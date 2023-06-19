@@ -8,6 +8,19 @@ import os
 from flask_cors import CORS
 import json
 
+# import glob
+# import tensorflow
+# from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img
+# from tensorflow.keras.layers import Conv2D, Flatten, MaxPooling2D, Dense, Dropout, BatchNormalization
+# from tensorflow.keras.models import Sequential
+# from mlxtend.plotting import plot_confusion_matrix
+# from tensorflow.keras.preprocessing import image
+# from tensorflow.keras.preprocessing.image import ImageDataGenerator
+# from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+# from tensorflow.keras.callbacks import ReduceLROnPlateau
+# from tensorflow.keras.applications.vgg16 import VGG16
+# from sklearn.model_selection import train_test_split
+
 app = Flask(__name__)
 app.debug = True
 CORS(app)
@@ -100,6 +113,28 @@ def predict_mri():
     # Return the response in JSON format
     return jsonify(response)
 
+
+
+@app.route('/pneumonia', methods = ['POST'])
+def pneumonia_prediction():
+    new_image_path = "Image Path"
+    test_image = image.load_img(new_image_path, target_size = (460, 460))
+    test_image = image.img_to_array(test_image)
+    #test_image = np.reshape(test_image, (224, 224, 3))
+    test_image = np.expand_dims(test_image, axis = 0)
+    test_image = test_image / 255.0
+    model_loaded = tensorflow.keras.models.load_model("model_path")
+    prediction = model_loaded.predict(test_image)
+    test_image_for_plotting = image.load_img(new_image_path, target_size = (460, 460))
+    plt.imshow(test_image_for_plotting)
+    if(prediction[0] > 0.5):
+        statistic = prediction[0] * 100 
+        print("This image is %.3f percent %s"% (statistic, "P N E U M O N I A"))
+    else:
+        statistic = (1.0 - prediction[0]) * 100
+        print("This image is %.3f percent %s" % (statistic, "N O R M A L"))
+     
+ 
 
 @app.route('/', methods=['GET'])
 def welcome():
