@@ -25,6 +25,11 @@
   border-radius: 22px;
 }
 
+.right-container-drag {
+  border: 1px dotted black;
+  border-style: dashed;
+}
+
 .upload-btn {
   background-color: #50b3ff;
 }
