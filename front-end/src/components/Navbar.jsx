@@ -24,8 +24,7 @@ const Navbar = () => {
         {/* logo */}
         <div className="logo">
           <a href="">
-            <img src="" alt="" />
-            Logo
+            <img src="./Image/doctorai_logo.svg" alt="" />
           </a>
         </div>
         {/* menu */}
