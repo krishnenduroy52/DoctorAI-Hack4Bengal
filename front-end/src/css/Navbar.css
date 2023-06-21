@@ -3,14 +3,34 @@
 }
 
 .links > li > a {
+    position: relative;
     color: #54616C;
     font-size: 1rem;
+    padding-bottom: 5px;
     font-weight: 500;
     transition: color 0.3s ease-in-out;
 }
 
 .links > li > a:hover {
     color: #0A6EBD;
+}
+
+.links > li > a::after {
+    content: "";
+    position: absolute;
+    left: -3px;
+    right: -3px;
+    bottom: 0;
+    width: 0;
+    /* max-width: 1%; */
+    height: 1.5px;
+    background-color: #fff;
+    transition: all 0.3s ease; 
+}
+
+.links > li > a:hover::after {
+    width: 110%;
+    background-color: #0A6EBD;
 }
 
 a {

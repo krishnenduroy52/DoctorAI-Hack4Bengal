@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faXmark } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef, useState } from "react";
-import './Navbar.css'
+import '../src/css/Navbar.css'
 
 const Navbar = () => {
 const toogleBtn = useRef(null);

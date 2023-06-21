@@ -1,3 +1,5 @@
+/*                 Hero Section                 */
+
 .topBody {
     height: auto;
     /* width: 100vw; */
@@ -33,7 +35,7 @@
     margin-bottom: 12px;
 }
 
-button {
+.topBody button {
     padding: 1em 2.1em 1.1em;
     border-radius: 4px;
     margin: 8px;
@@ -48,7 +50,7 @@ button {
     transition: background-color 0.5s ease-in-out;
 }
 
-button:hover {
+.topBody button:hover {
     background-color: transparent;
     color: #016CFF;
     cursor: pointer;
@@ -67,4 +69,22 @@ button:hover {
         text-align: center;
     }
     
+}
+
+
+
+/*                Model Selection Section                */
+
+.models {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.models button {
+    padding: clamp(2rem, calc(6vw - 12px), 4rem);
+    border: 2px solid #016CFF;
+    margin: clamp(2rem, calc(6vw - 12px), 4rem);
+    color: #016CFF;
 }
