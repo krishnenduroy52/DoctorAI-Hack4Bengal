@@ -135,7 +135,9 @@ def pneumonia_prediction():
             'predicted_class': 'PNEUMONIA',
             'probability': float(statistic)
         }
-
+    # Remove the temporary image file
+    os.remove(img_path)
+    
     return jsonify(result)
  
 
