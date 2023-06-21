@@ -2,7 +2,7 @@
   height: auto;
   /* width: 100vw; */
   /* padding: 20px; */
-  margin-top: 20px;
+  margin-top: 69px;
   margin-left: clamp(1rem, 5vw, 4rem);
   margin-right: clamp(1rem, 5vw, 4rem);
   display: flex;
@@ -25,10 +25,11 @@
   margin-bottom: 12px;
   font-weight: bold;
   color: #000;
+  line-height: 4.6rem;
 }
 
 .hero-text p {
-  font-size: clamp(1rem, calc(2vw - 12px), 2rem);
+  font-size: clamp(1.2rem, calc(1.9vw - 6px), 2.2rem);
   margin-bottom: 12px;
 }
 
