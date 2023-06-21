@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import "../css/predictionpage.css";
 
@@ -6,16 +7,12 @@ function Ctscan() {
   // fileupload & Result
   const [selectedFile, setSelectedFile] = useState(null);
   const [result, setResult] = useState(null);
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
 
-  const handleFileInputChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
-  const handleUploadClick = () => {
+  useEffect(() => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append("image", selectedFile);
-
       axios
         .post("http://localhost:8000/predict-ct", formData)
         .then((response) => {
@@ -25,8 +22,18 @@ function Ctscan() {
           console.error(error);
         });
     }
-  };
+  }, [selectedFile]);
 
+  // Drag and Drop
+  const onDrop = useCallback((acceptedFiles) => {
+    setSelectedFile(acceptedFiles[0]);
+    setIsDraggingOver(false);
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    onDragEnter: () => setIsDraggingOver(true),
+    onDragLeave: () => setIsDraggingOver(false),
+  });
   return (
     <div
       className="main-container flex items-center justify-center overflow-x-clip"
@@ -58,27 +65,31 @@ function Ctscan() {
               </div>
             </div>
             <div className="right-container relative group flex flex-col gap-4 md:gap-8 mt-8 md:mt-28">
-              <div className="dropzone-enabled"></div>
-              <div className="right-container-drop w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl">
-                <button
-                  type="button"
-                  className="upload-btn border border-transparent rounded-full font-bold transition ease-in-out text-center font-body no-underline text-white hover:no-underline inline-flex items-center justify-center text-2xl px-8 py-2.5 hover:bg-primary-hover active:bg-primary-hover active:scale-[0.98] focus:outline-none focus-visible:outline-none focus:ring-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-primary-hover"
+              <div className="dropzone-enabled" {...getRootProps()}>
+                <input {...getInputProps()} />
+
+                <div
+                  className={`right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl ${
+                    isDraggingOver ? "right-container-drag" : ""
+                  }`}
                 >
-                  Upload Image
-                </button>
-                <div className="hidden sm:flex flex-col gap-1.5">
-                  <p className="m-0 font-bold text-xl text-typo-secondary">
-                    or drop a file,
-                  </p>
-                  <span className="text-xs text-typo-secondary text-center">
-                    paste image or
-                    <a
-                      href="#"
-                      className="text-typo-secondary select-photo-url-btn underline"
-                    >
-                      URL
-                    </a>
-                  </span>
+                  <button
+                    type="button"
+                    className="upload-btn border border-transparent rounded-full font-bold transition ease-in-out text-center font-body no-underline text-white hover:no-underline inline-flex items-center justify-center text-2xl px-8 py-2.5 hover:bg-primary-hover active:bg-primary-hover active:scale-[0.98] focus:outline-none focus-visible:outline-none focus:ring-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-primary-hover"
+                    onClick={() => {
+                      // Handle click on the upload button here
+                    }}
+                  >
+                    Upload Image
+                  </button>
+                  <div className="hidden sm:flex flex-col gap-1.5">
+                    <p className="m-0 font-bold text-xl text-typo-secondary">
+                      or drop a file,
+                    </p>
+                    <span className="text-xs text-typo-secondary text-center">
+                      Paste Image and Wait
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
