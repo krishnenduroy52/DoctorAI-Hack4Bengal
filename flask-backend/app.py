@@ -3,23 +3,11 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.densenet import preprocess_input, decode_predictions
 from tensorflow.keras.applications.vgg16 import preprocess_input as preprocess_input_mri
+from tensorflow.keras.applications.resnet50 import preprocess_input as preprocess_input_resnet
 import numpy as np
 import os
 from flask_cors import CORS
 import json
-
-# import glob
-# import tensorflow
-# from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img
-# from tensorflow.keras.layers import Conv2D, Flatten, MaxPooling2D, Dense, Dropout, BatchNormalization
-# from tensorflow.keras.models import Sequential
-# from mlxtend.plotting import plot_confusion_matrix
-# from tensorflow.keras.preprocessing import image
-# from tensorflow.keras.preprocessing.image import ImageDataGenerator
-# from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-# from tensorflow.keras.callbacks import ReduceLROnPlateau
-# from tensorflow.keras.applications.vgg16 import VGG16
-# from sklearn.model_selection import train_test_split
 
 app = Flask(__name__)
 app.debug = True
@@ -31,6 +19,8 @@ ctmodel = load_model('Models/ct-scan/chest_CT_SCAN-DenseNet201.hdf5')
 # Load the MRI model
 mrimodel = load_model('Models/MRI/VGG16-Brain-Tumor-MRI-3.h5')
 
+# Load the pneumonia model 
+pneumonia_model = load_model("Models/PNEUMONIA/pneumonia_model.h5")
 
 class NumpyInt64Encoder(json.JSONEncoder):
     def default(self, obj):
@@ -115,25 +105,38 @@ def predict_mri():
 
 
 
-@app.route('/pneumonia', methods = ['POST'])
+@app.route('/pneumonia', methods=['POST'])
 def pneumonia_prediction():
-    new_image_path = "Image Path"
-    test_image = image.load_img(new_image_path, target_size = (460, 460))
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image file provided'})
+
+    # Load and preprocess the image
+    img = request.files['image']
+    img_path = f"tmp/{img.filename}"  # Save the file temporarily
+    img.save(img_path)
+
+    test_image = image.load_img(img_path, target_size=(460, 460))
     test_image = image.img_to_array(test_image)
-    #test_image = np.reshape(test_image, (224, 224, 3))
-    test_image = np.expand_dims(test_image, axis = 0)
+    test_image = np.expand_dims(test_image, axis=0)
     test_image = test_image / 255.0
-    model_loaded = tensorflow.keras.models.load_model("model_path")
-    prediction = model_loaded.predict(test_image)
-    test_image_for_plotting = image.load_img(new_image_path, target_size = (460, 460))
-    plt.imshow(test_image_for_plotting)
-    if(prediction[0] > 0.5):
-        statistic = prediction[0] * 100 
-        print("This image is %.3f percent %s"% (statistic, "P N E U M O N I A"))
+    # test_image = preprocess_input_resnet(test_image)
+
+    prediction = pneumonia_model.predict(test_image)
+    print("Prediction: ", prediction)
+    if prediction[0][0] == 0:
+        statistic = prediction[0] * 100
+        result = {
+            'predicted_class': 'NORMAL',
+            'probability': float(statistic)
+        }
     else:
         statistic = (1.0 - prediction[0]) * 100
-        print("This image is %.3f percent %s" % (statistic, "N O R M A L"))
-     
+        result = {
+            'predicted_class': 'PNEUMONIA',
+            'probability': float(statistic)
+        }
+
+    return jsonify(result)
  
 
 @app.route('/', methods=['GET'])
