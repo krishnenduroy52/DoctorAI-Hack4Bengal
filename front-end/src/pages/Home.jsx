@@ -13,13 +13,10 @@ const Home = () => {
         />
         <div className="hero-text">
           <h1>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore,
-            sequi!
+          Empowering Healthcare through Artificial Intelligence
           </h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero quae
-            perferendis quis? Qui ab consectetur non fuga labore. Consequatur,
-            ducimus!
+          Detect. Connect. Heal. Seamlessly schedule doctor meetings after disease detection, unlocking your path to optimal health.
           </p>
           <button>Make Appointment</button>
         </div>
