@@ -1,0 +1,149 @@
+.links > li {
+    list-style: none;
+}
+
+.links > li > a {
+    color: #54616C;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+}
+
+.links > li > a:hover {
+    color: #0A6EBD;
+}
+
+a {
+    text-decoration: none;
+    color: #54616C;
+    font-size: 1rem;
+}
+
+.logo > a, .toggle_btn {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.header {
+    position: relative;
+    /* padding: 0; */
+    max-width: 100vw;
+}
+
+.topNav {
+    max-width: 100vw;
+    height: 60px;
+    /* max-width: 1200px; */
+    margin: 0;
+    padding: 0 clamp(1rem , 5vw, 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* box-shadow: 0 2px 100px rgba(0, 0, 0, 0.3); */
+}
+
+.topNav .links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.topNav .toggle_btn {
+    display: none;
+    cursor: pointer;
+}
+
+.action_btn {
+    background-color: #0A6EBD;
+    color: #fff;
+    padding: 0.4rem 2rem;
+    border: 2px solid #0A6EBD;
+    outline: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    /* font-weight: thin; */
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.action_btn:hover {
+    color: #0A6EBD;
+    background-color: #fff;
+}
+
+/* DROPDOWN MENU */
+
+.dropdown_menu {
+    position: absolute;
+    right: 1rem;
+    top: 60px;
+    width: 300px;
+    height: 0;
+    background: #262d32;
+    backdrop-filter: blur(200px);
+    border-radius: 10px;
+    overflow: hidden;
+    display: none;
+    transition: height 0.4s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+/* 
+.dropdown_menu a{
+    color: #fff; */
+/* } */
+
+.dropdown_menu ul li{
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown_links {
+    scale: 1;
+    transition: scale 0.3s ease-in-out;
+}
+
+.dropdown_links:hover{
+    scale: 1.1;
+}
+
+.dropdown_menu .action_btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown_menu.open {
+    height: 200px;
+    display: block;
+}
+
+/* Responseive Design */
+
+@media (max-width: 832px) {
+    .topNav .links,
+    .topNav .action_btn {
+        display: none;
+    } 
+
+    li a {
+        color: #fff;
+    }
+
+    .topNav .toggle_btn {
+        display: block;
+    }
+
+    .dropdown_menu {
+        display: block;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .dropdown_menu {
+        left: clamp(1rem, 5vw, 4rem);
+        right: clamp(1rem, 5vw, 4rem);
+        width: unset;
+    }
+}
