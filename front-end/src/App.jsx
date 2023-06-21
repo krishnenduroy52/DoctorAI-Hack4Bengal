@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Meet from "./pages/Meet";
 import Rooms from "./pages/Rooms";
 import Navbar from "./components/Navbar";
+import Pneumonia from "./pages/pneumonia";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route exact path="/ctscan" element={<Ctscan />} />
         <Route path="/mri" element={<Mri />} />
+        <Route path="/pneumonia" element={<Pneumonia />} />
         <Route path="/meet" element={<Meet />} />
         <Route path="/rooms/:roomId" element={<Rooms />} />
       </Routes>
