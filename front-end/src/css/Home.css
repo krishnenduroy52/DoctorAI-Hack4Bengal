@@ -1,0 +1,70 @@
+.topBody {
+    height: auto;
+    /* width: 100vw; */
+    /* padding: 20px; */
+    margin-top: 20px;
+    margin-left: clamp(1rem, 5vw, 4rem);
+    margin-right: clamp(1rem, 5vw, 4rem);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.topBody img {
+    width: 100%;
+    /* height: px; */
+}
+
+.hero-text {
+    width: 100%;
+}
+
+.hero-text h1 {
+    font-size: clamp(2rem, calc(6vw - 12px), 4rem);
+    margin-bottom: 12px;
+    font-weight: bold;
+    color: #000;
+}
+
+.hero-text p {
+    font-size: clamp(1rem, calc(2vw - 12px), 2rem);
+    margin-bottom: 12px;
+}
+
+button {
+    padding: 1em 2.1em 1.1em;
+    border-radius: 4px;
+    margin: 8px;
+    border: 2px solid #016CFF;
+    background-color: #016CFF;
+    color: #fff;   
+    font-weight: 800;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    text-align: center;
+    /* box-shadow: 0em -0.2em 0em #016CFF inset; */
+    transition: background-color 0.5s ease-in-out;
+}
+
+button:hover {
+    background-color: transparent;
+    color: #016CFF;
+    cursor: pointer;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 992px) {
+    .topBody {
+        margin-top: 10px;
+        flex-direction: column;
+    }
+    .hero-text {
+        width: 100%;
+        text-align: center;
+    }
+    
+}

@@ -50,13 +50,13 @@ const toogleBtn = useRef(null);
       </div>
       <div className="dropdown_menu" ref={dropdownMenu}>
         <ul>
-          <li>
+          <li className="dropdown_links">
             <a href="services">Services</a>
           </li>
-          <li>
+          <li className="dropdown_links">
             <a href="about">About</a>
           </li>
-          <li>
+          <li className="dropdown_links">
             <a href="contact-us">Contact Us</a>
           </li>
           <li><a href="#" className="action_btn">

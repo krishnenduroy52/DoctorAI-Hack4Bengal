@@ -2,8 +2,15 @@
     list-style: none;
 }
 
+.links > li > a {
+    color: #54616C;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+}
+
 .links > li > a:hover {
-    color: rgb(208, 144, 24);
+    color: #0A6EBD;
 }
 
 a {
@@ -20,15 +27,15 @@ a {
 .header {
     position: relative;
     /* padding: 0; */
-    width: 100vw;
+    max-width: 100vw;
 }
 
 .topNav {
-    width: 100vw;
+    max-width: 100vw;
     height: 60px;
     /* max-width: 1200px; */
     margin: 0;
-    padding: 0 2rem;
+    padding: 0 clamp(1rem , 5vw, 4rem);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -50,17 +57,18 @@ a {
     background-color: #0A6EBD;
     color: #fff;
     padding: 0.4rem 2rem;
-    border: none;
+    border: 2px solid #0A6EBD;
     outline: none;
     border-radius: 20px;
     font-size: 1rem;
     /* font-weight: thin; */
     cursor: pointer;
-    transition: scale 0.3s ease;
+    transition: background-color 0.5s ease-in-out;
 }
 
 .action_btn:hover {
-    scale: 1.03;
+    color: #0A6EBD;
+    background-color: #fff;
 }
 
 /* DROPDOWN MENU */
@@ -71,12 +79,12 @@ a {
     top: 60px;
     width: 300px;
     height: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: #262d32;
     backdrop-filter: blur(200px);
     border-radius: 10px;
     overflow: hidden;
     display: none;
-    transition: height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: height 0.4s cubic-bezier(0.215, 0.610, 0.355, 1);
 }
 /* 
 .dropdown_menu a{
@@ -90,6 +98,15 @@ a {
     justify-content: center;
 }
 
+.dropdown_links {
+    scale: 1;
+    transition: scale 0.3s ease-in-out;
+}
+
+.dropdown_links:hover{
+    scale: 1.1;
+}
+
 .dropdown_menu .action_btn {
     width: 100%;
     display: flex;
@@ -97,17 +114,21 @@ a {
 }
 
 .dropdown_menu.open {
-    height: auto;
+    height: 200px;
     display: block;
 }
 
 /* Responseive Design */
 
-@media (max-width: 992px) {
+@media (max-width: 832px) {
     .topNav .links,
     .topNav .action_btn {
         display: none;
     } 
+
+    li a {
+        color: #fff;
+    }
 
     .topNav .toggle_btn {
         display: block;
@@ -121,8 +142,8 @@ a {
 
 @media (max-width: 576px) {
     .dropdown_menu {
-        left: 2rem;
-        right: 2rem;
+        left: clamp(1rem, 5vw, 4rem);
+        right: clamp(1rem, 5vw, 4rem);
         width: unset;
     }
 }
