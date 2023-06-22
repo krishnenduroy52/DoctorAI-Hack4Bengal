@@ -16,8 +16,8 @@ const Navbar = () => {
   };
 
   const [isLogin, setIsLogin] = useState(false);
+  const token = localStorage.getItem("doctor_ai_userID");
   useEffect(() => {
-    const token = localStorage.getItem("doctor_ai_userID");
     console.log(token);
     if (token) {
       setIsLogin(true);
@@ -25,7 +25,7 @@ const Navbar = () => {
       setIsLogin(false);
     }
     console.log(isLogin);
-  }, []);
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem("doctor_ai_userID");
@@ -66,7 +66,7 @@ const Navbar = () => {
         </ul>
         {/* signup */}
         {isLogin === false ? (
-          <Link to="/signup" className="action_btn">
+          <Link to="/login" className="action_btn">
             Sign In
           </Link>
         ) : (
@@ -99,7 +99,7 @@ const Navbar = () => {
           </li>
           {isLogin === false ? (
             <li className="dropdown_links">
-              <Link to="/signup" className="action_btn">
+              <Link to="/login" className="action_btn">
                 Sign In
               </Link>
             </li>
