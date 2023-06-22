@@ -9,6 +9,12 @@ const Navbar = () => {
   const [toggleBtnIcon, setToggleBtnIcon] = useState(faBarsStaggered);
   const dropdownMenu = useRef(null);
 
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+
+  const toggleProfileDropdown = () => {
+    setShowProfileDropdown(!showProfileDropdown);
+  };
+
   const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("doctor_ai_userID");
@@ -64,9 +70,17 @@ const Navbar = () => {
             Sign In
           </Link>
         ) : (
-          <Link onClick={handleLogout} className="action_btn">
-            Logout
-          </Link>
+          <div className="profile_dropdown">
+            <button className="action_btn" onClick={toggleProfileDropdown}>
+              Profile
+            </button>
+            {showProfileDropdown && (
+              <div className="profile_dropdown_content">
+                <Link to="/profile">View Profile</Link>
+                <Link onClick={handleLogout}>Logout</Link>
+              </div>
+            )}
+          </div>
         )}
         <div className="toggle_btn" ref={toogleBtn} onClick={openMenu}>
           <FontAwesomeIcon icon={toggleBtnIcon} />

@@ -111,6 +111,28 @@ app.post("/login", async (req, res) => {
     }
 });
 
+app.get('/user/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find the user in the database by ID
+        const user = await User.findById(id);
+
+        if (!user) {
+            // User not found
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // User found, return the user details
+        res.status(200).json({ user });
+    } catch (err) {
+        // Handle any errors that occurred during the retrieval
+        console.error('Error while retrieving user:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 
 // Start the server
 const port = 3000; // Choose any port you prefer
