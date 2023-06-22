@@ -133,6 +133,26 @@ app.get('/user/:id', async (req, res) => {
 });
 
 
+app.put('/user/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    const updatedData = req.body;
+
+    try {
+        // Find the user by ID and update the data
+        const user = await User.findByIdAndUpdate(userId, updatedData, { new: true });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'User data updated successfully', user });
+    } catch (error) {
+        console.error('Error updating user data:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 
 // Start the server
 const port = 3000; // Choose any port you prefer
