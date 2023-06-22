@@ -103,7 +103,7 @@ app.post("/login", async (req, res) => {
         // You can perform additional actions or generate a token here for authentication
 
         // Send a success response
-        res.status(200).json({ message: "User logged in successfully" });
+        res.status(200).json({ message: "User logged in successfully", user: user._id });
     } catch (err) {
         // Handle any errors that occurred during the login process
         console.error("Error while logging in:", err);
