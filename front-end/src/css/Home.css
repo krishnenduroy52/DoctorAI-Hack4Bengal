@@ -1,38 +1,38 @@
 /*                 Hero Section                 */
 
 .topBody {
-    height: auto;
-    /* width: 100vw; */
-    /* padding: 20px; */
-    margin-top: 20px;
-    margin-left: clamp(1rem, 5vw, 4rem);
-    margin-right: clamp(1rem, 5vw, 4rem);
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
+  height: auto;
+  /* width: 100vw; */
+  /* padding: 20px; */
+  margin-top: 69px;
+  margin-left: clamp(1rem, 5vw, 4rem);
+  margin-right: clamp(1rem, 5vw, 4rem);
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
 }
 
 .topBody img {
-    width: 100%;
-    /* height: px; */
+  width: clamp(40%, 50%, 100%);
 }
 
 .hero-text {
-    width: 100%;
+  width: 100%;
 }
 
 .hero-text h1 {
-    font-size: clamp(2rem, calc(6vw - 12px), 4rem);
-    margin-bottom: 12px;
-    font-weight: bold;
-    color: #000;
+  font-size: clamp(2rem, calc(6vw - 12px), 4rem);
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #000;
+  line-height: 4.6rem;
 }
 
 .hero-text p {
-    font-size: clamp(1rem, calc(2vw - 12px), 2rem);
-    margin-bottom: 12px;
+  font-size: clamp(1.2rem, calc(1.9vw - 6px), 2.2rem);
+  margin-bottom: 12px;
 }
 
 .topBody button {
@@ -55,20 +55,23 @@
     color: #016CFF;
     cursor: pointer;
 }
-
-
 /* Responsive Design */
 
 @media (max-width: 992px) {
-    .topBody {
-        margin-top: 10px;
-        flex-direction: column;
-    }
-    .hero-text {
-        width: 100%;
-        text-align: center;
-    }
-    
+  .topBody {
+    margin-top: 10px;
+    flex-direction: column;
+  }
+  .hero-text {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 650px) {
+  .topBody img {
+    width: 100%;
+  }
 }
 
 

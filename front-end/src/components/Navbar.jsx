@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faXmark } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef, useState } from "react";
-import '../src/css/Navbar.css'
+import "../css/Navbar.css";
 
 const Navbar = () => {
-const toogleBtn = useRef(null);
+  const toogleBtn = useRef(null);
   const [toggleBtnIcon, setToggleBtnIcon] = useState(faBarsStaggered);
   const dropdownMenu = useRef(null);
   const openMenu = () => {
@@ -16,7 +16,7 @@ const toogleBtn = useRef(null);
     } else {
       setToggleBtnIcon(faBarsStaggered);
     }
-  }
+  };
   return (
     <div className="header">
       {/*--------Navbar--------*/}
@@ -24,8 +24,7 @@ const toogleBtn = useRef(null);
         {/* logo */}
         <div className="logo">
           <a href="">
-            <img src="" alt="" />
-            Logo
+            <img src="./Image/doctorai_logo.svg" alt="" />
           </a>
         </div>
         {/* menu */}
@@ -59,13 +58,15 @@ const toogleBtn = useRef(null);
           <li className="dropdown_links">
             <a href="contact-us">Contact Us</a>
           </li>
-          <li><a href="#" className="action_btn">
-            Sign In
-          </a></li>
+          <li>
+            <a href="#" className="action_btn">
+              Sign In
+            </a>
+          </li>
         </ul>
       </div>
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Navbar
+export default Navbar;
