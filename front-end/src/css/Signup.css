@@ -111,3 +111,14 @@
 .name-number input {
     width: 100%;
 }
+
+.toast-container {
+    bottom: 0;
+    right: 0;
+  }
+
+.password-requirements{
+    display: block;
+    font-size: 0.55rem;
+    color: red;
+}

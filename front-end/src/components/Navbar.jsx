@@ -3,6 +3,7 @@ import { faBarsStaggered, faXmark } from "@fortawesome/free-solid-svg-icons";
 import React, { useRef, useState } from "react";
 import "../css/Navbar.css";
 
+
 const Navbar = () => {
   const toogleBtn = useRef(null);
   const [toggleBtnIcon, setToggleBtnIcon] = useState(faBarsStaggered);
