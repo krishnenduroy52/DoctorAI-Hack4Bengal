@@ -23,7 +23,7 @@ const Navbar = () => {
       <div className="topNav">
         {/* logo */}
         <div className="logo">
-          <a href="">
+          <a href="/">
             <img src="./Image/doctorai_logo.svg" alt="" />
           </a>
         </div>
@@ -40,7 +40,7 @@ const Navbar = () => {
           </li>
         </ul>
         {/* signup */}
-        <a href="#" className="action_btn">
+        <a href="/signup" className="action_btn">
           Sign In
         </a>
         <div className="toggle_btn" ref={toogleBtn} onClick={openMenu}>
