@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Ctscan from "./pages/Ctscan";
 import Mri from "./pages/Mri";
@@ -9,15 +9,18 @@ import Navbar from "./components/Navbar";
 import Pneumonia from "./pages/pneumonia";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
+
   return (
     <Router>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup/>} />
-        <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<ProfilePage/>} />
         <Route exact path="/ctscan" element={<Ctscan />} />
         <Route path="/mri" element={<Mri />} />
         <Route path="/pneumonia" element={<Pneumonia />} />
