@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faXmark } from "@fortawesome/free-solid-svg-icons";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/Navbar.css";
 
 
@@ -8,6 +8,23 @@ const Navbar = () => {
   const toogleBtn = useRef(null);
   const [toggleBtnIcon, setToggleBtnIcon] = useState(faBarsStaggered);
   const dropdownMenu = useRef(null);
+
+  const [isLogin, setIsLogin] = useState(false)
+  useEffect(() => {
+    const token = localStorage.getItem('doctor_ai_userID');
+    console.log(token)
+    if (token) {
+      setIsLogin(true)
+    } else {
+      setIsLogin(false)
+    }
+  }, [isLogin])
+
+  const handleLogout = () => {
+    localStorage.removeItem('doctor_ai_userID')
+    setIsLogin(false)
+  }
+
   const openMenu = () => {
     dropdownMenu.current.classList.toggle("open");
     const isOpen = dropdownMenu.current.classList.contains("open");
@@ -59,11 +76,18 @@ const Navbar = () => {
           <li className="dropdown_links">
             <a href="contact-us">Contact Us</a>
           </li>
-          <li>
+          {!isLogin ? <li>
             <a href="#" className="action_btn">
               Sign In
             </a>
-          </li>
+          </li> :
+            <li onClick={handleLogout}>
+              <div className="action_btn">
+                Logout
+              </div>
+            </li>
+          }
+
         </ul>
       </div>
     </div>

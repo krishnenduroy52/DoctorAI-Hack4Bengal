@@ -31,10 +31,12 @@ const Login = () => {
         }
         else {
             try {
-                await axios.post("http://localhost:3000/login", {
+                const res = await axios.post("http://localhost:3000/login", {
                     username,
                     password
                 });
+                console.log(res.data);
+                localStorage.setItem('doctor_ai_userID', res.data.user);
                 // If the login request is successful, show a success toast message
                 toast.success('User logged in successfully!');
                 // Navigate to the profile page after a delay
