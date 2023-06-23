@@ -4,6 +4,9 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "../css/ProfilePage.css";
 import { Navigate, useNavigate } from 'react-router-dom';
 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function ProfilePage() {
     const [userData, setUserData] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
@@ -24,10 +27,13 @@ export default function ProfilePage() {
             const data = await response.json();
             if (response.ok) {
                 setUserData(data.user);
+                // toast.success("Successfully fetched user data.")
             } else {
+                toast.error('Error retrieving user data'); // Display toast error
                 console.error('Error retrieving user data:', data.error);
             }
         } catch (error) {
+            toast.error('Error retrieving user data'); // Display toast error
             console.error('Error retrieving user data:', error);
         }
     };
@@ -58,6 +64,7 @@ export default function ProfilePage() {
                 // Update the userData state and exit edit mode
                 setUserData(editedData);
                 setIsEditMode(false);
+                toast.success('Data saved successfully'); // Display toast success message
                 console.log('Data saved successfully');
             } else {
                 console.error('Error saving user data:', response.statusText);
@@ -66,6 +73,7 @@ export default function ProfilePage() {
             console.error('Error saving user data:', error);
         }
     };
+
 
 
     const handleChange = (e) => {
@@ -78,6 +86,7 @@ export default function ProfilePage() {
 
     return (
         <section className="vh-100" style={{ backgroundColor: 'white' }}>
+            <ToastContainer />
             <MDBContainer className="py-5 h-100">
                 <MDBRow className="justify-content-center align-items-center h-100">
                     <MDBCol lg="6" className="mb-4 mb-lg-0">
