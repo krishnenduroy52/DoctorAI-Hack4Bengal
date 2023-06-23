@@ -1,8 +1,10 @@
+/*                 Hero Section                 */
+
 .topBody {
   height: auto;
   /* width: 100vw; */
   /* padding: 20px; */
-  margin-top: 69px;
+  margin-top: 20px;
   margin-left: clamp(1rem, 5vw, 4rem);
   margin-right: clamp(1rem, 5vw, 4rem);
   display: flex;
@@ -14,6 +16,7 @@
 
 .topBody img {
   width: clamp(40%, 50%, 100%);
+  margin-top: -30px;
 }
 
 .hero-text {
@@ -25,7 +28,7 @@
   margin-bottom: 12px;
   font-weight: bold;
   color: #000;
-  line-height: 4.6rem;
+  line-height: clamp(2.5rem, calc(6vw - 6px), 4.6rem);
 }
 
 .hero-text p {
@@ -33,26 +36,48 @@
   margin-bottom: 12px;
 }
 
-button {
-  padding: 1em 2.1em 1.1em;
-  border-radius: 4px;
-  margin: 8px;
-  border: 2px solid #016cff;
-  background-color: #016cff;
-  color: #fff;
-  font-weight: 800;
-  font-size: 0.85em;
-  text-transform: uppercase;
-  text-align: center;
-  /* box-shadow: 0em -0.2em 0em #016CFF inset; */
-  transition: background-color 0.5s ease-in-out;
+.topBody button {
+    padding: 1em 2.1em 1.1em;
+    border-radius: 4px;
+    margin: 8px 8px 8px 0;
+    border: 2px solid #016CFF;
+    background-color: #016CFF;
+    color: #fff;   
+    font-weight: 800;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    text-align: center;
+    /* box-shadow: 0em -0.2em 0em #016CFF inset; */
+    transition: background-color 0.5s ease-in-out;
 }
 
-button:hover {
-  background-color: transparent;
-  color: #016cff;
-  cursor: pointer;
+.topBody button:hover {
+    background-color: transparent;
+    color: #016CFF;
+    cursor: pointer;
 }
+
+
+
+
+/*                Model Selection Section                */
+
+.models {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.models button {
+    padding: clamp(2rem, calc(6vw - 12px), 4rem);
+    border: 2px solid #016CFF;
+    margin: clamp(2rem, calc(6vw - 12px), 4rem);
+    color: #016CFF;
+}
+
+
+
 /* Responsive Design */
 
 @media (max-width: 992px) {

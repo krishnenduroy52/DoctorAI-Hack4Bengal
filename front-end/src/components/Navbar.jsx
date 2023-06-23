@@ -1,13 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBarsStaggered, faXmark, faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState,} from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import { Link } from "react-router-dom";
+import services_menu from "../assets/json-data/services_menu.json";
 
 const Navbar = () => {
   const toogleBtn = useRef(null);
+  const servicesBtn = useRef(null);
   const [toggleBtnIcon, setToggleBtnIcon] = useState(faBarsStaggered);
+  const [serviceBtnIcon, setServiceBtnIcon] = useState(faAngleDown);
   const dropdownMenu = useRef(null);
 
   const navigate = useNavigate();
@@ -45,6 +48,18 @@ const Navbar = () => {
       setToggleBtnIcon(faBarsStaggered);
     }
   };
+
+  const openServices = () => {
+    servicesBtn.current.classList.toggle("open");
+    const isOpen = servicesBtn.current.classList.contains("open");
+    // console.log(toggleBtnIcon.current.classList);
+    if (isOpen) {
+      setServiceBtnIcon(faAngleUp);
+    } else {
+      setServiceBtnIcon(faAngleDown);
+    }
+  } 
+
   return (
     <div className="header">
       {/*--------Navbar--------*/}
@@ -57,8 +72,17 @@ const Navbar = () => {
         </div>
         {/* menu */}
         <ul className="links">
-          <li>
-            <a href="services">Services</a>
+          <li className="services">
+            <a className="no-link" onClick={openServices}>Services <FontAwesomeIcon className="ml-1 w-2" icon={serviceBtnIcon}/></a>
+            <div ref={servicesBtn} className="services_options">
+              <ul>
+                {services_menu.items.map((item, index) => {
+                  return (
+                    <Link key={index} to={item.url}><li>{item.title}</li></Link>
+                  );
+                })}
+              </ul>
+            </div>
           </li>
           <li>
             <a href="about">About</a>
@@ -92,7 +116,7 @@ const Navbar = () => {
       <div className="dropdown_menu" ref={dropdownMenu}>
         <ul>
           <li className="dropdown_links">
-            <a href="services">Services</a>
+            <a className="no-link">Services</a>
           </li>
           <li className="dropdown_links">
             <a href="about">About</a>

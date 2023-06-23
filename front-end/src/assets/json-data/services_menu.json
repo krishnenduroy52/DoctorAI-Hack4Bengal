@@ -1,0 +1,16 @@
+{
+    "items": [
+        {
+            "title": "MRI Scan",
+            "url": "/mri"
+        },
+        {
+            "title": "CT Scan",
+            "url": "/ctscan"
+        },
+        {
+            "title": "X-Ray",
+            "url": "/xray"
+        }
+    ]
+}

@@ -22,8 +22,22 @@ const Home = () => {
         </div>
       </div>
 
+
       {/* Models of CT scan and MRI machines */}
-      <div className="modelSection">{/* Models */}</div>
+      <div className="modelSection">
+        {/* Models */}
+        <div className="models">
+          <button className="CtScan">
+            <p>CT SCAN</p> <p>Lorem ipsum dolor sit amet.</p>
+          </button>
+          <button className="MRIScan">
+            <p>MRI SCAN</p> <p>Lorem ipsum dolor sit amet.</p>
+          </button>
+          <button className="LungXRayScan">
+            <p>Lungs X-RAY</p> <p>Lorem ipsum dolor sit amet.</p>
+          </button>
+        </div>
+      </div>
       {/* --------BottomBody--------*/}
       <div className="bottomBody">{/* About */}</div>
     </div>
