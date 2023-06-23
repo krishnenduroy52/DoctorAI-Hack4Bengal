@@ -3,12 +3,14 @@ import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import "../css/predictionpage.css";
 import { Link } from "react-router-dom";
+import Modal from "../components/Modal";
 
 function Ctscan() {
   // fileupload & Result
   const [selectedFile, setSelectedFile] = useState(null);
   const [result, setResult] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
+  const [showGive, setshowGive] = useState(false);
 
   useEffect(() => {
     if (selectedFile) {
@@ -18,6 +20,7 @@ function Ctscan() {
         .post("http://localhost:8000/predict-ct", formData)
         .then((response) => {
           setResult(response.data);
+          setshowGive(true);
         })
         .catch((error) => {
           console.error(error);
@@ -42,7 +45,7 @@ function Ctscan() {
     >
       <div className="prediction-bg">
         <img
-          src="https://images.pexels.com/videos/7089596/pexels-photo-7089596.jpeg?auto=compress&cs=tinysrgb&w=600"
+          src="https://images.pexels.com/videos/4316872/brain-cerebration-doctor-face-mask-4316872.jpeg?auto=compress&cs=tinysrgb&w=1600"
           alt=""
         />
       </div>
@@ -76,76 +79,51 @@ function Ctscan() {
               </div>
             </div>
             <div className="right-container relative group flex flex-col gap-4 md:gap-8">
-              {result ? (
-                <div className="right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl">
-                  CT-Scan Results
-                  <br /> Disease: {result.predicted_class}
-                  <br /> Probability: {result.probability.toFixed(2)}
-                  <div className="flex flex-col">
-                    <button
-                      type="button"
-                      className="upload-btn"
-                      onClick={() => {
-                        setResult("");
-                      }}
-                    >
-                      Predict Again
-                    </button>
-                    <Link to="/meet" className="predict-appointment">
-                      Make Appointment
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                <div className="dropzone-enabled" {...getRootProps()}>
-                  <input {...getInputProps()} />
+              <div className="dropzone-enabled" {...getRootProps()}>
+                <input {...getInputProps()} />
 
-                  <div
-                    className={`right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl ${
-                      isDraggingOver ? "right-container-drag" : ""
-                    }`}
+                <div
+                  className={`right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl ${
+                    isDraggingOver ? "right-container-drag" : ""
+                  }`}
+                >
+                  <button
+                    type="button"
+                    className="upload-btn"
+                    onClick={() => {
+                      // Handle click on the upload button here
+                    }}
                   >
-                    <button
-                      type="button"
-                      className="upload-btn"
-                      onClick={() => {
-                        // Handle click on the upload button here
-                      }}
-                    >
-                      Upload Image
-                    </button>
-                    <div className="hidden sm:flex flex-col gap-1.5">
-                      <p className="m-0 font-bold text-xl text-typo-secondary">
-                        or drop a file,
-                      </p>
-                      <span className="text-xs text-typo-secondary text-center">
-                        Paste Image and Wait
-                      </span>
-                    </div>
+                    Upload Image
+                  </button>
+                  <div className="hidden sm:flex flex-col gap-1.5">
+                    <p className="m-0 font-bold text-xl text-typo-secondary">
+                      or drop a file,
+                    </p>
+                    <span className="text-xs text-typo-secondary text-center">
+                      Paste Image and Wait
+                    </span>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Result Modal */}
+      {result && showGive ? (
+        <Modal
+          show={showGive}
+          onClose={() => setshowGive(false)}
+          img="Image/modelBanner.jpg"
+          bigText={`${result.predicted_class}`}
+          smallText="We recommend you to make a appointment with doctor"
+          percentage={`${Math.round(result.probability)}`}
+        />
+      ) : null}
     </div>
   );
-}
-
-{
-  /* <div>
-      <h1>Image Upload App</h1>
-      <input type="file" accept="image/*" onChange={handleFileInputChange} />
-      <button onClick={handleUploadClick}>Upload</button>
-      {result && (
-        <div>
-          <h2>Result</h2>
-          <p>Predicted Class: {result.predicted_class}</p>
-          <p>Probability: {result.probability.toFixed(2)}%</p>
-        </div>
-      )}
-    </div> */
 }
 
 export default Ctscan;
