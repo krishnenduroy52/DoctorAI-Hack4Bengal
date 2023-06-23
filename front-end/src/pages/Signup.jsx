@@ -212,10 +212,10 @@ const Signup = () => {
                         <button type="button" className="submit-btn" onClick={handleSubmitForm}>
                             Sign Up
                         </button>
-                        <p className="already-account">
+                    </div>
+                    <p className="already-account">
                             Already have an account? <a href="/login">Log in</a>
                         </p>
-                    </div>
                 </form>
             </div>
         </div>
