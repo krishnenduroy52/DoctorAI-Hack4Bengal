@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon, MDBBtn } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "../css/ProfilePage.css";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function ProfilePage() {
     const [userData, setUserData] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [editedData, setEditedData] = useState(null);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const userId = localStorage.getItem('doctor_ai_userID');
         if (userId) {
             fetchUserData(userId);
+        } else {
+            navigate('/login'); // Redirect to the login page if user is not logged in
         }
-    }, []);
+    }, [navigate]);
 
     const fetchUserData = async (userId) => {
         try {

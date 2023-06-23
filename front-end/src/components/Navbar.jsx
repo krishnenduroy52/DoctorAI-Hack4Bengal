@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered, faXmark } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,} from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import { Link } from "react-router-dom";
 
@@ -9,6 +10,7 @@ const Navbar = () => {
   const [toggleBtnIcon, setToggleBtnIcon] = useState(faBarsStaggered);
   const dropdownMenu = useRef(null);
 
+  const navigate = useNavigate();
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
   const toggleProfileDropdown = () => {
@@ -30,6 +32,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("doctor_ai_userID");
     setIsLogin(false);
+    navigate("/");
   };
 
   const openMenu = () => {
