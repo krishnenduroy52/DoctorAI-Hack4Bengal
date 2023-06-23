@@ -56,24 +56,7 @@
     color: #016CFF;
     cursor: pointer;
 }
-/* Responsive Design */
 
-@media (max-width: 992px) {
-  .topBody {
-    margin-top: 10px;
-    flex-direction: column;
-  }
-  .hero-text {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-@media (max-width: 650px) {
-  .topBody img {
-    width: 100%;
-  }
-}
 
 
 
@@ -91,4 +74,25 @@
     border: 2px solid #016CFF;
     margin: clamp(2rem, calc(6vw - 12px), 4rem);
     color: #016CFF;
+}
+
+
+
+/* Responsive Design */
+
+@media (max-width: 992px) {
+  .topBody {
+    margin-top: 10px;
+    flex-direction: column;
+  }
+  .hero-text {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 650px) {
+  .topBody img {
+    width: 100%;
+  }
 }

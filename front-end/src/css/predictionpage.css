@@ -30,10 +30,31 @@
   border-style: dashed;
 }
 
-.upload-btn {
+/* .upload-btn {
   background-color: #50b3ff;
-}
+} */
 
-.upload-btn:hover {
+/* .upload-btn:hover {
   background-color: #82c9ff;
+} */
+
+.predict-appointment,
+.upload-btn {
+  padding: 1em 2.1em 1.1em;
+  border-radius: 4px;
+  margin: 8px;
+  border: 2px solid #016cff;
+  background-color: #016cff;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: background-color 0.5s ease-in-out;
+}
+.predict-appointment:hover,
+.upload-btn:hover {
+  background-color: transparent;
+  color: #016cff;
+  cursor: pointer;
 }
