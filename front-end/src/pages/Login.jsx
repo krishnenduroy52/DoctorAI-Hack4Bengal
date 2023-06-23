@@ -42,7 +42,7 @@ const Login = () => {
         setTimeout(() => {
           // navigate("/");
           window.location.href = "/";
-        }, 1500); // Delay of 1.5 seconds before navigating
+        }, 1000); // Delay of 1.5 seconds before navigating
         // Additional actions or redirection can be performed here
       } catch (error) {
         console.log(error);
