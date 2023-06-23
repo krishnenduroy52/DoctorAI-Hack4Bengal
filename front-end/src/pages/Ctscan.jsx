@@ -38,8 +38,17 @@ function Ctscan() {
   return (
     <div
       className="main-container flex items-center justify-center overflow-x-clip"
-      style={{ minHeight: "calc(100vh - 700px)" }}
+      style={{ height: "90vh" }}
     >
+      <div className="prediction-bg">
+        <img
+          src="https://images.pexels.com/videos/7089596/pexels-photo-7089596.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt=""
+        />
+      </div>
+      {/* <div className="prediction-bg-right">
+        <img src="./Image/doctor-bg.jpg" alt="" />
+      </div> */}
       <div className="py-4 md:py-8">
         <div className="mx-auto w-full px-8 max-w-5xl relative">
           <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center md:gap-4">
@@ -55,7 +64,8 @@ function Ctscan() {
               ></video>
               <div className="flex flex-col gap-4">
                 <h1 className="font-display font-bold text-typo m-0 text-4xl md:text-5xl lg:text-6xl text-center md:!text-left">
-                  Detect Carcinoma <br /> CT-Scan image
+                  Detect <span className="text-orange-500">Carcinoma</span>{" "}
+                  <br /> CT-Scan image
                 </h1>
                 <p className="text-typo-tertiary font-bold text-xl m-0 !text-typo text-center md:!text-left">
                   100% Automatically and
@@ -65,7 +75,7 @@ function Ctscan() {
                 </p>
               </div>
             </div>
-            <div className="right-container relative group flex flex-col gap-4 md:gap-8 md:mt-28">
+            <div className="right-container relative group flex flex-col gap-4 md:gap-8">
               {result ? (
                 <div className="right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl">
                   CT-Scan Results
@@ -76,7 +86,6 @@ function Ctscan() {
                       type="button"
                       className="upload-btn"
                       onClick={() => {
-                        // Handle click on the upload button here
                         setResult("");
                       }}
                     >
