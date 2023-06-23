@@ -3,6 +3,37 @@
   background-color: #fff;
 }
 
+.prediction-bg {
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 60%;
+}
+
+.prediction-bg-right {
+  position: absolute;
+  overflow: hidden;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 40%;
+}
+.prediction-bg-right img {
+  height: 100%;
+  opacity: 0.5;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.prediction-bg img {
+  height: 100%;
+  opacity: 0.5;
+  object-fit: cover;
+  z-index: -1;
+}
+
 .max-w-5xl {
   width: 64rem;
 }
