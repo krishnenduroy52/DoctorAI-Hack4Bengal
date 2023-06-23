@@ -87,10 +87,10 @@ def predict_mri():
     predictions = mrimodel.predict(img)
 
     # Interpret the predictions
-    class_labels = ['pituitary', 'notumor', 'meningioma', 'glioma']
+    class_labels = ['Pituitary', 'Notumor', 'Meningioma', 'Glioma']
     predicted_class_index = np.argmax(predictions, axis=1)
     predicted_class_label = class_labels[predicted_class_index[0]]
-
+    print(predictions)
     # Prepare the response
     response = {
         'predicted_class': predicted_class_label,

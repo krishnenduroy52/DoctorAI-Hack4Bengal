@@ -12,7 +12,6 @@ import Login from "./pages/Login";
 import ProfilePage from "./pages/ProfilePage";
 
 function App() {
-
   return (
     <Router>
       <Navbar />
@@ -20,10 +19,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<ProfilePage/>} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route exact path="/ctscan" element={<Ctscan />} />
         <Route path="/mri" element={<Mri />} />
-        <Route path="/pneumonia" element={<Pneumonia />} />
+        <Route path="/xray" element={<Pneumonia />} />
         <Route path="/meet" element={<Meet />} />
         <Route path="/rooms/:roomId" element={<Rooms />} />
       </Routes>
