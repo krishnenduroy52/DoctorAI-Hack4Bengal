@@ -4,7 +4,7 @@
   height: auto;
   /* width: 100vw; */
   /* padding: 20px; */
-  margin-top: 69px;
+  margin-top: 20px;
   margin-left: clamp(1rem, 5vw, 4rem);
   margin-right: clamp(1rem, 5vw, 4rem);
   display: flex;
@@ -16,6 +16,7 @@
 
 .topBody img {
   width: clamp(40%, 50%, 100%);
+  margin-top: -30px;
 }
 
 .hero-text {
@@ -27,7 +28,7 @@
   margin-bottom: 12px;
   font-weight: bold;
   color: #000;
-  line-height: 4.6rem;
+  line-height: clamp(2.5rem, calc(6vw - 6px), 4.6rem);
 }
 
 .hero-text p {
@@ -38,7 +39,7 @@
 .topBody button {
     padding: 1em 2.1em 1.1em;
     border-radius: 4px;
-    margin: 8px;
+    margin: 8px 8px 8px 0;
     border: 2px solid #016CFF;
     background-color: #016CFF;
     color: #fff;   
