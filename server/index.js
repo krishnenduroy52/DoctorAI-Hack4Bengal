@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema({
     phoneNumber: String,
     gender: String,
     age: Number,
-    password: String
+    password: String,
+    schedule: [String]
 });
 
 // Create the User model
