@@ -71,7 +71,7 @@ const Login = () => {
             <div className="left-section">
                 <img
                     className="image"
-                    src="./Image/signup-page-image.png"
+                    src="./Image/doctors.gif"
                     alt="Image"
                 />
             </div>
