@@ -119,103 +119,106 @@ const Signup = () => {
     return (
         <div className="signup-page">
             <div className="left-section">
-                <img className="image" src="./Image/signup-page-image.png" alt="Image" />
+                <img className="image" src="./Image/Signup_page_image.png" alt="Image" />
             </div>
             <div className="right-section">
                 <h1>Create your account</h1>
                 <form>
                     <div className="name-number">
-                        <label>
-                            Username:
+                        <label className='label'>
+                            Username
                             <input
                                 type="text"
                                 value={username}
                                 name="username"
-                                className="form-input"
+                                className="form-input input"
                                 required  // Make username required
                                 onChange={handleChange}
                             />
                         </label>
-                        <label>
-                            Phone Number:
+                        <label className='label'>
+                            Phone Number
                             <input
                                 type="text"
                                 value={phoneNumber}
                                 name="phoneNumber"
-                                className="form-input"
+                                className="form-input input"
                                 onChange={handleChange}
                             />
                         </label>
                     </div>
 
                     <div className="name-number">
-                        <label>
-                            Gender:
+                        <label className='label'>
+                            Gender
                             <select
                                 value={gender}
                                 name="gender"
-                                className="form-input"
+                                className="form-input input"
                                 onChange={handleChange}
                             >
-                                <option value="">Select Gender</option>
-                                <option value="M">M</option>
-                                <option value="F">F</option>
+                                <option value="">Select</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
                             </select>
                         </label>
-                        <label>
-                            Age:
+                        <label className='label'>
+                            Age
                             <input
                                 type="text"
                                 value={age}
                                 name="age"
-                                className="form-input"
+                                className="form-input input"
                                 onChange={handleChange}
                             />
                         </label>
                     </div>
-                    <label>
-                        Email:
+                    <label className='label'>
+                        Email
                         <input
                             value={email}
                             type="email"
                             name="email"
-                            className="form-input"
+                            className="form-input input"
                             required  // Make email required
                             onChange={handleChange}
                         />
                     </label>
-                    <label>
-                        Password:
-                        <span className="password-requirements">
-                            Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, #, $, %, ^, &, *).
-                        </span>
-                        <input
-                            type="password"
-                            value={password}
-                            name="password"
-                            className="form-input"
-                            required  // Make password required
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        Confirm Password:
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            name="confirmPassword"
-                            className="form-input"
-                            onChange={handleChange}
-                        />
-                    </label>
+                    <div className="name-number">
+                        <label className='label'>
+                            Password
+                            <input
+                                type="password"
+                                value={password}
+                                name="password"
+                                className="form-input input"
+                                required  // Make password required
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <label className='label'>
+                            Confirm Password
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                name="confirmPassword"
+                                className="form-input input"
+                                onChange={handleChange}
+                            />
+                        </label>
+                    </div>
+
+                    <span className="password-requirements">
+                                Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, #, $, %, ^, &, *).
+                            </span>
                     <div className="form-footer">
-                        <button type="button" className="submit-btn" onClick={handleSubmitForm}>
+                        <button type="button" className="action_btn" onClick={handleSubmitForm}>
                             Sign Up
                         </button>
                     </div>
                     <p className="already-account">
-                            Already have an account? <a href="/login">Log in</a>
-                        </p>
+                        Already have an account? <a href="/login">Log in</a>
+                    </p>
                 </form>
             </div>
         </div>
