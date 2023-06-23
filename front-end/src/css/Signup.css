@@ -15,7 +15,11 @@
 
 .right-section {
   flex: 1;
-  margin: 10rem; /* Add spacing between the sections if desired */
+  margin: 6rem; /* Add spacing between the sections if desired */
+}
+
+.right-section form label{
+  display: block;
 }
 
 .right-section h1 {
@@ -24,6 +28,7 @@
   font-size: 3rem;
   font-weight: 600;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .form-input {
@@ -61,6 +66,7 @@
 .already-account {
   /* margin-top: 20px; */
   text-align: center;
+  font-size: small;
 }
 
 .already-account a {
@@ -74,9 +80,10 @@
 
 .form-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin: 20px;
+  margin-bottom: 5px;
 }
 
 .already-account a {
@@ -103,13 +110,14 @@
 }
 
 .name-number {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
 }
 
 .name-number input {
     width: 100%;
+    margin-right: 10rem;
 }
 
 .toast-container {
