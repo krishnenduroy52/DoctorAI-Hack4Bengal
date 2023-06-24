@@ -71,30 +71,32 @@ const Login = () => {
             <div className="left-section">
                 <img
                     className="image"
-                    src="./Image/signup-page-image.png"
+                    // src="./Image/doctors.gif"
+                    src='/Image/Login_page_image.png'
                     alt="Image"
                 />
             </div>
             <div className="right-section">
-                <h1>Login to your account</h1>
+                <h1>Login to <span>DOCTOR.AI</span></h1>
                 <form action="POST">
                     <div className="name-number">
-                        <label>
-                            Username:
+                        <label className="label">
+                            Username
                             <input
                                 type="text"
                                 value={username}
                                 name="username"
-                                className="form-input"
+                                className="form-input input"
+                                placeholder="Username"
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                         </label>
-                        <label>
-                            Password:
+                        <label className="label">
+                            Password
                             <input
                                 type="password"
                                 name="password"
-                                className="form-input"
+                                className="form-input input"
                                 onChange={(e) => {
                                     setPassword(e.target.value);
                                 }}
@@ -110,11 +112,11 @@ const Login = () => {
                         >
                             Login
                         </button>
-                        
+
                     </div>
                     <p className="already-account">
-                            Don't have an account? <a href="/signup">Sign Up</a>
-                        </p>
+                        Don't have an account? <a href="/signup">Sign Up</a>
+                    </p>
                 </form>
             </div>
         </div>

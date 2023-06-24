@@ -79,10 +79,7 @@ const Navbar = () => {
         {/* menu */}
         <ul className="links">
           <li className="services">
-            <a className="no-link" onClick={openServices}>
-              Services{" "}
-              <FontAwesomeIcon className="ml-1 w-2" icon={serviceBtnIcon} />
-            </a>
+            <a className="no-link" onClick={openServices}>Services <FontAwesomeIcon className="ml-1 w-2" icon={serviceBtnIcon} /></a>
             <div ref={servicesBtn} className="services_options">
               <ul>
                 {services_menu.items.map((item, index) => {
@@ -136,17 +133,21 @@ const Navbar = () => {
             <a href="contact-us">Contact Us</a>
           </li>
           {isLogin === false ? (
-            <li className="dropdown_links">
-              <Link to="/login" className="action_btn">
-                Sign In
-              </Link>
-            </li>
+            <Link to="/login" className="action_btn">
+              Sign In
+            </Link>
           ) : (
-            <li className="dropdown_links">
-              <Link onClick={handleLogout} className="action_btn">
-                Log Out
-              </Link>
-            </li>
+            <div className="profile_dropdown">
+              <button className="action_btn" onClick={toggleProfileDropdown}>
+                Profile
+              </button>
+              {showProfileDropdown && (
+                <div className="profile_dropdown_content">
+                  <Link to="/profile">View Profile</Link>
+                  <Link onClick={handleLogout}>Logout</Link>
+                </div>
+              )}
+            </div>
           )}
         </ul>
       </div>
