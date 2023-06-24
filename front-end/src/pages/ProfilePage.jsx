@@ -221,7 +221,7 @@ export default function ProfilePage() {
               <div className="schedule-field">
                 <div className="schedule-info-field">
                   <div className="schedule_detail">
-                    <p>Schedule 1</p>
+                    <p>Appointment 1</p>
                     <div>
                     {userData && (userData.schedule)}
                     </div>
