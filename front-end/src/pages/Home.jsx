@@ -10,9 +10,9 @@ const Home = () => {
     console.log("Appointment button clicked");
 
     try {
-      const response = await axios.post("http://localhost:3000/apppointment", {
-        doctorId: "2",
-        clientId: "abc",
+      const response = await axios.post("http://localhost:3000/appointment", {
+        doctorId: "4",
+        clientId: "649707673426d14bb924d2f0",
         timeOfAppointment: 10,
         dateOfAppointment: "2023-06-22",
         about: "Follow-up checkup",
