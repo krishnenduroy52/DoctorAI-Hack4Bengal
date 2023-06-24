@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/Signup.css';
 import bcrypt from 'bcryptjs';
+import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
-
 
 const Signup = () => {
     const [state, setState] = useState({
@@ -17,6 +17,14 @@ const Signup = () => {
         password: '',
         confirmPassword: '',
     });
+
+    const navigate = useNavigate();
+    useEffect( () => {
+        const userId = localStorage.getItem("doctor_ai_userID");
+        if (userId) {
+            navigate("/");
+        }
+    })
 
     const handleChange = (e) => {
         setState({
