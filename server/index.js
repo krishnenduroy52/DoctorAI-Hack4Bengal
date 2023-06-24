@@ -39,7 +39,7 @@ const appointmentSchema = new mongoose.Schema({
     doctorId: String,
     clientId: String,
     meetingId: String,
-    timeOfAppointment: Number,
+    timeOfAppointment: String,
     dateOfAppointment: Date,
     about: String
 })
@@ -205,8 +205,16 @@ app.post('/appointment', async (req, res) => {
         });
 
         // Save the new user to the database
-        await newAppointment.save();
-
+        const result = await newAppointment.save();
+        // console.log(result)
+        const appointmentId = result._id;
+        const user = await User.findById(clientId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        user.schedule.push(appointmentId);
+        await user.save();
+        
         // Send a success response
         res.status(200).json({ message: 'Appointment created successfully' });
     } catch (err) {
