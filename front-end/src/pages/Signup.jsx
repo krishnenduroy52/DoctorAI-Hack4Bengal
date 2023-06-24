@@ -122,7 +122,7 @@ const Signup = () => {
                 <img className="image" src="./Image/Signup_page_image.png" alt="Image" />
             </div>
             <div className="right-section">
-                <h1>Create your account</h1>
+                <h1>Create Your Account</h1>
                 <form>
                     <div className="name-number">
                         <label className='label'>

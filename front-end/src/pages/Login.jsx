@@ -77,7 +77,7 @@ const Login = () => {
                 />
             </div>
             <div className="right-section">
-                <h1>Login to your account</h1>
+                <h1>Login to <span>DOCTOR.AI</span></h1>
                 <form action="POST">
                     <div className="name-number">
                         <label className="label">
