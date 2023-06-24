@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     email: String,
     phoneNumber: String,
     gender: String,
-    age: Number,
+    dob: Date,
     password: String,
     schedule: [String]
 });
@@ -78,7 +78,7 @@ app.get('/', (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-    const { username, email, phoneNumber, gender, age, password } = req.body;
+    const { username, email, phoneNumber, gender, dob, password } = req.body;
     console.log(req.body); // Logging the entire request body
 
     try {
@@ -98,7 +98,7 @@ app.post("/signup", async (req, res) => {
             email,
             phoneNumber,
             gender,
-            age,
+            dob,
             password
         });
 

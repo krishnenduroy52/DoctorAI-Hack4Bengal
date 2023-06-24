@@ -7,17 +7,34 @@ import "../css/ProfilePage.css";
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editedData, setEditedData] = useState(null);
+  const [editedData, setEditedData] = useState({});
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const userId = localStorage.getItem("doctor_ai_userID");
-  //   if (userId) {
-  //     fetchUserData(userId);
-  //   } else {
-  //     navigate("/login"); // Redirect to the login page if user is not logged in
-  //   }
-  // }, [navigate]);
+  const calculateAge = (dateString) => {
+    const birthDate = new Date(dateString);
+    const currentDate = new Date();
+  
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+  
+    if (
+      currentDate.getMonth() < birthDate.getMonth() ||
+      (currentDate.getMonth() === birthDate.getMonth() &&
+        currentDate.getDate() < birthDate.getDate())
+    ) {
+      return age - 1;
+    }
+  
+    return age;
+  };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("doctor_ai_userID");
+    if (userId) {
+      fetchUserData(userId);
+    } else {
+      navigate("/login"); // Redirect to the login page if user is not logged in
+    }
+  }, [navigate]);
 
   const fetchUserData = async (userId) => {
     try {
@@ -43,7 +60,7 @@ export default function ProfilePage() {
       email: userData.email,
       phoneNumber: userData.phoneNumber,
       gender: userData.gender,
-      age: userData.age,
+      dob: userData.dob,
     });
   };
 
@@ -71,7 +88,16 @@ export default function ProfilePage() {
         console.error("Error saving user data:", response.statusText);
       }
     } catch (error) {
-      console.error("Error saving user data:", error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.error === "User not found" || error.response.data.error === "Internal server error"
+      ) {
+        toast.error("Cannot update user Details!");
+      }
+      else {
+        console.error("Error saving user data:", error);
+      }
     }
   };
 
@@ -85,11 +111,12 @@ export default function ProfilePage() {
 
   return (
     <div className="profile-main">
+      <ToastContainer />
       <aside className="profile-left-panel">
         <div className="pbtn active profile">
           <img src="/Image/profile.png" alt="profile" />
           <div className="name">
-            <p>Krishnendu Roy</p>
+            <p>{isEditMode ? editedData?.username : userData?.username || ""}</p>
           </div>
         </div>
         {/* <div className="pbtn">Schedules</div> */}
@@ -98,7 +125,7 @@ export default function ProfilePage() {
         <div className="right-container">
           <div className="personal-info">
             <h2>My Details</h2>
-            <p>Presonal Information</p>
+            <p>Personal Information</p>
             <hr />
             <div className="personal-info-container">
               <div className="personal-info-text">
@@ -109,14 +136,53 @@ export default function ProfilePage() {
               </div>
               <div className="personal-field">
                 <div className="personal-info-field">
-                  <input className="" value="Krishnendu roy" />
-                  <input className="" value="9073712806" />
-                  <input className="" value="21" />
-                  <input className="" value="male" />
-                  <input className="" value="krishnendu@gmail.com" />
+                  <input
+                    type="text"
+                    className="username"
+                    name="username"
+                    value={isEditMode ? editedData?.username : userData?.username || ""}
+                    onChange={handleChange}
+                    disabled={!isEditMode}
+                  />
+                  <input
+                    type="text"
+                    className="phonenumber"
+                    name="phoneNumber"
+                    value={isEditMode ? editedData?.phoneNumber : userData?.phoneNumber || ""}
+                    onChange={handleChange}
+                    disabled={!isEditMode}
+                  />
+                  <input
+                    type={isEditMode ? "date" : "text"}
+                    className="dob"
+                    name="dob"
+                    value={isEditMode ? editedData?.dob : calculateAge(userData?.dob) || ""}
+                    onChange={handleChange}
+                    disabled={!isEditMode}
+                  />
+                  <input
+                    type="text"
+                    className="gender"
+                    name="gender"
+                    value={isEditMode ? editedData?.gender : userData?.gender || ""}
+                    onChange={handleChange}
+                    disabled={!isEditMode}
+                  />
+                  <input
+                    type="email"
+                    className="email"
+                    name="email"
+                    value={isEditMode ? editedData?.email : userData?.email || ""}
+                    onChange={handleChange}
+                    disabled={!isEditMode}
+                  />
                 </div>
                 <div className="save_edit">
-                  <button>Edit</button>
+                  {isEditMode ? (
+                    <button onClick={handleSave}>Save</button>
+                  ) : (
+                    <button onClick={handleEdit}>Edit</button>
+                  )}
                 </div>
               </div>
             </div>

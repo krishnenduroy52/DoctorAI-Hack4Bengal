@@ -13,13 +13,14 @@ const Signup = () => {
         email: '',
         phoneNumber: '',
         gender: '',
-        age: '',
+        dob: '',
         password: '',
         confirmPassword: '',
     });
+    const [passwordErrors, setPasswordErrors] = useState([]);
 
     const navigate = useNavigate();
-    useEffect( () => {
+    useEffect(() => {
         const userId = localStorage.getItem("doctor_ai_userID");
         if (userId) {
             navigate("/");
@@ -31,9 +32,27 @@ const Signup = () => {
             ...state,
             [e.target.name]: e.target.value,
         });
+
+        if (e.target.name === "password") {
+            const { value } = e.target;
+            const passwordRequirements = [
+                { regex: /[A-Z]/, message: 'Password must contain at least one uppercase letter.' },
+                { regex: /[a-z]/, message: 'Password must contain at least one lowercase letter.' },
+                { regex: /\d/, message: 'Password must contain at least one digit.' },
+                { regex: /[@#$%^&*]/, message: 'Password must contain at least one special character (@, #, $, %, ^, &, *).' },
+                { regex: /.{8,}/, message: 'Password must be at least 8 characters long.' },
+            ];
+
+            const passwordValidationErrors = passwordRequirements
+                .filter(requirement => !requirement.regex.test(value))
+                .map(requirement => requirement.message);
+
+            setPasswordErrors(passwordValidationErrors);
+        }
     };
 
-    const { username, email, phoneNumber, gender, age, password, confirmPassword } = state;
+
+    const { username, email, phoneNumber, gender, dob, password, confirmPassword } = state;
 
     const validateForm = () => {
         if (phoneNumber.length < 10) {
@@ -88,7 +107,7 @@ const Signup = () => {
                 email,
                 phoneNumber,
                 gender,
-                age,
+                dob,
                 password: hashedPassword
             })
                 .then(res => {
@@ -119,8 +138,6 @@ const Signup = () => {
             toast.error('An error occurred while signing up.');
         }
     };
-
-
 
 
 
@@ -173,9 +190,9 @@ const Signup = () => {
                         <label className='label'>
                             Age
                             <input
-                                type="text"
-                                value={age}
-                                name="age"
+                                type="date"
+                                value={dob}
+                                name="dob"
                                 className="form-input input"
                                 onChange={handleChange}
                             />
@@ -215,10 +232,19 @@ const Signup = () => {
                             />
                         </label>
                     </div>
+                    {passwordErrors.length > 0 && (
+                        <span className="password-requirements">
+                            <ul className="password-errors">
+                                {passwordErrors.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))}
+                            </ul>
+                        </span>
+                    )}
 
-                    <span className="password-requirements">
-                                Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, #, $, %, ^, &, *).
-                            </span>
+                    {/* <span className="password-requirements">
+                        Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, #, $, %, ^, &, *).
+                    </span> */}
                     <div className="form-footer">
                         <button type="button" className="action_btn" onClick={handleSubmitForm}>
                             Sign Up

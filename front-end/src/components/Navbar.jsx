@@ -41,7 +41,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("doctor_ai_userID");
     setIsLogin(false);
-    navigate("/");
+    window.location.href = "/";
   };
 
   const openMenu = () => {
