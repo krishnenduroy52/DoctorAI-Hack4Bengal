@@ -214,7 +214,7 @@ app.post('/appointment', async (req, res) => {
         }
         user.schedule.push(appointmentId);
         await user.save();
-        
+
         // Send a success response
         res.status(200).json({ message: 'Appointment created successfully' });
     } catch (err) {
@@ -223,6 +223,28 @@ app.post('/appointment', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 })
+
+
+app.get('/appointment/:id', async (req, res) => {
+    const appointmentId = req.params.id;
+
+    try {
+        // Find the appointment in the database by ID
+        const appointment = await Appointment.findById(appointmentId);
+
+        if (!appointment) {
+            // Appointment not found
+            return res.status(404).json({ error: 'Appointment not found' });
+        }
+
+        // Appointment found, return the appointment details
+        res.status(200).json({ appointment });
+    } catch (err) {
+        // Handle any errors that occurred during the retrieval
+        console.error('Error while retrieving appointment:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 
 // Start the server
