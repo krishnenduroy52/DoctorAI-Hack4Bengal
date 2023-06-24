@@ -10,6 +10,7 @@ import Pneumonia from "./pages/pneumonia";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ProfilePage from "./pages/ProfilePage";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/xray" element={<Pneumonia />} />
         <Route path="/meet" element={<Meet />} />
         <Route path="/rooms/:roomId" element={<Rooms />} />
+        <Route path="/general/chat" element={<Chat />} />
       </Routes>
     </Router>
   );
