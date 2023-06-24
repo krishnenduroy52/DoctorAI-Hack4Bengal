@@ -2,12 +2,15 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import "../css/predictionpage.css";
+import { Link } from "react-router-dom";
+import Modal from "../components/Modal";
 
 function Pneumonia() {
   // fileupload & Result
   const [selectedFile, setSelectedFile] = useState(null);
   const [result, setResult] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
+  const [showGive, setshowGive] = useState(false);
 
   useEffect(() => {
     if (selectedFile) {
@@ -17,7 +20,7 @@ function Pneumonia() {
         .post("http://localhost:8000/pneumonia", formData)
         .then((response) => {
           setResult(response.data);
-          console.log(response.data);
+          setshowGive(true);
         })
         .catch((error) => {
           console.error(error);
@@ -51,8 +54,8 @@ function Pneumonia() {
       </div> */}
       <div className="py-4 md:py-8">
         <div className="mx-auto w-full px-8 max-w-5xl relative">
-          <div className="flex flex-col lg:flex-row items-center justify-center md:gap-4">
-            <div className="left-container flex flex-col md:flex-row lg:flex-col items-center lg:items-start gap-6 md:gap-8">
+          <div className="flex flex-col lg:flex-row lg:items-start items-center justify-center md:gap-4">
+            <div className="left-container flex flex-col md:flex-row lg:flex-col items-center gap-6 md:gap-8">
               <video
                 preload="auto"
                 className="left-container-video w-full h-auto rounded-4xl max-w-[320px] lg:max-w-[420px]"
@@ -64,7 +67,8 @@ function Pneumonia() {
               ></video>
               <div className="flex flex-col gap-4">
                 <h1 className="font-display font-bold text-typo m-0 text-4xl md:text-5xl lg:text-6xl text-center md:!text-left">
-                  Detect pneumonia <br /> CT-Scan image
+                  Detect <span className="text-orange-500">pneumonia</span>
+                  <br /> CT-Scan image
                 </h1>
                 <p className="text-typo-tertiary font-bold text-xl m-0 !text-typo text-center md:!text-left">
                   100% Automatically and
@@ -106,6 +110,17 @@ function Pneumonia() {
           </div>
         </div>
       </div>
+      {/* Result Modal */}
+      {result && showGive ? (
+        <Modal
+          show={showGive}
+          onClose={() => setshowGive(false)}
+          img="Image/modelBanner.jpg"
+          bigText={`${result.predicted_class}`}
+          smallText="We recommend you to make a appointment with doctor"
+          percentage={`${Math.round(result.probability)}`}
+        />
+      ) : null}
     </div>
   );
 }

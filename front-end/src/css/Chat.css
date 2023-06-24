@@ -1,0 +1,91 @@
+.chatApp {
+  height: 88.5vh;
+  display: flex;
+}
+.left-panel {
+  width: 300px;
+  height: 88.5vh;
+  background-color: #8ab1ff;
+  padding: 0 8px;
+}
+svg {
+  width: 20px;
+  margin-right: 10px;
+}
+.btn {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  background-color: transparent;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  padding: 5px 13px;
+  border-radius: 6px;
+  color: #2e2e2e;
+}
+.btn:hover {
+  background-color: rgba(82, 82, 82, 0.2);
+}
+.main {
+  background-color: rgb(236, 237, 255);
+  width: 100%;
+  position: relative;
+}
+.chat {
+  display: grid;
+  grid-template-columns: 50px 100%;
+  padding: 15px 20%;
+  color: black;
+  align-items: center;
+}
+.gpt {
+  background-color: rgba(155, 155, 155, 0.2);
+}
+.chat > svg {
+  color: white;
+  /* border: 1px solid white; */
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #202123;
+}
+
+.chatBox {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 40px;
+  text-align: center;
+}
+
+.inField {
+  min-width: 60%;
+  max-height: 450px;
+  /* overflow: hidden; */
+  font-size: 16px;
+  padding: 15px;
+  forced-color-adjust: none;
+  border-radius: 5px;
+  box-shadow: #202123;
+  background-color: rgb(84, 84, 84);
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
+  border: 0px;
+  color: white;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+/* .select-selected {
+    background-color: DodgerBlue;
+  } */
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
