@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
+import axios from "axios";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -100,6 +101,25 @@ export default function ProfilePage() {
       }
     }
   };
+
+  const fetchAppointmentDetails = (appointmentId) => {
+    axios.get(`http://localhost:3000/appointment/${appointmentId}`)
+      .then(response => {
+        const appointment = response.data.appointment;
+        // Do something with the fetched appointment details
+        console.log(appointment);
+      })
+      .catch(error => {
+        console.error('Error:', error.response.data.error);
+        // Handle the error appropriately
+      });
+  };
+
+  useEffect(() => {
+    const appointmentId = '649707b43426d14bb924d2f5';
+    fetchAppointmentDetails(appointmentId);
+  }, []);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -203,10 +223,7 @@ export default function ProfilePage() {
                   <div className="schedule_detail">
                     <p>Schedule 1</p>
                     <div>
-                      About Lorem ipsum dolor sit amet consectetur adipisicing
-                      elit. Sunt veniam incidunt rem ad corporis corrupti iure,
-                      totam, fugit at, libero eaque? Error dolore explicabo,
-                      reprehenderit beatae placeat maxime tempora perspiciatis?
+                    {userData && (userData.schedule)}
                     </div>
                     <div>12/02/2024</div>
                   </div>
