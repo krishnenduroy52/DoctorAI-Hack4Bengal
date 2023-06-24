@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../css/Signup.css";
@@ -11,6 +11,13 @@ const Login = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect( () => {
+        const userId = localStorage.getItem("doctor_ai_userID");
+        if (userId) {
+            navigate("/");
+        }
+    })
 
     const validateForm = () => {
         if (username.length < 3) {
