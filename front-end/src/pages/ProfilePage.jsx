@@ -10,14 +10,14 @@ export default function ProfilePage() {
   const [editedData, setEditedData] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const userId = localStorage.getItem("doctor_ai_userID");
-    if (userId) {
-      fetchUserData(userId);
-    } else {
-      navigate("/login"); // Redirect to the login page if user is not logged in
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const userId = localStorage.getItem("doctor_ai_userID");
+  //   if (userId) {
+  //     fetchUserData(userId);
+  //   } else {
+  //     navigate("/login"); // Redirect to the login page if user is not logged in
+  //   }
+  // }, [navigate]);
 
   const fetchUserData = async (userId) => {
     try {
@@ -84,149 +84,82 @@ export default function ProfilePage() {
   };
 
   return (
-    <section className="vh-100 profile-section">
-      <ToastContainer />
-      <div className="container">
-        <div className="row justify-content-center align-items-center h-100">
-          <div className="col-lg-6 mb-4 mb-lg-0">
-            <div className="card profile-card">
-              <div className="row g-0">
-                <div className="col-md-4 profile-image">
-                  <img
-                    src="../public/Image/Profile-Icon-SVG-09856789.png"
-                    alt="Avatar"
-                    className="my-5 profile-avatar"
-                  />
-                  {userData && (
-                    <>
-                      {!isEditMode && (
-                        <>
-                          <h5>{userData.username}</h5>
-                          <p className="profile-id">{userData._id}</p>
-                          <button
-                            className="btn btn-primary profile-edit-btn"
-                            onClick={handleEdit}
-                          >
-                            Edit
-                          </button>
-                        </>
-                      )}
-                      {isEditMode && (
-                        <>
-                          <input
-                            type="text"
-                            name="username"
-                            value={editedData.username}
-                            onChange={handleChange}
-                            className="form-control"
-                          />
-                          <input
-                            type="text"
-                            name="email"
-                            value={editedData.email}
-                            onChange={handleChange}
-                            className="form-control"
-                          />
-                          <button
-                            className="btn btn-primary profile-save-btn"
-                            onClick={handleSave}
-                          >
-                            Save
-                          </button>
-                        </>
-                      )}
-                    </>
-                  )}
+    <div className="profile-main">
+      <aside className="profile-left-panel">
+        <div className="pbtn active profile">
+          <img src="/Image/profile.png" alt="profile" />
+          <div className="name">
+            <p>Krishnendu Roy</p>
+          </div>
+        </div>
+        {/* <div className="pbtn">Schedules</div> */}
+      </aside>
+      <section className="profile-right-pannel">
+        <div className="right-container">
+          <div className="personal-info">
+            <h2>My Details</h2>
+            <p>Presonal Information</p>
+            <hr />
+            <div className="personal-info-container">
+              <div className="personal-info-text">
+                <p>
+                  Assertively utilize adaptive customer service for future-proof
+                  platforms. Completely drive optimal markets.
+                </p>
+              </div>
+              <div className="personal-field">
+                <div className="personal-info-field">
+                  <input className="" value="Krishnendu roy" />
+                  <input className="" value="9073712806" />
+                  <input className="" value="21" />
+                  <input className="" value="male" />
+                  <input className="" value="krishnendu@gmail.com" />
                 </div>
-                <div className="col-md-8">
-                  <div className="card-body p-4">
-                    <h3>Details</h3>
-                    <hr className="mt-0 mb-4" />
-                    {userData && (
-                      <>
-                        {!isEditMode && (
-                          <div className="pt-1">
-                            <div className="mb-3">
-                              <h6>Email</h6>
-                              <p className="text-muted">{userData.email}</p>
-                            </div>
-                            <div className="mb-3">
-                              <h6>Phone</h6>
-                              <p className="text-muted">
-                                {userData.phoneNumber}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                        {isEditMode && (
-                          <div className="pt-1">
-                            <div className="mb-3">
-                              <h6>Email</h6>
-                              <input
-                                type="text"
-                                name="email"
-                                value={editedData.email}
-                                onChange={handleChange}
-                                className="form-control"
-                              />
-                            </div>
-                            <div className="mb-3">
-                              <h6>Phone</h6>
-                              <input
-                                type="text"
-                                name="phoneNumber"
-                                value={editedData.phoneNumber}
-                                onChange={handleChange}
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                        )}
-                        {!isEditMode && (
-                          <div className="pt-1">
-                            <div className="mb-3">
-                              <h6>Gender</h6>
-                              <p className="text-muted">{userData.gender}</p>
-                            </div>
-                            <div className="mb-3">
-                              <h6>Age</h6>
-                              <p className="text-muted">{userData.age}</p>
-                            </div>
-                          </div>
-                        )}
-                        {isEditMode && (
-                          <div className="pt-1">
-                            <div className="mb-3">
-                              <h6>Gender</h6>
-                              <input
-                                type="text"
-                                name="gender"
-                                value={editedData.gender}
-                                onChange={handleChange}
-                                className="form-control"
-                              />
-                            </div>
-                            <div className="mb-3">
-                              <h6>Age</h6>
-                              <input
-                                type="text"
-                                name="age"
-                                value={editedData.age}
-                                onChange={handleChange}
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    )}
+                <div className="save_edit">
+                  <button>Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="schedule-info">
+            <h2>My Schedules</h2>
+            <p>Meeting Information</p>
+            <hr />
+            <div className="schedule-info-container">
+              <div className="schedule-info-text">
+                <p>
+                  Assertively utilize adaptive customer service for future-proof
+                  platforms. Completely drive optimal markets.
+                </p>
+              </div>
+              <div className="schedule-field">
+                <div className="schedule-info-field">
+                  <div className="schedule_detail">
+                    <p>Schedule 1</p>
+                    <div>
+                      About Lorem ipsum dolor sit amet consectetur adipisicing
+                      elit. Sunt veniam incidunt rem ad corporis corrupti iure,
+                      totam, fugit at, libero eaque? Error dolore explicabo,
+                      reprehenderit beatae placeat maxime tempora perspiciatis?
+                    </div>
+                    <div>12/02/2024</div>
+                  </div>
+                  <div className="schedule_detail">
+                    <p>Schedule 2</p>
+                    <div>
+                      About Lorem ipsum dolor sit amet consectetur adipisicing
+                      elit. Sunt veniam incidunt rem ad corporis corrupti iure,
+                      totam, fugit at, libero eaque? Error dolore explicabo,
+                      reprehenderit beatae placeat maxime tempora perspiciatis?
+                    </div>
+                    <div>12/02/2024</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
