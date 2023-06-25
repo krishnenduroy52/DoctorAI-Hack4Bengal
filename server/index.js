@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 require("dotenv").config();
 
+const Doctor = require('./models/DoctorModel')
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -68,10 +70,6 @@ const generateMeetingCode = () => {
 
     return code;
 };
-
-// Example usage
-const meetingCode = generateMeetingCode();
-console.log(meetingCode); // Output: abc-xyz-dfg
 
 // Define your routes and middleware here
 
@@ -257,6 +255,36 @@ app.get("/appointment/:id", async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+app.post('/doctorSignup', async (req, res) => {
+    const { username, email, phoneNumber, gender, dob,  password, specialization } = req.body;
+
+    try {
+        const existingUser = await Doctor.findOne({ email });
+
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
+        const newDoctor = new Doctor({
+            username,
+            email,
+            phoneNumber,
+            gender,
+            dob,
+            password,
+            specialization,
+        });
+
+        await newDoctor.save();
+
+        res.status(200).json({ message: 'Doctor created successfully' });
+    } catch (err) {
+        console.error('Error while saving doctor:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 // CHAT WITH GPT
 

@@ -138,7 +138,7 @@ export default function ProfilePage() {
           <img src="/Image/profile.png" alt="profile" />
           <div className="name">
             <p>
-              {isEditMode ? editedData?.username : userData?.username || ""}
+              {isEditMode ? editedData?.username : userData?.username || "Your name"}
             </p>
           </div>
         </div>
