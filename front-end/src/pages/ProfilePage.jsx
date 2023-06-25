@@ -30,9 +30,9 @@ export default function ProfilePage() {
     return age;
   };
 
-  const handleScheduleDelete = ( ) => {
+  const handleScheduleDelete = () => {
     console.log("Deleted");
-  }
+  };
 
   useEffect(() => {
     const userId = localStorage.getItem("doctor_ai_userID");
@@ -108,30 +108,30 @@ export default function ProfilePage() {
     }
   };
 
-  const fetchAppointmentDetails = (appointmentId) => {
-    axios
-      .get(`http://localhost:3000/appointment/${appointmentId}`)
-      .then((response) => {
-        const appointment = response.data.appointment;
-        console.log(appointment.doctorId);
-        // Do something with the fetched appointment details
-        setSchedule((prev) => {
-          let isAlreadyScheduled = false;
-          prev.forEach((item) =>
-            item._id == appointment._id ? (isAlreadyScheduled = true) : null
-          );
+  const fetchAppointmentDetails = async (appointmentId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/appointment/${appointmentId}`
+      );
+      const appointment = response.data.appointment;
 
-          if (!isAlreadyScheduled) {
-            return [...prev, appointment];
-          }
-          return prev;
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error.response.data.error);
+      const doctorId = appointment.doctorId;
+      const doctorDetail = await axios.get(
+        `http://localhost:3000/doctor/details/${doctorId}`
+      );
+      const doc = doctorDetail.data;
+      setSchedule((prev) => {
+        let isAlreadyScheduled = false;
+        prev.forEach((item) =>
+          item._id == appointment._id ? (isAlreadyScheduled = true) : null
+        );
+        if (!isAlreadyScheduled) {
+          return [...prev, { ...appointment, doctor: doc }];
+        }
+        return prev;
       });
+    } catch (error) {}
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedData((prevData) => ({
@@ -140,7 +140,7 @@ export default function ProfilePage() {
     }));
   };
 
-  // console.log(schedule);
+  console.log(schedule);
 
   return (
     <div className="profile-main">
@@ -150,7 +150,9 @@ export default function ProfilePage() {
           <img src="/Image/profile.png" alt="profile" />
           <div className="name">
             <p>
-              {isEditMode ? editedData?.username : userData?.username || "Your name"}
+              {isEditMode
+                ? editedData?.username
+                : userData?.username || "Your name"}
             </p>
           </div>
         </div>
@@ -262,8 +264,11 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="user-info__basic">
-                            <h5 className="mb-0">Dr. Krishnendu Roy</h5>
-                            <p className="text-muted mb-0">28 yrs, Male</p>
+                            <h5 className="mb-0">{item.doctor.username}</h5>
+                            <p className="text-muted mb-0">
+                              {calculateAge(item.doctor.dob)} yrs,{" "}
+                              {item.doctor.gender}
+                            </p>
                           </div>
                         </div>
                         <div className="dropdown open">
@@ -281,13 +286,16 @@ export default function ProfilePage() {
                             className="dropdown-menu"
                             aria-labelledby="triggerId1"
                           >
-                            <a onClick={handleScheduleDelete} className="dropdown-item text-danger" >
+                            <a
+                              onClick={handleScheduleDelete}
+                              className="dropdown-item text-danger"
+                            >
                               <i className="fa fa-trash mr-1"></i> Delete
                             </a>
                           </div>
                         </div>
                       </div>
-                      <h6 className="mb-0">+91 9876543215</h6>
+                      <h6 className="mb-0">{item.doctor.phoneNumber}</h6>
                       <div>
                         <small>{item.about}</small>
                       </div>
@@ -300,7 +308,10 @@ export default function ProfilePage() {
                             </small>
                           </h5>
                         </div>
-                        <Link to={`/rooms/${item.meetingId}`} className="text-success font-weight-bold ">
+                        <Link
+                          to={`/rooms/${item.meetingId}`}
+                          className="text-success font-weight-bold "
+                        >
                           Join
                         </Link>
                       </div>
