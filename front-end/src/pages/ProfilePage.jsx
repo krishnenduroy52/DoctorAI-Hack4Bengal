@@ -14,9 +14,9 @@ export default function ProfilePage() {
   const calculateAge = (dateString) => {
     const birthDate = new Date(dateString);
     const currentDate = new Date();
-  
+
     const age = currentDate.getFullYear() - birthDate.getFullYear();
-  
+
     if (
       currentDate.getMonth() < birthDate.getMonth() ||
       (currentDate.getMonth() === birthDate.getMonth() &&
@@ -24,7 +24,7 @@ export default function ProfilePage() {
     ) {
       return age - 1;
     }
-  
+
     return age;
   };
 
@@ -43,6 +43,7 @@ export default function ProfilePage() {
       const data = await response.json();
       if (response.ok) {
         setUserData(data.user);
+        // const appointments = data.user.schedule.map((s) => );
         // toast.success("Successfully fetched user data.")
       } else {
         toast.error("Error retrieving user data"); // Display toast error
@@ -90,36 +91,36 @@ export default function ProfilePage() {
       }
     } catch (error) {
       if (
-        error.response &&
-        error.response.data &&
-        error.response.data.error === "User not found" || error.response.data.error === "Internal server error"
+        (error.response &&
+          error.response.data &&
+          error.response.data.error === "User not found") ||
+        error.response.data.error === "Internal server error"
       ) {
         toast.error("Cannot update user Details!");
-      }
-      else {
+      } else {
         console.error("Error saving user data:", error);
       }
     }
   };
 
   const fetchAppointmentDetails = (appointmentId) => {
-    axios.get(`http://localhost:3000/appointment/${appointmentId}`)
-      .then(response => {
+    axios
+      .get(`http://localhost:3000/appointment/${appointmentId}`)
+      .then((response) => {
         const appointment = response.data.appointment;
         // Do something with the fetched appointment details
         console.log(appointment);
       })
-      .catch(error => {
-        console.error('Error:', error.response.data.error);
+      .catch((error) => {
+        console.error("Error:", error.response.data.error);
         // Handle the error appropriately
       });
   };
 
   useEffect(() => {
-    const appointmentId = '649707b43426d14bb924d2f5';
+    const appointmentId = "649707b43426d14bb924d2f5";
     fetchAppointmentDetails(appointmentId);
   }, []);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -136,7 +137,9 @@ export default function ProfilePage() {
         <div className="pbtn active profile">
           <img src="/Image/profile.png" alt="profile" />
           <div className="name">
-            <p>{isEditMode ? editedData?.username : userData?.username || ""}</p>
+            <p>
+              {isEditMode ? editedData?.username : userData?.username || ""}
+            </p>
           </div>
         </div>
         {/* <div className="pbtn">Schedules</div> */}
@@ -160,7 +163,11 @@ export default function ProfilePage() {
                     type="text"
                     className="username"
                     name="username"
-                    value={isEditMode ? editedData?.username : userData?.username || ""}
+                    value={
+                      isEditMode
+                        ? editedData?.username
+                        : userData?.username || ""
+                    }
                     onChange={handleChange}
                     disabled={!isEditMode}
                   />
@@ -168,7 +175,11 @@ export default function ProfilePage() {
                     type="text"
                     className="phonenumber"
                     name="phoneNumber"
-                    value={isEditMode ? editedData?.phoneNumber : userData?.phoneNumber || ""}
+                    value={
+                      isEditMode
+                        ? editedData?.phoneNumber
+                        : userData?.phoneNumber || ""
+                    }
                     onChange={handleChange}
                     disabled={!isEditMode}
                   />
@@ -176,7 +187,11 @@ export default function ProfilePage() {
                     type={isEditMode ? "date" : "text"}
                     className="dob"
                     name="dob"
-                    value={isEditMode ? editedData?.dob : calculateAge(userData?.dob) || ""}
+                    value={
+                      isEditMode
+                        ? editedData?.dob
+                        : calculateAge(userData?.dob) || ""
+                    }
                     onChange={handleChange}
                     disabled={!isEditMode}
                   />
@@ -184,7 +199,9 @@ export default function ProfilePage() {
                     type="text"
                     className="gender"
                     name="gender"
-                    value={isEditMode ? editedData?.gender : userData?.gender || ""}
+                    value={
+                      isEditMode ? editedData?.gender : userData?.gender || ""
+                    }
                     onChange={handleChange}
                     disabled={!isEditMode}
                   />
@@ -192,7 +209,9 @@ export default function ProfilePage() {
                     type="email"
                     className="email"
                     name="email"
-                    value={isEditMode ? editedData?.email : userData?.email || ""}
+                    value={
+                      isEditMode ? editedData?.email : userData?.email || ""
+                    }
                     onChange={handleChange}
                     disabled={!isEditMode}
                   />
@@ -222,9 +241,7 @@ export default function ProfilePage() {
                 <div className="schedule-info-field">
                   <div className="schedule_detail">
                     <p>Appointment 1</p>
-                    <div>
-                    {userData && (userData.schedule)}
-                    </div>
+                    <div>{userData && userData.about}</div>
                     <div>12/02/2024</div>
                   </div>
                   <div className="schedule_detail">

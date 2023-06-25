@@ -17,8 +17,11 @@ function Chat() {
       prompt: chatLog[chatLog.length - 1].chat,
     });
     // const res = await response.json();
-    // console.log(response);
-    setChats((chats) => [...chats, { user: "gpt", chat: response.data.choices[0].message.content }]);
+    console.log(response);
+    setChats((chats) => [
+      ...chats,
+      { user: "gpt", chat: response.data.choices[0].message.content },
+    ]);
   };
 
   const onPressEnter = (e) => {
@@ -27,17 +30,6 @@ function Chat() {
       handelSumbit(e);
     }
   };
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const response = await axios.get("http://localhost:8000/");
-      count.current = response.data.model;
-      setModel(response.data.model);
-      setSelectmodel(count.current[0].id);
-    };
-
-    getUsers();
-  }, []);
 
   return (
     <div className="chatApp">
