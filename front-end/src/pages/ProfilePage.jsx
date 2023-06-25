@@ -4,11 +4,13 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.css";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedData, setEditedData] = useState({});
+  const [schedule, setSchedule] = useState([]);
   const navigate = useNavigate();
 
   const calculateAge = (dateString) => {
@@ -43,8 +45,8 @@ export default function ProfilePage() {
       const data = await response.json();
       if (response.ok) {
         setUserData(data.user);
-        // const appointments = data.user.schedule.map((s) => );
-        // toast.success("Successfully fetched user data.")
+        data.user.schedule.map((s) => fetchAppointmentDetails(s));
+        toast.success("Successfully fetched user data.");
       } else {
         toast.error("Error retrieving user data"); // Display toast error
         console.error("Error retrieving user data:", data.error);
@@ -85,7 +87,6 @@ export default function ProfilePage() {
         setUserData(editedData);
         setIsEditMode(false);
         toast.success("Data saved successfully"); // Display toast success message
-        console.log("Data saved successfully");
       } else {
         console.error("Error saving user data:", response.statusText);
       }
@@ -109,18 +110,22 @@ export default function ProfilePage() {
       .then((response) => {
         const appointment = response.data.appointment;
         // Do something with the fetched appointment details
-        console.log(appointment);
+        setSchedule((prev) => {
+          let isAlreadyScheduled = false;
+          prev.forEach((item) =>
+            item._id == appointment._id ? (isAlreadyScheduled = true) : null
+          );
+
+          if (!isAlreadyScheduled) {
+            return [...prev, appointment];
+          }
+          return prev;
+        });
       })
       .catch((error) => {
         console.error("Error:", error.response.data.error);
-        // Handle the error appropriately
       });
   };
-
-  useEffect(() => {
-    const appointmentId = "649707b43426d14bb924d2f5";
-    fetchAppointmentDetails(appointmentId);
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -129,6 +134,8 @@ export default function ProfilePage() {
       [name]: value,
     }));
   };
+
+  console.log(schedule);
 
   return (
     <div className="profile-main">
@@ -235,32 +242,69 @@ export default function ProfilePage() {
             <h2>My Schedules</h2>
             <p>Meeting Information</p>
             <hr />
-            <div className="schedule-info-container">
-              <div className="schedule-info-text">
-                <p>
-                  Assertively utilize adaptive customer service for future-proof
-                  platforms. Completely drive optimal markets.
-                </p>
-              </div>
-              <div className="schedule-field">
-                <div className="schedule-info-field">
-                  <div className="schedule_detail">
-                    <p>Appointment 1</p>
-                    <div>{userData && userData.about}</div>
-                    <div>12/02/2024</div>
-                  </div>
-                  <div className="schedule_detail">
-                    <p>Schedule 2</p>
-                    <div>
-                      About Lorem ipsum dolor sit amet consectetur adipisicing
-                      elit. Sunt veniam incidunt rem ad corporis corrupti iure,
-                      totam, fugit at, libero eaque? Error dolore explicabo,
-                      reprehenderit beatae placeat maxime tempora perspiciatis?
+            <div className="row">
+              {schedule &&
+                schedule.map((item) => (
+                  <div className="col-sm-6 col-md-6 col-lg-4">
+                    <div className="card bg-white p-3 mb-4 shadow">
+                      <div className="d-flex justify-content-between mb-4">
+                        <div className="user-info">
+                          <div className="user-info__img">
+                            <img
+                              src="/Image/profile.png"
+                              alt="doctor Img"
+                              width="30"
+                            />
+                          </div>
+                          <div className="user-info__basic">
+                            <h5 className="mb-0">Dr. Krishnendu Roy</h5>
+                            <p className="text-muted mb-0">28 yrs, Male</p>
+                          </div>
+                        </div>
+                        <div className="dropdown open">
+                          <a
+                            href="#!"
+                            className="px-2"
+                            id="triggerId1"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i className="fa fa-ellipsis-v"></i>
+                          </a>
+                          <div
+                            className="dropdown-menu"
+                            aria-labelledby="triggerId1"
+                          >
+                            <a className="dropdown-item" href="#">
+                              <i className="fa fa-pencil mr-1"></i> Edit
+                            </a>
+                            <a className="dropdown-item text-danger" href="#">
+                              <i className="fa fa-trash mr-1"></i> Delete
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <h6 className="mb-0">+91 9876543215</h6>
+                      <div>
+                        <small>{item.about}</small>
+                      </div>
+                      <div className="d-flex justify-content-between mt-4">
+                        <div>
+                          <h5 className="mb-0">
+                            {item.timeOfAppointment}
+                            <small className="ml-1">
+                              {item.dateOfAppointment}
+                            </small>
+                          </h5>
+                        </div>
+                        <span className="text-success font-weight-bold">
+                          Join
+                        </span>
+                      </div>
                     </div>
-                    <div>12/02/2024</div>
                   </div>
-                </div>
-              </div>
+                ))}
             </div>
           </div>
         </div>
