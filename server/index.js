@@ -285,6 +285,26 @@ app.post('/doctorSignup', async (req, res) => {
     }
 });
 
+app.get("/doctor/:id", async (req, res) => {
+    const doctorId = req.params.id;
+
+    try {
+        // Find the appointment in the database by ID
+        const response = await Doctor.findById(doctorId);
+
+        if (!response) {
+            // Appointment not found
+            return res.status(404).json({ error: "Doctor details not found" });
+        }
+
+        // Appointment found, return the appointment details
+        res.status(200).json( response );
+    } catch (err) {
+        // Handle any errors that occurred during the retrieval
+        console.error("Error while retrieving appointment:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
 
 // CHAT WITH GPT
 
