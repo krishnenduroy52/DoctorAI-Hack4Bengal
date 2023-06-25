@@ -247,6 +247,44 @@ app.get('/appointment/:id', async (req, res) => {
 });
 
 
+
+// CHAT WITH GPT
+
+const runPrompt = async (prompt) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            "Authorization": `Bearer ${process.env.API_KEY}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{role: "assistant", content: prompt}],
+            max_tokens: 100,
+        })
+    }
+
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', options);
+        const data = await response.json();
+        return data;
+    }catch(error) {
+        console.error('Some error occured*');
+    }
+    return;
+}
+
+app.post('/completion', async(req, res) => {
+    const prompt = req.body.prompt;
+    try {
+        const response = await runPrompt(prompt);
+        res.send(response.data);
+    } catch (error) {
+        console.error("Some error occured");
+    }
+})
+
+
 // Start the server
 const port = 3000; // Choose any port you prefer
 app.listen(port, () => {

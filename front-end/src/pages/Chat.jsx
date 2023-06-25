@@ -13,13 +13,12 @@ function Chat() {
     const chatLog = [...chats, { user: "me", chat: input }];
     setChats(chatLog);
     setInput("");
-    const response = await axios.post("http://localhost:8000/", {
-      chats: chatLog.map((chat) => chat.chat).join(" "),
-      model: selectModel,
+    const response = await axios.post("http://localhost:3000/completion", {
+      prompt: chatLog[chatLog.length - 1].chat,
     });
     // const res = await response.json();
-    console.log(response);
-    setChats((chats) => [...chats, { user: "gpt", chat: response.data.chat }]);
+    // console.log(response);
+    setChats((chats) => [...chats, { user: "gpt", chat: response.data.choices[0].message.content }]);
   };
 
   const onPressEnter = (e) => {
@@ -82,9 +81,9 @@ function Chat() {
       </aside>
       <section className="main">
         <div className="main_chat">
-          {chats.map((chat) =>
+          {chats.map((chat, index) =>
             chat.user === "me" ? (
-              <div className="me">
+              <div className="me" key={index}>
                 <div className="chat">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +103,7 @@ function Chat() {
                 </div>
               </div>
             ) : (
-              <div className="gpt">
+              <div className="gpt" key={index}>
                 <div className="chat">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -129,6 +128,7 @@ function Chat() {
         <div className="chatBox">
           <form onSubmit={handelSumbit}>
             <textarea
+              placeholder="Type a message and hit enter....."
               type="text"
               value={input}
               className="inField"
