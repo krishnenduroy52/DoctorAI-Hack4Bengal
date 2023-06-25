@@ -16,16 +16,10 @@ const DoctorDataInput = () => {
         dob: '',
         password: '',
         confirmPassword: '',
+        specialization: [],
     });
     const [passwordErrors, setPasswordErrors] = useState([]);
 
-    const navigate = useNavigate();
-    useEffect(() => {
-        const userId = localStorage.getItem("doctor_ai_userID");
-        if (userId) {
-            navigate("/");
-        }
-    })
 
     const handleChange = (e) => {
         setState({
@@ -51,8 +45,13 @@ const DoctorDataInput = () => {
         }
     };
 
+    const convertSpecializations = (specializations) => {
+        const trimmedSpecializations = specializations.trim();
+        const splitSpecializations = trimmedSpecializations.split(',').filter(spec => spec.trim() !== '');
+        return splitSpecializations;
+    };
 
-    const { username, email, phoneNumber, gender, dob, password, confirmPassword } = state;
+    const { username, email, phoneNumber, gender, dob, password, confirmPassword, specialization } = state;
 
     const validateForm = () => {
         if (phoneNumber.length < 10) {
@@ -102,22 +101,21 @@ const DoctorDataInput = () => {
 
         try {
             const hashedPassword = await bcrypt.hash(password, 10);
-            await axios.post("http://localhost:3000/signup", {
+            const specializationArray = convertSpecializations(specialization);
+            await axios.post("http://localhost:3000/doctorSignup", {
                 username,
                 email,
                 phoneNumber,
                 gender,
                 dob,
-                password: hashedPassword
+                password: hashedPassword,
+                specialization: specializationArray,
             })
                 .then(res => {
                     console.log(res);
                     console.log(res.data);
                     // Additional actions or redirection can be performed here
-                    toast.success('User created successfully!');
-                    setTimeout(() => {
-                        navigate('/login');
-                    }, 2000);
+                    toast.success('Doctor created successfully!');
                 })
                 .catch(error => {
                     // Error message for existing email
@@ -144,7 +142,7 @@ const DoctorDataInput = () => {
     return (
         <div className="signup-page">
             <div className="left-section">
-                <img className="image" src="./Image/Signup_page_image.png" alt="Image" />
+                <img className="image" src="./Image/Doctors_signup.png" alt="Image" />
             </div>
             <div className="right-section">
                 <h1>Enter Doctor Details</h1>
@@ -241,18 +239,23 @@ const DoctorDataInput = () => {
                             </ul>
                         </span>
                     )}
-
-                    {/* <span className="password-requirements">
-                        Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, #, $, %, ^, &, *).
-                    </span> */}
+                    <div>
+                        <label className='label'>
+                            Specialization <span className='doc_span'>(Enter coma separated)</span>
+                            <input
+                                type="text"
+                                value={specialization}
+                                name="specialization"
+                                className="form-input input"
+                                onChange={handleChange}
+                            />
+                        </label>
+                    </div>
                     <div className="form-footer">
                         <button type="button" className="action_btn" onClick={handleSubmitForm}>
-                            Sign Up
+                            Create
                         </button>
                     </div>
-                    <p className="already-account">
-                        Already have an account? <a href="/login">Log in</a>
-                    </p>
                 </form>
             </div>
         </div>

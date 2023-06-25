@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
@@ -29,6 +29,10 @@ export default function ProfilePage() {
 
     return age;
   };
+
+  const handleScheduleDelete = ( ) => {
+    console.log("Deleted");
+  }
 
   useEffect(() => {
     const userId = localStorage.getItem("doctor_ai_userID");
@@ -109,6 +113,7 @@ export default function ProfilePage() {
       .get(`http://localhost:3000/appointment/${appointmentId}`)
       .then((response) => {
         const appointment = response.data.appointment;
+        console.log(appointment.doctorId);
         // Do something with the fetched appointment details
         setSchedule((prev) => {
           let isAlreadyScheduled = false;
@@ -135,7 +140,7 @@ export default function ProfilePage() {
     }));
   };
 
-  console.log(schedule);
+  // console.log(schedule);
 
   return (
     <div className="profile-main">
@@ -145,7 +150,7 @@ export default function ProfilePage() {
           <img src="/Image/profile.png" alt="profile" />
           <div className="name">
             <p>
-              {isEditMode ? editedData?.username : userData?.username || ""}
+              {isEditMode ? editedData?.username : userData?.username || "Your name"}
             </p>
           </div>
         </div>
@@ -244,8 +249,8 @@ export default function ProfilePage() {
             <hr />
             <div className="row">
               {schedule &&
-                schedule.map((item) => (
-                  <div className="col-sm-6 col-md-6 col-lg-4">
+                schedule.map((item, idx) => (
+                  <div className="col-sm-6 col-md-6 col-lg-4" key={idx}>
                     <div className="card bg-white p-3 mb-4 shadow">
                       <div className="d-flex justify-content-between mb-4">
                         <div className="user-info">
@@ -276,10 +281,7 @@ export default function ProfilePage() {
                             className="dropdown-menu"
                             aria-labelledby="triggerId1"
                           >
-                            <a className="dropdown-item" href="#">
-                              <i className="fa fa-pencil mr-1"></i> Edit
-                            </a>
-                            <a className="dropdown-item text-danger" href="#">
+                            <a onClick={handleScheduleDelete} className="dropdown-item text-danger" >
                               <i className="fa fa-trash mr-1"></i> Delete
                             </a>
                           </div>
@@ -298,9 +300,9 @@ export default function ProfilePage() {
                             </small>
                           </h5>
                         </div>
-                        <span className="text-success font-weight-bold">
+                        <Link to={`/rooms/${item.meetingId}`} className="text-success font-weight-bold ">
                           Join
-                        </span>
+                        </Link>
                       </div>
                     </div>
                   </div>
