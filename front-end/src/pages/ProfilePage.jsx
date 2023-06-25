@@ -163,6 +163,7 @@ export default function ProfilePage() {
                     type="text"
                     className="username"
                     name="username"
+                    placeholder="Username"
                     value={
                       isEditMode
                         ? editedData?.username
@@ -175,6 +176,7 @@ export default function ProfilePage() {
                     type="text"
                     className="phonenumber"
                     name="phoneNumber"
+                    placeholder="Phone Number"
                     value={
                       isEditMode
                         ? editedData?.phoneNumber
@@ -187,6 +189,7 @@ export default function ProfilePage() {
                     type={isEditMode ? "date" : "text"}
                     className="dob"
                     name="dob"
+                    placeholder="age"
                     value={
                       isEditMode
                         ? editedData?.dob
@@ -199,6 +202,7 @@ export default function ProfilePage() {
                     type="text"
                     className="gender"
                     name="gender"
+                    placeholder="Gender"
                     value={
                       isEditMode ? editedData?.gender : userData?.gender || ""
                     }
@@ -209,6 +213,7 @@ export default function ProfilePage() {
                     type="email"
                     className="email"
                     name="email"
+                    placeholder="Email"
                     value={
                       isEditMode ? editedData?.email : userData?.email || ""
                     }
