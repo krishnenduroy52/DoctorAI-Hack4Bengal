@@ -30,6 +30,8 @@ const Home = () => {
   };
 
   return (
+    <>
+    <ToastContainer position="bottom-right" theme="colored" />
     <div className="home">
       {/*--------TopBody--------*/}
       <div className="topBody">
@@ -69,12 +71,8 @@ const Home = () => {
       {/* --------BottomBody--------*/}
       <div className="bottomBody">{/* About */}</div>
     </div>
+    </>
   );
 };
 
-export default () => (
-  <>
-    <ToastContainer position="bottom-right" theme="colored" />
-    <Home />
-  </>
-);
+export default Home;
