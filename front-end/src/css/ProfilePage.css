@@ -1,5 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 .profile-main {
-  height: 88.5vh;
   display: flex;
 }
 .profile-left-panel {
@@ -120,4 +120,29 @@ hr {
   padding: 10px;
 
   border-radius: 5px;
+}
+
+.profile_date_time {
+  display: flex;
+  gap: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+
+  font-family: "Roboto", sans-serif;
+}
+
+.user-info__img img {
+  margin-right: 15px;
+  height: 55px;
+  width: 55px;
+  border-radius: 45px;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+a {
+  text-decoration: none !important;
 }
