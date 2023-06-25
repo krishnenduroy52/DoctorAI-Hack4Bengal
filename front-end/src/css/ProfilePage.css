@@ -1,10 +1,123 @@
-.gradient-custom {
-    /* fallback for old browsers */
-    background: #f6d365;
-  
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right bottom, rgb(101, 183, 246), rgb(133, 149, 253));
-  
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right bottom, rgb(101, 195, 246), rgb(133, 135, 253))
-  }
+.profile-main {
+  height: 88.5vh;
+  display: flex;
+}
+.profile-left-panel {
+  width: 20vw;
+  height: 88.5vh;
+  padding: 0 8px;
+}
+
+.pbtn {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  padding: 5px 13px;
+  border-radius: 6px;
+  color: #2e2e2e;
+  font-weight: 700;
+}
+
+.pbtn:hover {
+  background-color: rgba(137, 165, 243, 0.2);
+  color: rgb(63, 63, 222);
+}
+
+.active {
+  background-color: rgba(137, 165, 243, 0.2);
+  color: rgb(42, 42, 112);
+}
+.profile-right-pannel {
+  display: flex;
+  width: 80vw;
+}
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.profile img {
+  width: 25%;
+}
+.name {
+  margin-top: 10px;
+}
+
+.right-container {
+  padding: 40px;
+  width: 100%;
+  border-radius: 20px;
+  -webkit-box-shadow: -3px -3px 6px 0px rgba(0, 0, 0, 0.23);
+  -moz-box-shadow: -3px -3px 6px 0px rgba(0, 0, 0, 0.23);
+  box-shadow: -3px -3px 6px 0px rgba(0, 0, 0, 0.23);
+}
+
+.personal-info > h2,
+.schedule-info > h2 {
+  font-size: 25px;
+  font-weight: 700;
+}
+hr {
+  border: none; /* Remove the default border */
+  background-color: #cccccc; /* Change the color to blue */
+  height: 1.5px; /* Set the initial height */
+  margin: 10px 0; /* Add some margin for spacing */
+  transition: height 0.3s; /* Add a smooth transition effect */
+}
+
+.personal-info-container,
+.schedule-info-container {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+.personal-info-text,
+.schedule-info-text {
+  width: 30%;
+  font-size: 13px;
+  padding-right: 70px;
+  margin-top: 15px;
+}
+.personal-field,
+.schedule-field {
+  width: 55%;
+}
+.personal-info-field {
+  display: flex;
+  flex-wrap: wrap;
+}
+.personal-info-field input,
+.schedule_detail input {
+  flex: 1;
+  margin-right: 10px;
+  border: 1px solid #9f9f9f;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+  margin: 10px 5px;
+  background-color: #e4e4e4;
+}
+.save_edit {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  background-color: rgb(165, 204, 255);
+  width: fit-content;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.schedule-info-field {
+  display: flex;
+  flex-direction: column;
+}
+.schedule_detail {
+  margin-bottom: 40px;
+  background-color: #b8b8b8;
+  padding: 10px;
+
+  border-radius: 5px;
+}

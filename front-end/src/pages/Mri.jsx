@@ -2,21 +2,25 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import "../css/predictionpage.css";
+import { Link } from "react-router-dom";
+import Modal from "../components/Modal";
 
 function Mri() {
   // fileupload & Result
   const [selectedFile, setSelectedFile] = useState(null);
   const [result, setResult] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
+  const [showGive, setshowGive] = useState(false);
 
   useEffect(() => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append("image", selectedFile);
       axios
-        .post("http://localhost:8000/predict-ct", formData)
+        .post("http://localhost:8000/predict-mri", formData)
         .then((response) => {
           setResult(response.data);
+          setshowGive(true);
         })
         .catch((error) => {
           console.error(error);
@@ -37,12 +41,21 @@ function Mri() {
   return (
     <div
       className="main-container flex items-center justify-center overflow-x-clip"
-      style={{ minHeight: "calc(100vh - 700px)" }}
+      style={{ height: "90vh" }}
     >
+      <div className="prediction-bg">
+        <img
+          src="https://i.vimeocdn.com/video/705159602-6253f49a7fc7d987ebb415d7e8801754ce272a8dcbe92b4ddf45b7189a82c047-d_640x360.jpg"
+          alt=""
+        />
+      </div>
+      {/* <div className="prediction-bg-right">
+        <img src="./Image/doctor-bg.jpg" alt="" />
+      </div> */}
       <div className="py-4 md:py-8">
         <div className="mx-auto w-full px-8 max-w-5xl relative">
           <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center md:gap-4">
-            <div className="left-container flex flex-col md:flex-row lg:flex-col items-center lg:items-start gap-6 md:gap-8">
+            <div className="left-container flex flex-col md:flex-row lg:flex-col items-center gap-6 md:gap-8">
               <video
                 preload="auto"
                 className="left-container-video w-full h-auto rounded-4xl max-w-[320px] lg:max-w-[420px]"
@@ -68,7 +81,7 @@ function Mri() {
                 </p>
               </div>
             </div>
-            <div className="right-container relative group flex flex-col gap-4 md:gap-8 mt-8 md:mt-28">
+            <div className="right-container relative group flex flex-col gap-4">
               <div className="dropzone-enabled" {...getRootProps()}>
                 <input {...getInputProps()} />
 
@@ -100,6 +113,16 @@ function Mri() {
           </div>
         </div>
       </div>
+      {result && showGive ? (
+        <Modal
+          show={showGive}
+          onClose={() => setshowGive(false)}
+          img="Image/modelBanner.jpg"
+          bigText={`${result.predicted_class}`}
+          smallText="We recommend you to make a appointment with doctor"
+          percentage={`${Math.round(result.probability)}`}
+        />
+      ) : null}
     </div>
   );
 }

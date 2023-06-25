@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/Signup.css';
 import bcrypt from 'bcryptjs';
+import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
-
 
 const Signup = () => {
     const [state, setState] = useState({
@@ -13,19 +13,46 @@ const Signup = () => {
         email: '',
         phoneNumber: '',
         gender: '',
-        age: '',
+        dob: '',
         password: '',
         confirmPassword: '',
     });
+    const [passwordErrors, setPasswordErrors] = useState([]);
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        const userId = localStorage.getItem("doctor_ai_userID");
+        if (userId) {
+            navigate("/");
+        }
+    })
 
     const handleChange = (e) => {
         setState({
             ...state,
             [e.target.name]: e.target.value,
         });
+
+        if (e.target.name === "password") {
+            const { value } = e.target;
+            const passwordRequirements = [
+                { regex: /[A-Z]/, message: 'Password must contain at least one uppercase letter.' },
+                { regex: /[a-z]/, message: 'Password must contain at least one lowercase letter.' },
+                { regex: /\d/, message: 'Password must contain at least one digit.' },
+                { regex: /[@#$%^&*]/, message: 'Password must contain at least one special character (@, #, $, %, ^, &, *).' },
+                { regex: /.{8,}/, message: 'Password must be at least 8 characters long.' },
+            ];
+
+            const passwordValidationErrors = passwordRequirements
+                .filter(requirement => !requirement.regex.test(value))
+                .map(requirement => requirement.message);
+
+            setPasswordErrors(passwordValidationErrors);
+        }
     };
 
-    const { username, email, phoneNumber, gender, age, password, confirmPassword } = state;
+
+    const { username, email, phoneNumber, gender, dob, password, confirmPassword } = state;
 
     const validateForm = () => {
         if (phoneNumber.length < 10) {
@@ -80,7 +107,7 @@ const Signup = () => {
                 email,
                 phoneNumber,
                 gender,
-                age,
+                dob,
                 password: hashedPassword
             })
                 .then(res => {
@@ -114,108 +141,118 @@ const Signup = () => {
 
 
 
-
-
     return (
         <div className="signup-page">
             <div className="left-section">
-                <img className="image" src="./Image/signup-page-image.png" alt="Image" />
+                <img className="image" src="./Image/Signup_page_image.png" alt="Image" />
             </div>
             <div className="right-section">
-                <h1>Create your account</h1>
+                <h1>Create Your Account</h1>
                 <form>
                     <div className="name-number">
-                        <label>
-                            Username:
+                        <label className='label'>
+                            Username
                             <input
                                 type="text"
                                 value={username}
                                 name="username"
-                                className="form-input"
+                                className="form-input input"
                                 required  // Make username required
                                 onChange={handleChange}
                             />
                         </label>
-                        <label>
-                            Phone Number:
+                        <label className='label'>
+                            Phone Number
                             <input
                                 type="text"
                                 value={phoneNumber}
                                 name="phoneNumber"
-                                className="form-input"
+                                className="form-input input"
                                 onChange={handleChange}
                             />
                         </label>
                     </div>
 
                     <div className="name-number">
-                        <label>
-                            Gender:
+                        <label className='label'>
+                            Gender
                             <select
                                 value={gender}
                                 name="gender"
-                                className="form-input"
+                                className="form-input input"
                                 onChange={handleChange}
                             >
-                                <option value="">Select Gender</option>
-                                <option value="M">M</option>
-                                <option value="F">F</option>
+                                <option value="">Select</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
                             </select>
                         </label>
-                        <label>
-                            Age:
+                        <label className='label'>
+                            Age
                             <input
-                                type="text"
-                                value={age}
-                                name="age"
-                                className="form-input"
+                                type="date"
+                                value={dob}
+                                name="dob"
+                                className="form-input input"
                                 onChange={handleChange}
                             />
                         </label>
                     </div>
-                    <label>
-                        Email:
+                    <label className='label'>
+                        Email
                         <input
                             value={email}
                             type="email"
                             name="email"
-                            className="form-input"
+                            className="form-input input"
                             required  // Make email required
                             onChange={handleChange}
                         />
                     </label>
-                    <label>
-                        Password:
+                    <div className="name-number">
+                        <label className='label'>
+                            Password
+                            <input
+                                type="password"
+                                value={password}
+                                name="password"
+                                className="form-input input"
+                                required  // Make password required
+                                onChange={handleChange}
+                            />
+                        </label>
+                        <label className='label'>
+                            Confirm Password
+                            <input
+                                type="password"
+                                value={confirmPassword}
+                                name="confirmPassword"
+                                className="form-input input"
+                                onChange={handleChange}
+                            />
+                        </label>
+                    </div>
+                    {passwordErrors.length > 0 && (
                         <span className="password-requirements">
-                            Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, #, $, %, ^, &, *).
+                            <ul className="password-errors">
+                                {passwordErrors.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))}
+                            </ul>
                         </span>
-                        <input
-                            type="password"
-                            value={password}
-                            name="password"
-                            className="form-input"
-                            required  // Make password required
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        Confirm Password:
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            name="confirmPassword"
-                            className="form-input"
-                            onChange={handleChange}
-                        />
-                    </label>
+                    )}
+
+                    {/* <span className="password-requirements">
+                        Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@, #, $, %, ^, &, *).
+                    </span> */}
                     <div className="form-footer">
-                        <button type="button" className="submit-btn" onClick={handleSubmitForm}>
+                        <button type="button" className="action_btn" onClick={handleSubmitForm}>
                             Sign Up
                         </button>
-                        <p className="already-account">
-                            Already have an account? <a href="/login">Log in</a>
-                        </p>
                     </div>
+                    <p className="already-account">
+                        Already have an account? <a href="/login">Log in</a>
+                    </p>
                 </form>
             </div>
         </div>

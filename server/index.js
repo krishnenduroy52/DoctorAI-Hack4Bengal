@@ -27,12 +27,48 @@ const userSchema = new mongoose.Schema({
     email: String,
     phoneNumber: String,
     gender: String,
-    age: Number,
-    password: String
+    dob: Date,
+    password: String,
+    schedule: [String]
 });
 
 // Create the User model
 const User = mongoose.model('User', userSchema);
+
+const appointmentSchema = new mongoose.Schema({
+    doctorId: String,
+    clientId: String,
+    meetingId: String,
+    timeOfAppointment: String,
+    dateOfAppointment: Date,
+    about: String
+})
+
+const Appointment = mongoose.model('Appointment', appointmentSchema);
+
+
+const generateMeetingCode = () => {
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    let code = '';
+
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            const randomChar = characters.charAt(Math.floor(Math.random() * characters.length));
+            code += randomChar;
+        }
+
+        if (i < 2) {
+            code += '-';
+        }
+    }
+
+    return code;
+};
+
+// Example usage
+const meetingCode = generateMeetingCode();
+console.log(meetingCode); // Output: abc-xyz-dfg
+
 
 // Define your routes and middleware here
 
@@ -42,7 +78,7 @@ app.get('/', (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-    const { username, email, phoneNumber, gender, age, password, confirmPassword } = req.body;
+    const { username, email, phoneNumber, gender, dob, password } = req.body;
     console.log(req.body); // Logging the entire request body
 
     try {
@@ -62,7 +98,7 @@ app.post("/signup", async (req, res) => {
             email,
             phoneNumber,
             gender,
-            age,
+            dob,
             password
         });
 
@@ -152,6 +188,63 @@ app.put('/user/:userId', async (req, res) => {
     }
 });
 
+app.post('/appointment', async (req, res) => {
+    console.log("This is appointment page backend")
+    const { doctorId, clientId, meetingId, timeOfAppointment, dateOfAppointment, about } = req.body;
+    console.log(req.body); // Logging the entire request body
+
+    try {
+        // Create a new user document
+        const newAppointment = new Appointment({
+            doctorId,
+            clientId,
+            meetingId: generateMeetingCode(),
+            timeOfAppointment,
+            dateOfAppointment,
+            about
+        });
+
+        // Save the new user to the database
+        const result = await newAppointment.save();
+        // console.log(result)
+        const appointmentId = result._id;
+        const user = await User.findById(clientId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        user.schedule.push(appointmentId);
+        await user.save();
+
+        // Send a success response
+        res.status(200).json({ message: 'Appointment created successfully' });
+    } catch (err) {
+        // Handle any errors that occurred during saving
+        console.error('Error while saving appointment:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+
+app.get('/appointment/:id', async (req, res) => {
+    const appointmentId = req.params.id;
+
+    try {
+        // Find the appointment in the database by ID
+        const appointment = await Appointment.findById(appointmentId);
+
+        if (!appointment) {
+            // Appointment not found
+            return res.status(404).json({ error: 'Appointment not found' });
+        }
+
+        // Appointment found, return the appointment details
+        res.status(200).json({ appointment });
+    } catch (err) {
+        // Handle any errors that occurred during the retrieval
+        console.error('Error while retrieving appointment:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 
 // Start the server

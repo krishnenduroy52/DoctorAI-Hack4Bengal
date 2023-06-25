@@ -1,10 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsStaggered, faXmark, faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useRef, useState,} from "react";
+import {
+  faBarsStaggered,
+  faXmark,
+  faAngleUp,
+  faAngleDown,
+} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import { Link } from "react-router-dom";
 import services_menu from "../assets/json-data/services_menu.json";
+import logo from "/Image/doctorai_logo.svg";
 
 const Navbar = () => {
   const toogleBtn = useRef(null);
@@ -35,7 +41,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("doctor_ai_userID");
     setIsLogin(false);
-    navigate("/");
+    window.location.href = "/";
   };
 
   const openMenu = () => {
@@ -58,7 +64,7 @@ const Navbar = () => {
     } else {
       setServiceBtnIcon(faAngleDown);
     }
-  } 
+  };
 
   return (
     <div className="header">
@@ -67,18 +73,20 @@ const Navbar = () => {
         {/* logo */}
         <div className="logo">
           <a href="/">
-            <img src="./Image/doctorai_logo.svg" alt="" />
+            <img src={logo} alt="" />
           </a>
         </div>
         {/* menu */}
         <ul className="links">
           <li className="services">
-            <a className="no-link" onClick={openServices}>Services <FontAwesomeIcon className="ml-1 w-2" icon={serviceBtnIcon}/></a>
+            <a className="no-link" onClick={openServices}>Services <FontAwesomeIcon className="ml-1 w-2" icon={serviceBtnIcon} /></a>
             <div ref={servicesBtn} className="services_options">
               <ul>
                 {services_menu.items.map((item, index) => {
                   return (
-                    <Link key={index} to={item.url}><li>{item.title}</li></Link>
+                    <Link key={index} to={item.url}>
+                      <li>{item.title}</li>
+                    </Link>
                   );
                 })}
               </ul>
@@ -125,17 +133,21 @@ const Navbar = () => {
             <a href="contact-us">Contact Us</a>
           </li>
           {isLogin === false ? (
-            <li className="dropdown_links">
-              <Link to="/login" className="action_btn">
-                Sign In
-              </Link>
-            </li>
+            <Link to="/login" className="action_btn">
+              Sign In
+            </Link>
           ) : (
-            <li className="dropdown_links">
-              <Link onClick={handleLogout} className="action_btn">
-                Log Out
-              </Link>
-            </li>
+            <div className="profile_dropdown">
+              <button className="action_btn" onClick={toggleProfileDropdown}>
+                Profile
+              </button>
+              {showProfileDropdown && (
+                <div className="profile_dropdown_content">
+                  <Link to="/profile">View Profile</Link>
+                  <Link onClick={handleLogout}>Logout</Link>
+                </div>
+              )}
+            </div>
           )}
         </ul>
       </div>
