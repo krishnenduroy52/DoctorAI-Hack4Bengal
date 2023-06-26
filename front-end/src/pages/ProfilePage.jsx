@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
+import "bootstrap/dist/css/bootstrap.css";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedData, setEditedData] = useState({});
+  const [schedule, setSchedule] = useState([]);
   const navigate = useNavigate();
 
   const calculateAge = (dateString) => {
@@ -28,6 +30,10 @@ export default function ProfilePage() {
     return age;
   };
 
+  const handleScheduleDelete = () => {
+    console.log("Deleted");
+  };
+
   useEffect(() => {
     const userId = localStorage.getItem("doctor_ai_userID");
     if (userId) {
@@ -43,8 +49,8 @@ export default function ProfilePage() {
       const data = await response.json();
       if (response.ok) {
         setUserData(data.user);
-        // const appointments = data.user.schedule.map((s) => );
-        // toast.success("Successfully fetched user data.")
+        data.user.schedule.map((s) => fetchAppointmentDetails(s));
+        toast.success("Successfully fetched user data.");
       } else {
         toast.error("Error retrieving user data"); // Display toast error
         console.error("Error retrieving user data:", data.error);
@@ -85,7 +91,6 @@ export default function ProfilePage() {
         setUserData(editedData);
         setIsEditMode(false);
         toast.success("Data saved successfully"); // Display toast success message
-        console.log("Data saved successfully");
       } else {
         console.error("Error saving user data:", response.statusText);
       }
@@ -103,25 +108,30 @@ export default function ProfilePage() {
     }
   };
 
-  const fetchAppointmentDetails = (appointmentId) => {
-    axios
-      .get(`http://localhost:3000/appointment/${appointmentId}`)
-      .then((response) => {
-        const appointment = response.data.appointment;
-        // Do something with the fetched appointment details
-        console.log(appointment);
-      })
-      .catch((error) => {
-        console.error("Error:", error.response.data.error);
-        // Handle the error appropriately
+  const fetchAppointmentDetails = async (appointmentId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/appointment/${appointmentId}`
+      );
+      const appointment = response.data.appointment;
+
+      const doctorId = appointment.doctorId;
+      const doctorDetail = await axios.get(
+        `http://localhost:3000/doctor/details/${doctorId}`
+      );
+      const doc = doctorDetail.data;
+      setSchedule((prev) => {
+        let isAlreadyScheduled = false;
+        prev.forEach((item) =>
+          item._id == appointment._id ? (isAlreadyScheduled = true) : null
+        );
+        if (!isAlreadyScheduled) {
+          return [...prev, { ...appointment, doctor: doc }];
+        }
+        return prev;
       });
+    } catch (error) {}
   };
-
-  useEffect(() => {
-    const appointmentId = "649707b43426d14bb924d2f5";
-    fetchAppointmentDetails(appointmentId);
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedData((prevData) => ({
@@ -129,6 +139,8 @@ export default function ProfilePage() {
       [name]: value,
     }));
   };
+
+  console.log(schedule);
 
   return (
     <div className="profile-main">
@@ -138,7 +150,9 @@ export default function ProfilePage() {
           <img src="/Image/profile.png" alt="profile" />
           <div className="name">
             <p>
-              {isEditMode ? editedData?.username : userData?.username || ""}
+              {isEditMode
+                ? editedData?.username
+                : userData?.username || "Your name"}
             </p>
           </div>
         </div>
@@ -163,6 +177,7 @@ export default function ProfilePage() {
                     type="text"
                     className="username"
                     name="username"
+                    placeholder="Username"
                     value={
                       isEditMode
                         ? editedData?.username
@@ -175,6 +190,7 @@ export default function ProfilePage() {
                     type="text"
                     className="phonenumber"
                     name="phoneNumber"
+                    placeholder="Phone Number"
                     value={
                       isEditMode
                         ? editedData?.phoneNumber
@@ -187,6 +203,7 @@ export default function ProfilePage() {
                     type={isEditMode ? "date" : "text"}
                     className="dob"
                     name="dob"
+                    placeholder="age"
                     value={
                       isEditMode
                         ? editedData?.dob
@@ -199,6 +216,7 @@ export default function ProfilePage() {
                     type="text"
                     className="gender"
                     name="gender"
+                    placeholder="Gender"
                     value={
                       isEditMode ? editedData?.gender : userData?.gender || ""
                     }
@@ -209,6 +227,7 @@ export default function ProfilePage() {
                     type="email"
                     className="email"
                     name="email"
+                    placeholder="Email"
                     value={
                       isEditMode ? editedData?.email : userData?.email || ""
                     }
@@ -230,32 +249,75 @@ export default function ProfilePage() {
             <h2>My Schedules</h2>
             <p>Meeting Information</p>
             <hr />
-            <div className="schedule-info-container">
-              <div className="schedule-info-text">
-                <p>
-                  Assertively utilize adaptive customer service for future-proof
-                  platforms. Completely drive optimal markets.
-                </p>
-              </div>
-              <div className="schedule-field">
-                <div className="schedule-info-field">
-                  <div className="schedule_detail">
-                    <p>Appointment 1</p>
-                    <div>{userData && userData.about}</div>
-                    <div>12/02/2024</div>
-                  </div>
-                  <div className="schedule_detail">
-                    <p>Schedule 2</p>
-                    <div>
-                      About Lorem ipsum dolor sit amet consectetur adipisicing
-                      elit. Sunt veniam incidunt rem ad corporis corrupti iure,
-                      totam, fugit at, libero eaque? Error dolore explicabo,
-                      reprehenderit beatae placeat maxime tempora perspiciatis?
+            <div className="row">
+              {schedule &&
+                schedule.map((item, idx) => (
+                  <div className="col-sm-6 col-md-6 col-lg-4" key={idx}>
+                    <div className="card bg-white p-3 mb-4 shadow">
+                      <div className="d-flex justify-content-between mb-4">
+                        <div className="user-info">
+                          <div className="user-info__img">
+                            <img
+                              src="/Image/profile.png"
+                              alt="doctor Img"
+                              width="30"
+                            />
+                          </div>
+                          <div className="user-info__basic">
+                            <h5 className="mb-0">{item.doctor.username}</h5>
+                            <p className="text-muted mb-0">
+                              {calculateAge(item.doctor.dob)} yrs,{" "}
+                              {item.doctor.gender}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="dropdown open">
+                          <a
+                            href="#!"
+                            className="px-2"
+                            id="triggerId1"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i className="fa fa-ellipsis-v"></i>
+                          </a>
+                          <div
+                            className="dropdown-menu"
+                            aria-labelledby="triggerId1"
+                          >
+                            <a
+                              onClick={handleScheduleDelete}
+                              className="dropdown-item text-danger"
+                            >
+                              <i className="fa fa-trash mr-1"></i> Delete
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <h6 className="mb-0">{item.doctor.phoneNumber}</h6>
+                      <div>
+                        <small>{item.about}</small>
+                      </div>
+                      <div className="d-flex justify-content-between mt-4">
+                        <div>
+                          <h5 className="mb-0">
+                            {item.timeOfAppointment}
+                            <small className="ml-1">
+                              {item.dateOfAppointment}
+                            </small>
+                          </h5>
+                        </div>
+                        <Link
+                          to={`/rooms/${item.meetingId}`}
+                          className="text-success font-weight-bold "
+                        >
+                          Join
+                        </Link>
+                      </div>
                     </div>
-                    <div>12/02/2024</div>
                   </div>
-                </div>
-              </div>
+                ))}
             </div>
           </div>
         </div>

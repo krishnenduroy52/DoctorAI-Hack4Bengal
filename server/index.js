@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 require("dotenv").config();
 
+const Doctor = require("./models/DoctorModel");
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -68,10 +70,6 @@ const generateMeetingCode = () => {
 
   return code;
 };
-
-// Example usage
-const meetingCode = generateMeetingCode();
-console.log(meetingCode); // Output: abc-xyz-dfg
 
 // Define your routes and middleware here
 
@@ -251,6 +249,64 @@ app.get("/appointment/:id", async (req, res) => {
 
     // Appointment found, return the appointment details
     res.status(200).json({ appointment });
+  } catch (err) {
+    // Handle any errors that occurred during the retrieval
+    console.error("Error while retrieving appointment:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/doctorSignup", async (req, res) => {
+  const {
+    username,
+    email,
+    phoneNumber,
+    gender,
+    dob,
+    password,
+    specialization,
+  } = req.body;
+
+  try {
+    const existingUser = await Doctor.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({ error: "Email already exists" });
+    }
+
+    const newDoctor = new Doctor({
+      username,
+      email,
+      phoneNumber,
+      gender,
+      dob,
+      password,
+      specialization,
+    });
+
+    await newDoctor.save();
+
+    res.status(200).json({ message: "Doctor created successfully" });
+  } catch (err) {
+    console.error("Error while saving doctor:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/doctor/details/:id", async (req, res) => {
+  const doctorId = req.params.id;
+
+  try {
+    // Find the appointment in the database by ID
+    const response = await Doctor.findById(doctorId);
+
+    if (!response) {
+      // Appointment not found
+      return res.status(404).json({ error: "Doctor details not found" });
+    }
+
+    // Appointment found, return the appointment details
+    res.status(200).json(response);
   } catch (err) {
     // Handle any errors that occurred during the retrieval
     console.error("Error while retrieving appointment:", err);

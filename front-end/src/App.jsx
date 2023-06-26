@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ProfilePage from "./pages/ProfilePage";
 import Chat from "./pages/Chat";
+import DoctorDataInput from "./pages/DoctorDataInput";
 import Appointment from "./pages/Appointment";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/meet" element={<Meet />} />
         <Route path="/rooms/:roomId" element={<Rooms />} />
         <Route path="/general/chat" element={<Chat />} />
+        <Route path="/doctor" element={<DoctorDataInput/>} />
         <Route path="/appointment" element={<Appointment about="about"/>} />
       </Routes>
     </Router>
