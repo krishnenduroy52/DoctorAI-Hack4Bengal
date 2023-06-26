@@ -11,6 +11,7 @@ export default function ProfilePage() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [schedule, setSchedule] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const calculateAge = (dateString) => {
@@ -110,11 +111,11 @@ export default function ProfilePage() {
 
   const fetchAppointmentDetails = async (appointmentId) => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
         `http://localhost:3000/appointment/${appointmentId}`
       );
       const appointment = response.data.appointment;
-
       const doctorId = appointment.doctorId;
       const doctorDetail = await axios.get(
         `http://localhost:3000/doctor/details/${doctorId}`
@@ -122,6 +123,7 @@ export default function ProfilePage() {
       const doc = doctorDetail.data;
       setSchedule((prev) => {
         let isAlreadyScheduled = false;
+        // setIsLoading(false);
         prev.forEach((item) =>
           item._id == appointment._id ? (isAlreadyScheduled = true) : null
         );
@@ -130,8 +132,12 @@ export default function ProfilePage() {
         }
         return prev;
       });
-    } catch (error) {}
+      if (schedule.length === 0) {
+        setIsLoading(false);
+      }
+    } catch (error) { }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedData((prevData) => ({
@@ -140,7 +146,7 @@ export default function ProfilePage() {
     }));
   };
 
-  console.log(schedule);
+  // console.log(schedule);
 
   return (
     <div className="profile-main">
@@ -249,76 +255,90 @@ export default function ProfilePage() {
             <h2>My Schedules</h2>
             <p>Meeting Information</p>
             <hr />
-            <div className="row">
-              {schedule &&
-                schedule.map((item, idx) => (
-                  <div className="col-sm-6 col-md-6 col-lg-4" key={idx}>
-                    <div className="card bg-white p-3 mb-4 shadow">
-                      <div className="d-flex justify-content-between mb-4">
-                        <div className="user-info">
-                          <div className="user-info__img">
-                            <img
-                              src="/Image/profile.png"
-                              alt="doctor Img"
-                              width="30"
-                            />
-                          </div>
-                          <div className="user-info__basic">
-                            <h5 className="mb-0">{item.doctor.username}</h5>
-                            <p className="text-muted mb-0">
-                              {calculateAge(item.doctor.dob)} yrs,{" "}
-                              {item.doctor.gender}
-                            </p>
+            {isLoading ? (
+              <div className="d-flex justify-content-center text-primary">
+                <div className="spinner-border" style={{ width: '3rem', height: '3rem' }} role="status">
+                  <span className="sr-only">Loading...</span>
+                </div>
+              </div>
+            ) :
+              schedule.length === 0 ? (
+                <h3> <span className="profile_span">No </span>upcoming appointments scheduled at the moment.</h3>
+              )
+                : (
+                  <div className="row">
+                    {schedule &&
+                      schedule.map((item, idx) => (
+                        <div className="col-sm-6 col-md-6 col-lg-4" key={idx}>
+                          <div className="card bg-white p-3 mb-4 shadow">
+                            <div className="d-flex justify-content-between mb-4">
+                              <div className="user-info">
+                                <div className="user-info__img">
+                                  <img
+                                    src="/Image/profile.png"
+                                    alt="doctor Img"
+                                    width="30"
+                                  />
+                                </div>
+                                <div className="user-info__basic">
+                                  <h5 className="mb-0">{item.doctor.username}</h5>
+                                  <p className="text-muted mb-0">
+                                    {calculateAge(item.doctor.dob)} yrs,{" "}
+                                    {item.doctor.gender}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="dropdown open">
+                                <a
+                                  href="#!"
+                                  className="px-2"
+                                  id="triggerId1"
+                                  data-toggle="dropdown"
+                                  aria-haspopup="true"
+                                  aria-expanded="false"
+                                >
+                                  <i className="fa fa-ellipsis-v"></i>
+                                </a>
+                                <div
+                                  className="dropdown-menu"
+                                  aria-labelledby="triggerId1"
+                                >
+                                  <a
+                                    onClick={handleScheduleDelete}
+                                    className="dropdown-item text-danger"
+                                  >
+                                    <i className="fa fa-trash mr-1"></i> Delete
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <h6 className="mb-0">{item.doctor.phoneNumber}</h6>
+                            <div>
+                              <small>{item.about}</small>
+                            </div>
+                            <div className="d-flex justify-content-between mt-4">
+                              <div>
+                                <h5 className="mb-0">
+                                  {item.timeOfAppointment}
+                                  <small className="ml-1">
+                                    {item.dateOfAppointment}
+                                  </small>
+                                </h5>
+                              </div>
+                              <Link
+                                to={`/rooms/${item.meetingId}`}
+                                className="text-success font-weight-bold btn"
+                                style={{ width: 'auto' }}
+                              >
+                                Join
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                        <div className="dropdown open">
-                          <a
-                            href="#!"
-                            className="px-2"
-                            id="triggerId1"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i className="fa fa-ellipsis-v"></i>
-                          </a>
-                          <div
-                            className="dropdown-menu"
-                            aria-labelledby="triggerId1"
-                          >
-                            <a
-                              onClick={handleScheduleDelete}
-                              className="dropdown-item text-danger"
-                            >
-                              <i className="fa fa-trash mr-1"></i> Delete
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <h6 className="mb-0">{item.doctor.phoneNumber}</h6>
-                      <div>
-                        <small>{item.about}</small>
-                      </div>
-                      <div className="d-flex justify-content-between mt-4">
-                        <div>
-                          <h5 className="mb-0">
-                            {item.timeOfAppointment}
-                            <small className="ml-1">
-                              {item.dateOfAppointment}
-                            </small>
-                          </h5>
-                        </div>
-                        <Link
-                          to={`/rooms/${item.meetingId}`}
-                          className="text-success font-weight-bold "
-                        >
-                          Join
-                        </Link>
-                      </div>
-                    </div>
+                      ))}
                   </div>
-                ))}
-            </div>
+                )}
+
           </div>
         </div>
       </section>

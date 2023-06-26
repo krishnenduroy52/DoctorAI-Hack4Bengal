@@ -146,3 +146,8 @@ hr {
 a {
   text-decoration: none !important;
 }
+
+.profile_span{
+  color: red;
+}
+
