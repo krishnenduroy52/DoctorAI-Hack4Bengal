@@ -32,31 +32,35 @@ export default function ProfilePage() {
   };
 
   const handleScheduleDelete = async (id) => {
-    try{
+    try {
       //Appointment schema fetching
-      const scheduleResult = await axios.get(`http://localhost:3000/appointment/${id}`);
+      const scheduleResult = await axios.get(
+        `http://localhost:3000/appointment/${id}`
+      );
       const userId = scheduleResult.data.appointment.clientId;
-      const clientResult = await axios.get(`http://localhost:3000/user/${userId}`);
-      const oldSchedule = (clientResult.data.user.schedule);
+      const clientResult = await axios.get(
+        `http://localhost:3000/user/${userId}`
+      );
+      const oldSchedule = clientResult.data.user.schedule;
       const newSchedule = oldSchedule.filter((s) => s !== id);
 
       await axios.put(`http://localhost:3000/user/${userId}`, {
-        schedule: newSchedule
+        schedule: newSchedule,
       });
-      const deleteAppointment = await axios.delete(`http://localhost:3000/appointment/delete/${id}`);
+      const deleteAppointment = await axios.delete(
+        `http://localhost:3000/appointment/delete/${id}`
+      );
       console.log(deleteAppointment.data);
-      if(deleteAppointment.data.success){
+      if (deleteAppointment.data.success) {
         toast.success(deleteAppointment.data.message);
-        setUserData(prev => ({...prev, schedule: newSchedule}));
-        setSchedule(newSchedule)
-        console.log(newSchedule);
-      }
-      else{
+        setUserData((prev) => ({ ...prev, schedule: newSchedule }));
+        setSchedule([]);
+        newSchedule.forEach((s) => fetchAppointmentDetails(s));
+      } else {
         toast.error(deleteAppointment.data.message);
       }
-    }
-    catch(error){
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -148,7 +152,6 @@ export default function ProfilePage() {
       const doc = doctorDetail.data;
       setSchedule((prev) => {
         let isAlreadyScheduled = false;
-        // setIsLoading(false);
         prev.forEach((item) =>
           item._id == appointment._id ? (isAlreadyScheduled = true) : null
         );
@@ -157,10 +160,8 @@ export default function ProfilePage() {
         }
         return prev;
       });
-      if (schedule.length === 0) {
-        setIsLoading(false);
-      }
-    } catch (error) { }
+      setIsLoading(false);
+    } catch (error) {}
   };
 
   const handleChange = (e) => {
@@ -173,29 +174,27 @@ export default function ProfilePage() {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    const formattedDate = date.toLocaleDateString('en-US', options);
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
 
     const day = date.getDate();
-    let suffix = 'th';
+    let suffix = "th";
 
     if (day === 1 || day === 21 || day === 31) {
-      suffix = 'st';
+      suffix = "st";
     } else if (day === 2 || day === 22) {
-      suffix = 'nd';
+      suffix = "nd";
     } else if (day === 3 || day === 23) {
-      suffix = 'rd';
+      suffix = "rd";
     }
 
     return `${day}${suffix} ${formattedDate}`;
   };
 
-
   // console.log(schedule);
 
   return (
     <div className="profile-main">
-      <ToastContainer />
       <aside className="profile-left-panel">
         <div className="pbtn active profile">
           <img src="/Image/profile.png" alt="profile" />
@@ -286,11 +285,15 @@ export default function ProfilePage() {
                     disabled={!isEditMode}
                   />
                 </div>
-                <div className="save_edit">
+                <div className="save_edit_container">
                   {isEditMode ? (
-                    <button onClick={handleSave}>Save</button>
+                    <button onClick={handleSave} className="save_edit">
+                      Save
+                    </button>
                   ) : (
-                    <button onClick={handleEdit}>Edit</button>
+                    <button onClick={handleEdit} className="save_edit">
+                      Edit
+                    </button>
                   )}
                 </div>
               </div>
@@ -302,92 +305,102 @@ export default function ProfilePage() {
             <hr />
             {isLoading ? (
               <div className="d-flex justify-content-center text-primary">
-                <div className="spinner-border" style={{ width: '3rem', height: '3rem' }} role="status">
+                <div
+                  className="spinner-border"
+                  style={{ width: "3rem", height: "3rem" }}
+                  role="status"
+                >
                   <span className="sr-only">Loading...</span>
                 </div>
               </div>
-            ) :
-              schedule.length === 0 ? (
-                <h3> <span className="profile_span">No </span>upcoming appointments scheduled at the moment.</h3>
-              )
-                : (
-                  <div className="row">
-                    {schedule &&
-                      schedule.map((item, idx) => (
-                        <div className="col-sm-6 col-md-6 col-lg-4" key={idx}>
-                          <div className="card bg-white p-3 mb-4 shadow">
-                            <div className="d-flex justify-content-between mb-4">
-                              <div className="user-info">
-                                <div className="user-info__img">
-                                  <img
-                                    src="/Image/profile.png"
-                                    alt="doctor Img"
-                                    width="30"
-                                  />
-                                </div>
-                                <div className="user-info__basic">
-                                  <h5 className="mb-0">{item.doctor.username}</h5>
-                                  <p className="text-muted mb-0">
-                                    {calculateAge(item.doctor.dob)} yrs,{" "}
-                                    {item.doctor.gender}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="dropdown open">
-                                <a
-                                  href="#!"
-                                  className="px-2"
-                                  id="triggerId1"
-                                  data-toggle="dropdown"
-                                  aria-haspopup="true"
-                                  aria-expanded="false"
-                                >
-                                  <i className="fa fa-ellipsis-v"></i>
-                                </a>
-                                <div
-                                  className="dropdown-menu"
-                                  aria-labelledby="triggerId1"
-                                >
-                                  <a
-                                    onClick={() => handleScheduleDelete(item._id)}
-                                    className="dropdown-item text-danger"
-                                  >
-                                    <i className="fa-sharp fa-solid fa-trash fa-shake"></i> Delete
-                                  </a>
-                                </div>
-                              </div>
+            ) : schedule.length === 0 ? (
+              <h3>
+                {" "}
+                <span className="profile_span">No </span>upcoming appointments
+                scheduled at the moment.
+              </h3>
+            ) : (
+              <div className="row">
+                {schedule &&
+                  schedule.map((item, idx) => (
+                    <div className="col-sm-6 col-md-6 col-lg-4" key={idx}>
+                      <div className="card bg-white p-3 mb-4 shadow">
+                        <div className="d-flex justify-content-between mb-4">
+                          <div className="user-info">
+                            <div className="user-info__img">
+                              <img
+                                src="/Image/profile.png"
+                                alt="doctor Img"
+                                width="30"
+                              />
                             </div>
-                            <h6 className="mb-0"> <i className="fa-solid fa-phone fa-bounce fa-margin"></i> {item.doctor.phoneNumber}</h6>
-                            <div>
-                            <i className="fa-solid fa-stethoscope fa-margin"></i>
-                              <small>{item.about}</small>
+                            <div className="user-info__basic">
+                              <h5 className="mb-0">{item.doctor.username}</h5>
+                              <p className="text-muted mb-0">
+                                {calculateAge(item.doctor.dob)} yrs,{" "}
+                                {item.doctor.gender}
+                              </p>
                             </div>
-                            <div className="d-flex justify-content-between mt-4">
-                              <div>
-                                <h5 className="mb-0">  
-                                <i className="fa-sharp fa-regular fa-clock fa-margin"></i>                
-                                  {item.timeOfAppointment}
-                                  <hr className="card-hr"/>
-                                  <small className="ml-1">
-                                  <i className="fa-solid fa-calendar-days fa-margin"></i>
-                                    {formatDate(item.dateOfAppointment)}
-                                  </small>
-                                </h5>
-                              </div>
-                              <Link
-                                to={`/rooms/${item.meetingId}`}
-                                className="text-success font-weight-bold btn"
-                                style={{ width: 'auto'}}
+                          </div>
+                          <div className="dropdown open">
+                            <a
+                              href="#!"
+                              className="px-2"
+                              id="triggerId1"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              <i className="fa fa-ellipsis-v"></i>
+                            </a>
+                            <div
+                              className="dropdown-menu"
+                              aria-labelledby="triggerId1"
+                            >
+                              <a
+                                onClick={() => handleScheduleDelete(item._id)}
+                                className="dropdown-item text-danger"
                               >
-                                Join
-                              </Link>
+                                <i className="fa-sharp fa-solid fa-trash fa-shake"></i>{" "}
+                                Delete
+                              </a>
                             </div>
                           </div>
                         </div>
-                      ))}
-                  </div>
-                )}
-
+                        <h6 className="mb-0">
+                          {" "}
+                          <i className="fa-solid fa-phone fa-bounce fa-margin"></i>{" "}
+                          {item.doctor.phoneNumber}
+                        </h6>
+                        <div>
+                          <i className="fa-solid fa-stethoscope fa-margin"></i>
+                          <small>{item.about}</small>
+                        </div>
+                        <div className="d-flex justify-content-between mt-4">
+                          <div>
+                            <h5 className="mb-0">
+                              <i className="fa-sharp fa-regular fa-clock fa-margin"></i>
+                              {item.timeOfAppointment}
+                              <hr className="card-hr" />
+                              <small className="ml-1">
+                                <i className="fa-solid fa-calendar-days fa-margin"></i>
+                                {formatDate(item.dateOfAppointment)}
+                              </small>
+                            </h5>
+                          </div>
+                          <Link
+                            to={`/rooms/${item.meetingId}`}
+                            className="text-success font-weight-bold btn"
+                            style={{ width: "auto" }}
+                          >
+                            Join
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
