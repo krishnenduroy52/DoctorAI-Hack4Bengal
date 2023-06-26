@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -145,6 +146,26 @@ export default function ProfilePage() {
       [name]: value,
     }));
   };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-US', options);
+
+    const day = date.getDate();
+    let suffix = 'th';
+
+    if (day === 1 || day === 21 || day === 31) {
+      suffix = 'st';
+    } else if (day === 2 || day === 22) {
+      suffix = 'nd';
+    } else if (day === 3 || day === 23) {
+      suffix = 'rd';
+    }
+
+    return `${day}${suffix} ${formattedDate}`;
+  };
+
 
   // console.log(schedule);
 
@@ -297,7 +318,7 @@ export default function ProfilePage() {
                                   aria-haspopup="true"
                                   aria-expanded="false"
                                 >
-                                  <i className="fa fa-ellipsis-v"></i>
+                                  <i className="fa-solid fa-ellipsis-vertical"></i>
                                 </a>
                                 <div
                                   className="dropdown-menu"
@@ -307,28 +328,31 @@ export default function ProfilePage() {
                                     onClick={handleScheduleDelete}
                                     className="dropdown-item text-danger"
                                   >
-                                    <i className="fa fa-trash mr-1"></i> Delete
+                                    <i className="fa-sharp fa-solid fa-trash fa-shake"></i> Delete
                                   </a>
                                 </div>
                               </div>
                             </div>
-                            <h6 className="mb-0">{item.doctor.phoneNumber}</h6>
+                            <h6 className="mb-0"> <i className="fa-solid fa-phone fa-bounce"></i> {item.doctor.phoneNumber}</h6>
                             <div>
                               <small>{item.about}</small>
                             </div>
                             <div className="d-flex justify-content-between mt-4">
                               <div>
-                                <h5 className="mb-0">
+                                <h5 className="mb-0">  
+                                <i class="fa-sharp fa-regular fa-clock fa-margin"></i>                
                                   {item.timeOfAppointment}
+                                  <hr className="card-hr"/>
                                   <small className="ml-1">
-                                    {item.dateOfAppointment}
+                                  <i class="fa-solid fa-calendar-days fa-margin"></i>
+                                    {formatDate(item.dateOfAppointment)}
                                   </small>
                                 </h5>
                               </div>
                               <Link
                                 to={`/rooms/${item.meetingId}`}
                                 className="text-success font-weight-bold btn"
-                                style={{ width: 'auto' }}
+                                style={{ width: 'auto'}}
                               >
                                 Join
                               </Link>
