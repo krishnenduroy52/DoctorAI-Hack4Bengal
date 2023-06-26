@@ -79,7 +79,10 @@ const Navbar = () => {
         {/* menu */}
         <ul className="links">
           <li className="services">
-            <a className="no-link" onClick={openServices}>Services <FontAwesomeIcon className="ml-1 w-2" icon={serviceBtnIcon} /></a>
+            <a className="no-link" onClick={openServices}>
+              Services{" "}
+              <FontAwesomeIcon className="ml-1 w-2" icon={serviceBtnIcon} />
+            </a>
             <div ref={servicesBtn} className="services_options">
               <ul>
                 {services_menu.items.map((item, index) => {
@@ -93,10 +96,13 @@ const Navbar = () => {
             </div>
           </li>
           <li>
-            <a href="about">About</a>
+            <a href="/general/chat">General</a>
           </li>
           <li>
-            <a href="contact-us">Contact Us</a>
+            <a href="/about">About</a>
+          </li>
+          <li>
+            <a href="/contact-us">Contact Us</a>
           </li>
         </ul>
         {/* signup */}
