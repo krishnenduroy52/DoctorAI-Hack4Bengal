@@ -1,5 +1,7 @@
 import React from "react";
 import TimeSlot from "../components/TimeSlot";
+import DoctorDetails from "../components/DoctorDetails";
+import doctorDetails from "../assets/json-data/doctorDetails.json";
 
 const Appointment = (props) => {
   // console.log(props);
@@ -27,7 +29,7 @@ const Appointment = (props) => {
       </div>
       <hr />
       <div>
-
+        <DoctorDetails doctors={doctorDetails} />
       </div>
     </div>
   );

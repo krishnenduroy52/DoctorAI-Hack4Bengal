@@ -30,7 +30,7 @@ function App() {
         <Route path="/rooms/:roomId" element={<Rooms />} />
         <Route path="/general/chat" element={<Chat />} />
         <Route path="/doctor" element={<DoctorDataInput/>} />
-        <Route path="/appointment" element={<Appointment about="about"/>} />
+        <Route path="/appointment" element={<Appointment about={"Lorem ipsum dolor sit amet."}/>} />
       </Routes>
     </Router>
   );
