@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -32,8 +31,33 @@ export default function ProfilePage() {
     return age;
   };
 
-  const handleScheduleDelete = () => {
-    console.log("Deleted");
+  const handleScheduleDelete = async (id) => {
+    try{
+      //Appointment schema fetching
+      const scheduleResult = await axios.get(`http://localhost:3000/appointment/${id}`);
+      const userId = scheduleResult.data.appointment.clientId;
+      const clientResult = await axios.get(`http://localhost:3000/user/${userId}`);
+      const oldSchedule = (clientResult.data.user.schedule);
+      const newSchedule = oldSchedule.filter((s) => s !== id);
+
+      await axios.put(`http://localhost:3000/user/${userId}`, {
+        schedule: newSchedule
+      });
+      const deleteAppointment = await axios.delete(`http://localhost:3000/appointment/delete/${id}`);
+      console.log(deleteAppointment.data);
+      if(deleteAppointment.data.success){
+        toast.success(deleteAppointment.data.message);
+        setUserData(prev => ({...prev, schedule: newSchedule}));
+        setSchedule(newSchedule)
+        console.log(newSchedule);
+      }
+      else{
+        toast.error(deleteAppointment.data.message);
+      }
+    }
+    catch(error){
+      console.log(error)
+    }
   };
 
   useEffect(() => {
@@ -318,14 +342,14 @@ export default function ProfilePage() {
                                   aria-haspopup="true"
                                   aria-expanded="false"
                                 >
-                                  <i className="fa-solid fa-ellipsis-vertical"></i>
+                                  <i className="fa fa-ellipsis-v"></i>
                                 </a>
                                 <div
                                   className="dropdown-menu"
                                   aria-labelledby="triggerId1"
                                 >
                                   <a
-                                    onClick={handleScheduleDelete}
+                                    onClick={() => handleScheduleDelete(item._id)}
                                     className="dropdown-item text-danger"
                                   >
                                     <i className="fa-sharp fa-solid fa-trash fa-shake"></i> Delete
@@ -333,18 +357,19 @@ export default function ProfilePage() {
                                 </div>
                               </div>
                             </div>
-                            <h6 className="mb-0"> <i className="fa-solid fa-phone fa-bounce"></i> {item.doctor.phoneNumber}</h6>
+                            <h6 className="mb-0"> <i className="fa-solid fa-phone fa-bounce fa-margin"></i> {item.doctor.phoneNumber}</h6>
                             <div>
+                            <i className="fa-solid fa-stethoscope fa-margin"></i>
                               <small>{item.about}</small>
                             </div>
                             <div className="d-flex justify-content-between mt-4">
                               <div>
                                 <h5 className="mb-0">  
-                                <i class="fa-sharp fa-regular fa-clock fa-margin"></i>                
+                                <i className="fa-sharp fa-regular fa-clock fa-margin"></i>                
                                   {item.timeOfAppointment}
                                   <hr className="card-hr"/>
                                   <small className="ml-1">
-                                  <i class="fa-solid fa-calendar-days fa-margin"></i>
+                                  <i className="fa-solid fa-calendar-days fa-margin"></i>
                                     {formatDate(item.dateOfAppointment)}
                                   </small>
                                 </h5>

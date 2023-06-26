@@ -17,11 +17,11 @@ const Home = () => {
 
     try {
       const response = await axios.post("http://localhost:3000/appointment", {
-        doctorId: "4",
+        doctorId: "6498643b433385d056ca7b9b",
         clientId: "649707673426d14bb924d2f0",
         timeOfAppointment: 10,
         dateOfAppointment: "2023-06-22",
-        about: "Follow-up checkup",
+        about: "General Checkup",
       });
 
       if (response.status === 200) {
@@ -54,7 +54,7 @@ const Home = () => {
           <p>
             Detect. Connect. Heal. Seamlessly schedule doctor meetings after disease detection, unlocking your path to optimal health.
           </p>
-          <button type="button" onClick={handleMakeAppointment}>Make Appointment</button>
+          <button type="button" onClick={handleSubmit}>Make Appointment</button>
         </div>
       </div>
 
