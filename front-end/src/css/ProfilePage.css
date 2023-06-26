@@ -150,4 +150,12 @@ a {
 .profile_span{
   color: red;
 }
+.card-hr{
+  color: blue;
+    margin: .5rem 0;
+}
+
+.fa-margin{
+  margin-right: .5rem;
+}
 
