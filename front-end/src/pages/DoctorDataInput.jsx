@@ -181,8 +181,8 @@ const DoctorDataInput = () => {
                                 onChange={handleChange}
                             >
                                 <option value="">Select</option>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </select>
                         </label>
                         <label className='label'>
