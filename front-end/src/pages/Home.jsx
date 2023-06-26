@@ -1,9 +1,15 @@
 import "../css/Home.css";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleMakeAppointment = () => {
+    navigate("/appointment"); // Redirect to the "/appointment" route
+  };
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
@@ -48,7 +54,7 @@ const Home = () => {
           <p>
             Detect. Connect. Heal. Seamlessly schedule doctor meetings after disease detection, unlocking your path to optimal health.
           </p>
-          <button type="button" onClick={handleSubmit}>Make Appointment</button>
+          <button type="button" onClick={handleMakeAppointment}>Make Appointment</button>
         </div>
       </div>
 
