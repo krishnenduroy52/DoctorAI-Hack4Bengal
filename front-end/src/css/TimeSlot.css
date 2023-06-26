@@ -1,0 +1,38 @@
+.time-slot-container {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(58, 58, 59, 0.81);
+  }
+  
+  .time-slot-list {
+    display: flex;
+  }
+  
+  .time-slot {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .time-slot-container::-webkit-scrollbar {
+    height: 5px;
+  }
+  
+  .time-slot-container::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  .time-slot-container::-webkit-scrollbar-thumb {
+    background-color: rgba(58, 58, 59, 0.81);
+  }
+  
+  .time-slot.selected {
+    background-color: lightblue;
+  }
+  

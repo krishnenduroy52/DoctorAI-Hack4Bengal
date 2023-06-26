@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import ProfilePage from "./pages/ProfilePage";
 import Chat from "./pages/Chat";
 import DoctorDataInput from "./pages/DoctorDataInput";
+import Appointment from "./pages/Appointment";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/rooms/:roomId" element={<Rooms />} />
         <Route path="/general/chat" element={<Chat />} />
         <Route path="/doctor" element={<DoctorDataInput/>} />
+        <Route path="/appointment" element={<Appointment about={"Lorem ipsum dolor sit amet."}/>} />
       </Routes>
     </Router>
   );

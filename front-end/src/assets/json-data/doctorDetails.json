@@ -1,0 +1,53 @@
+[
+    {
+      "name": "Dr. John Doe",
+      "specialty": "Cardiology",
+      "imageSrc": "https://example.com/doctor1-image.jpg"
+    },
+    {
+      "name": "Dr. Jane Smith",
+      "specialty": "Pediatrics",
+      "imageSrc": "https://example.com/doctor2-image.jpg"
+    },
+    {
+      "name": "Dr. Michael Johnson",
+      "specialty": "Dermatology",
+      "imageSrc": "https://example.com/doctor3-image.jpg"
+    },
+    {
+      "name": "Dr. Sarah Davis",
+      "specialty": "Orthopedics",
+      "imageSrc": "https://example.com/doctor4-image.jpg"
+    },
+    {
+      "name": "Dr. Robert Anderson",
+      "specialty": "Ophthalmology",
+      "imageSrc": "https://example.com/doctor5-image.jpg"
+    },
+    {
+      "name": "Dr. Emily Wilson",
+      "specialty": "Gynecology",
+      "imageSrc": "https://example.com/doctor6-image.jpg"
+    },
+    {
+      "name": "Dr. Christopher Lee",
+      "specialty": "Neurology",
+      "imageSrc": "https://example.com/doctor7-image.jpg"
+    },
+    {
+      "name": "Dr. Olivia Brown",
+      "specialty": "Psychiatry",
+      "imageSrc": "https://example.com/doctor8-image.jpg"
+    },
+    {
+      "name": "Dr. Daniel Martinez",
+      "specialty": "Family Medicine",
+      "imageSrc": "https://example.com/doctor9-image.jpg"
+    },
+    {
+      "name": "Dr. Ava Taylor",
+      "specialty": "Endocrinology",
+      "imageSrc": "https://example.com/doctor10-image.jpg"
+    }
+  ]
+  
