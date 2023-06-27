@@ -78,7 +78,7 @@ const DoctorLogin = () => {
         <img
           className="image"
           // src="./Image/doctors.gif"
-          src="/Image/Login_page_image.png"
+          src="/Image/DoctorLogin.png"
           alt="Image"
         />
       </div>
