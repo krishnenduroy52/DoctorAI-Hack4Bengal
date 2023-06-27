@@ -270,7 +270,7 @@ app.get("/appointment/:id", async (req, res) => {
     }
 });
 
-app.post("/doctorSignup", async (req, res) => {
+app.post("/doctor/signup", async (req, res) => {
     const {
         username,
         email,
@@ -306,6 +306,27 @@ app.post("/doctorSignup", async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+app.post('/doctor/login', async(req, res) => {
+    const {username, password} = req.body;
+    try{
+        const doct = await Doctor.findOne({ username });
+        if (!doct){
+            return res.status(404).json({ message: "Doctor not found", success: false });
+        }
+        const isPasswordValid = await bcrypt.compare(password, doct.password);
+
+        if (!isPasswordValid) {
+            // Invalid password
+            return res.status(401).json({ message: "Incorrect password" , success: false});
+        }
+        res
+        .status(200)
+        .json({ message: "Doctor logged in successfully!", success: true, user: doct._id });
+    }catch(error){
+
+    }
+})
 
 app.get("/doctor/details/:id", async (req, res) => {
     const doctorId = req.params.id;
