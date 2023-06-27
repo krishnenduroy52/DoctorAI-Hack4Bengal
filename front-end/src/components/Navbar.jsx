@@ -40,6 +40,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("doctor_ai_userID");
+    localStorage.removeItem("doctor_ai_isDoc");
     setIsLogin(false);
     window.location.href = "/";
   };

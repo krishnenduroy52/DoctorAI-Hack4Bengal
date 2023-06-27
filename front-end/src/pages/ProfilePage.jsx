@@ -65,7 +65,13 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
+    const isDoc = localStorage.getItem("doctor_ai_isDoc");
+    if (isDoc == "1") {
+      navigate("/doctor/dashboard");
+      return;
+    }
     const userId = localStorage.getItem("doctor_ai_userID");
+
     if (userId) {
       fetchUserData(userId);
     } else {

@@ -12,13 +12,6 @@ const DoctorLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   const userId = localStorage.getItem("doctor_ai_userID");
-  //   if (userId) {
-  //     navigate("/");
-  //   }
-  // });
-
   const validateForm = () => {
     if (username.length < 3) {
       toast.error("Username must be of at least 3 characters");
@@ -40,34 +33,33 @@ const DoctorLogin = () => {
           username,
           password,
         });
-        if(res.data.success){
-          localStorage.setItem("doctor_ai_doctorID", res.data.user);
-        toast.success(res.data.message);
-        // Navigate to the profile page
-        navigate("/doctor/dashboard");
-        }
-        else{
+        if (res.data.success) {
+          localStorage.setItem("doctor_ai_userID", res.data.user);
+          localStorage.setItem("doctor_ai_isDoc", "1");
+          toast.success(res.data.message);
+          // Navigate to the profile page
+          navigate("/doctor/dashboard");
+        } else {
           toast.error(res.data.message);
         }
-        
       } catch (error) {
         console.log(error);
-      //   if (
-      //     error.response &&
-      //     error.response.data &&
-      //     error.response.data.error === "Incorrect password"
-      //   ) {
-      //     toast.error("Incorrect password!");
-      //   } else if (
-      //     error.response &&
-      //     error.response.data &&
-      //     error.response.data.error === "User not found"
-      //   ) {
-      //     toast.error("Incorrect username password");
-      //   } else {
-      //     // If the login request encounters an error, show an error toast message
-      //     toast.error("An error occurred while logging in.");
-      //   }
+        //   if (
+        //     error.response &&
+        //     error.response.data &&
+        //     error.response.data.error === "Incorrect password"
+        //   ) {
+        //     toast.error("Incorrect password!");
+        //   } else if (
+        //     error.response &&
+        //     error.response.data &&
+        //     error.response.data.error === "User not found"
+        //   ) {
+        //     toast.error("Incorrect username password");
+        //   } else {
+        //     // If the login request encounters an error, show an error toast message
+        //     toast.error("An error occurred while logging in.");
+        //   }
       }
     }
   };
