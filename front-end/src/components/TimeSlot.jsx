@@ -3,11 +3,10 @@ import timeSlots from "../assets/json-data/timeSlots.json";
 import "../css/TimeSlot.css";
 
 
-const TimeSlot = () => {
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+const TimeSlot = ({setTime, time}) => {
 
   const handleTimeSlotClick = (timeSlot) => {
-    setSelectedTimeSlot(timeSlot.label);
+    setTime(timeSlot.label);
   };
 
   return (
@@ -18,13 +17,13 @@ const TimeSlot = () => {
           <div
             key={index}
             onClick={() => handleTimeSlotClick(timeSlot)}
-            className={`time-slot ${selectedTimeSlot === timeSlot.label ? 'selected' : ''}`}
+            className={`time-slot ${time === timeSlot.label ? 'selected' : ''}`}
           >
             {timeSlot.label}
           </div>
         ))}
       </div>
-      <p>Selected time slot: {selectedTimeSlot || 'None'}</p>
+      <p>Selected time slot: <span>{time || '--:-- --'}</span></p>
     </div>
   );
 };
