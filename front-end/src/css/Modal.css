@@ -14,12 +14,12 @@
   align-items: center;
 }
 
-.modal {
+.modal_custom {
   min-width: 700px;
   min-height: 450px;
   background: white;
   border-radius: 5px;
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   position: relative;
