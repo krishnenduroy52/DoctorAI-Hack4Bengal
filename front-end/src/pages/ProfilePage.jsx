@@ -38,6 +38,7 @@ export default function ProfilePage() {
         `http://localhost:3000/appointment/${id}`
       );
       const userId = scheduleResult.data.appointment.clientId;
+      const doctorId = scheduleResult.data.appointment.doctorId;
       const clientResult = await axios.get(
         `http://localhost:3000/user/${userId}`
       );

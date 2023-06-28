@@ -8,14 +8,20 @@ import "react-toastify/dist/ReactToastify.css";
 // import doctorDetails from "../assets/json-data/doctorDetails.json";
 import "../css/Appointment.css";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
-const Appointment = ({ about }) => {
+const Appointment = () => {
   const dateInputRef = useRef(null);
   const [time, setTime] = useState(null);
   const [userID, setUserID] = useState("");
   const [doctorID, setDoctorID] = useState(null);
   const [userData, setUserData] = useState(null);
   const [doctorDetails, setDoctorDetails] = useState(null);
+  
+
+  const location = useLocation();
+  console.log(location.state);
+  const [about, setAbout] = useState(location.state !== null ? location.state.about : "");
 
   const calculateAge = (dateString) => {
     const birthDate = new Date(dateString);
@@ -85,6 +91,31 @@ const Appointment = ({ about }) => {
     }
   };
 
+
+  const handleSubmit = async (ev) => {
+    ev.preventDefault();
+    console.log("Appointment button clicked");
+    
+    try {
+      const response = await axios.post(`http://localhost:3000/appointment`, {
+        doctorId: doctorID,
+        clientId: userID,
+        timeOfAppointment: time,
+        dateOfAppointment: dateInputRef.current.value,
+        about: about,
+      });
+
+      if (response.status === 200) {
+        toast.success("Appointment booked successfully");
+      } else {
+        toast.error("Failed to book appointment");
+      }
+    } catch (error) {
+      console.log("Error", error);
+      toast.error("An error occurred");
+    }
+  };
+
   return (
     <div className="appointment_container">
       <h1 className="main_heading">Make Appointment</h1>
@@ -100,7 +131,7 @@ const Appointment = ({ about }) => {
             </h2>
           </div>
         )}
-        <button>Confirm Appointment</button>
+        <button onClick={handleSubmit}>Confirm Appointment</button>
       </div>
       <hr />
       <div className="book_time_container">

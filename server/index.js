@@ -214,7 +214,6 @@ app.post("/appointment", async (req, res) => {
   const {
     doctorId,
     clientId,
-    meetingId,
     timeOfAppointment,
     dateOfAppointment,
     about,
@@ -242,6 +241,13 @@ app.post("/appointment", async (req, res) => {
     }
     user.schedule.push(appointmentId);
     await user.save();
+
+    const doctor = await Doctor.findById(doctorId);
+    if(!doctor) {
+      return res.status(404).json({error: "Doctor not found"})
+    }
+    doctor.schedule.push(appointmentId);
+    await doctor.save();
 
     // Send a success response
     res.status(200).json({ message: "Appointment created successfully" });
