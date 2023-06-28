@@ -49,7 +49,8 @@ export default function ProfilePage() {
         schedule: newSchedule,
       });
       const deleteAppointment = await axios.delete(
-        `http://localhost:3000/appointment/delete/${id}`
+        `http://localhost:3000/appointment/delete/${id}`,
+        { data: { doctorId } }
       );
       console.log(deleteAppointment.data);
       if (deleteAppointment.data.success) {
