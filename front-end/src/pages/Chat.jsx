@@ -17,14 +17,22 @@ function Chat() {
     const response = await axios.post("http://localhost:3000/completion", {
       prompt: input,
     });
-    // const gptAnswer = prompt("Enter the gpt asnwer");
-    // console.log(gptAnswer);
     setChats((chats) => [
       ...chats,
       { user: "gpt", chat: response.data.choices[0].message.content },
-      // { user: "gpt", chat: gptAnswer },
     ]);
   };
+
+  // Test UI with handel submit
+  // const handelSumbit = async (e) => {
+  //   e.preventDefault();
+  //   const chatLog = [...chats, { user: "me", chat: input }];
+  //   setChats(chatLog);
+  //   setInput("");
+  //   const gptAnswer = prompt("Enter the gpt asnwer");
+  //   console.log(gptAnswer);
+  //   setChats((chats) => [...chats, { user: "gpt", chat: gptAnswer }]);
+  // };
 
   const clearChat = () => {
     setChats([]);
@@ -135,7 +143,7 @@ function Chat() {
           <div className="chatBox">
             <form onSubmit={handelSumbit}>
               <textarea
-                placeholder="Type a message and hit enter....."
+                placeholder="Type a message and Hit Enter..."
                 type="text"
                 value={input}
                 className="inField"

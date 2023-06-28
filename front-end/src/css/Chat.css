@@ -14,6 +14,7 @@
   height: 88.5vh;
   display: flex;
   border-radius: 10px;
+  margin-bottom: 50px;
   -webkit-box-shadow: -2px -2px 26px 0px rgba(100, 100, 100, 0.75);
   -moz-box-shadow: -2px -2px 26px 0px rgba(100, 100, 100, 0.75);
   box-shadow: -2px -2px 20px 0px rgba(100, 100, 100, 0.75);
