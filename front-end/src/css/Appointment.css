@@ -99,6 +99,9 @@
   white-space: nowrap;
   scrollbar-width: thin;
 }
+.main_chat::-webkit-scrollbar {
+  width: 0;
+}
 
 .card-container::-webkit-scrollbar {
   height: 5px;
