@@ -41,8 +41,8 @@ const Login = () => {
           username,
           password,
         });
-        console.log(res.data);
         localStorage.setItem("doctor_ai_userID", res.data.user);
+        localStorage.setItem("doctor_ai_isDoc", "0");
         // If the login request is successful, show a success toast message
         toast.success("User logged in successfully!");
         // Navigate to the profile page

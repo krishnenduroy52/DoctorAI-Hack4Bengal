@@ -38,6 +38,7 @@ export default function ProfilePage() {
         `http://localhost:3000/appointment/${id}`
       );
       const userId = scheduleResult.data.appointment.clientId;
+      const doctorId = scheduleResult.data.appointment.doctorId;
       const clientResult = await axios.get(
         `http://localhost:3000/user/${userId}`
       );
@@ -65,7 +66,13 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
+    const isDoc = localStorage.getItem("doctor_ai_isDoc");
+    if (isDoc == "1") {
+      navigate("/doctor/dashboard");
+      return;
+    }
     const userId = localStorage.getItem("doctor_ai_userID");
+
     if (userId) {
       fetchUserData(userId);
     } else {

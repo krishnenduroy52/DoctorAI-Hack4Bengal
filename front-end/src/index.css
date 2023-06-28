@@ -1,5 +1,14 @@
 * {
-    font-family: inter;
+    font-family: inter !important;
     margin: 0;
     padding: 0;
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgba(58, 58, 59, 0.81);
 }

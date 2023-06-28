@@ -2,6 +2,7 @@ import React from "react";
 import "../css/Modal.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { Link } from "react-router-dom";
 
 export default function Modal({
   show,
@@ -13,7 +14,7 @@ export default function Modal({
 }) {
   return (
     <div className="modalWrapper">
-      <div className="modal">
+      <div className="modal_custom">
         <button onClick={onClose} className="btnClose btn-close" />
         <div className="mainContainer">
           <img src={img} alt="" className="main__img" />
@@ -46,13 +47,14 @@ export default function Modal({
               <button className="Thanks__btn btnGive" onClick={onClose}>
                 No Thanks
               </button>
-              <button
+              <Link
                 className="btnGive shop__btnGive"
                 style={{ backgroundColor: "black" }}
                 onClick={onClose}
+                to="/appointment"
               >
                 Appointment
-              </button>
+              </Link>
             </div>
             <p className="nointerest" onClick={onClose}></p>
           </div>
