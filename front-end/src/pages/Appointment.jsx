@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import doctorDetails from "../assets/json-data/doctorDetails.json";
 import "../css/Appointment.css";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Appointment = () => {
   const dateInputRef = useRef(null);
@@ -18,6 +18,7 @@ const Appointment = () => {
   const [userData, setUserData] = useState(null);
   const [doctorDetails, setDoctorDetails] = useState(null);
   
+  const navigate = useNavigate();
 
   const location = useLocation();
   console.log(location.state);
@@ -95,6 +96,15 @@ const Appointment = () => {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     console.log("Appointment button clicked");
+
+    if(!doctorID) {
+      toast.error("Doctor is a required field");
+      return;
+    } 
+    if(!time || !dateInputRef.current.value) {
+      toast.error("Time and Date are required fields");
+      return;
+    }
     
     try {
       const response = await axios.post(`http://localhost:3000/appointment`, {
@@ -148,7 +158,9 @@ const Appointment = () => {
             required
           />
           <TimeSlot setTime={setTime} time={time} />
-          <p>{about}</p>
+          {/* <hr/> */}
+          <label htmlFor="about-input">About: </label>
+          <textarea id="about-input" type="text" value={about} onChange={(e) => {setAbout(e.target.value)}}/>
         </div>
       </div>
       <hr />
@@ -217,8 +229,8 @@ const Appointment = () => {
                   <div className="specialization">
                     <i className="fa-solid fa-stethoscope fa-margin"></i>
                     <div className="specialization-container">
-                      {item.specialization.map((sp) => (
-                        <small className="specialization-item">{sp}</small>
+                      {item.specialization.map((sp, index) => (
+                        <small key={index} className="specialization-item">{sp}</small>
                       ))}
                     </div>
                   </div>

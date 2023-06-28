@@ -15,6 +15,7 @@
   .time-slot-container > p > span {
     border: 2px solid #666;
     padding: 3px;
+    border-radius: 10px;
   }
   
   .time-slot-list {
@@ -22,7 +23,7 @@
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: thin;
-    padding: 5px 0;
+    padding: 15px 0;
     scrollbar-color: rgba(58, 58, 59, 0.81);
   }
   
