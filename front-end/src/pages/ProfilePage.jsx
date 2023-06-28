@@ -5,6 +5,19 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhone,
+  faStethoscope,
+  faCalendarDays,
+  faClock,
+  faEllipsisVertical,
+  faTrashCan,
+  faPenToSquare,
+  faFloppyDisk,
+  faCircleInfo,
+  faCalendarPlus
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -38,7 +51,6 @@ export default function ProfilePage() {
         `http://localhost:3000/appointment/${id}`
       );
       const userId = scheduleResult.data.appointment.clientId;
-      const doctorId = scheduleResult.data.appointment.doctorId;
       const clientResult = await axios.get(
         `http://localhost:3000/user/${userId}`
       );
@@ -49,8 +61,7 @@ export default function ProfilePage() {
         schedule: newSchedule,
       });
       const deleteAppointment = await axios.delete(
-        `http://localhost:3000/appointment/delete/${id}`,
-        { data: { doctorId } }
+        `http://localhost:3000/appointment/delete/${id}`
       );
       console.log(deleteAppointment.data);
       if (deleteAppointment.data.success) {
@@ -67,13 +78,7 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    const isDoc = localStorage.getItem("doctor_ai_isDoc");
-    if (isDoc == "1") {
-      navigate("/doctor/dashboard");
-      return;
-    }
     const userId = localStorage.getItem("doctor_ai_userID");
-
     if (userId) {
       fetchUserData(userId);
     } else {
@@ -169,7 +174,7 @@ export default function ProfilePage() {
         return prev;
       });
       setIsLoading(false);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleChange = (e) => {
@@ -219,7 +224,7 @@ export default function ProfilePage() {
       <section className="profile-right-pannel">
         <div className="right-container">
           <div className="personal-info">
-            <h2>My Details</h2>
+            <h2>My Details {" "} <FontAwesomeIcon icon={faCircleInfo} style={{}}/></h2>
             <p>Personal Information</p>
             <hr />
             <div className="personal-info-container">
@@ -296,10 +301,12 @@ export default function ProfilePage() {
                 <div className="save_edit_container">
                   {isEditMode ? (
                     <button onClick={handleSave} className="save_edit">
+                      <FontAwesomeIcon icon={faFloppyDisk} />{" "}
                       Save
                     </button>
                   ) : (
                     <button onClick={handleEdit} className="save_edit">
+                      <FontAwesomeIcon icon={faPenToSquare} />{" "}
                       Edit
                     </button>
                   )}
@@ -308,7 +315,7 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="schedule-info">
-            <h2>My Schedules</h2>
+            <h2>My Schedules{" "}<FontAwesomeIcon icon={faCalendarPlus} /></h2>
             <p>Meeting Information</p>
             <hr />
             {isLoading ? (
@@ -359,7 +366,7 @@ export default function ProfilePage() {
                               aria-haspopup="true"
                               aria-expanded="false"
                             >
-                              <i className="fa fa-ellipsis-v"></i>
+                              <FontAwesomeIcon icon={faEllipsisVertical} />
                             </a>
                             <div
                               className="dropdown-menu"
@@ -369,7 +376,7 @@ export default function ProfilePage() {
                                 onClick={() => handleScheduleDelete(item._id)}
                                 className="dropdown-item text-danger"
                               >
-                                <i className="fa-sharp fa-solid fa-trash fa-shake"></i>{" "}
+                                <FontAwesomeIcon icon={faTrashCan} shake />{" "}
                                 Delete
                               </a>
                             </div>
@@ -377,28 +384,28 @@ export default function ProfilePage() {
                         </div>
                         <h6 className="mb-0">
                           {" "}
-                          <i className="fa-solid fa-phone fa-bounce fa-margin"></i>{" "}
+                          <FontAwesomeIcon className="fa-margin" icon={faPhone} bounce />{" "}
                           {item.doctor.phoneNumber}
                         </h6>
                         <div>
-                          <i className="fa-solid fa-stethoscope fa-margin"></i>
+                          <FontAwesomeIcon className="fa-margin" icon={faStethoscope} />
                           <small>{item.about}</small>
                         </div>
                         <div className="d-flex justify-content-between mt-4">
                           <div>
                             <h5 className="mb-0">
-                              <i className="fa-sharp fa-regular fa-clock fa-margin"></i>
+                              <FontAwesomeIcon className="fa-margin" icon={faClock} spin />
                               {item.timeOfAppointment}
                               <hr className="card-hr" />
                               <small className="ml-1">
-                                <i className="fa-solid fa-calendar-days fa-margin"></i>
+                                <FontAwesomeIcon className="fa-margin" icon={faCalendarDays} />
                                 {formatDate(item.dateOfAppointment)}
                               </small>
                             </h5>
                           </div>
                           <Link
                             to={`/rooms/${item.meetingId}`}
-                            className="text-success font-weight-bold btn"
+                            className="text-success font-weight-bold btn join-room-btn"
                             style={{ width: "auto" }}
                           >
                             Join

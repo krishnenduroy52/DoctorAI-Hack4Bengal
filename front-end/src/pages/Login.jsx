@@ -5,7 +5,10 @@ import "../css/Signup.css";
 import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faRightToBracket
+} from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -115,7 +118,7 @@ const Login = () => {
               className="action_btn"
               onClick={handleSubmitForm}
             >
-              Login
+              Login {" "} <FontAwesomeIcon icon={faRightToBracket} />
             </button>
           </div>
           <p className="already-account">

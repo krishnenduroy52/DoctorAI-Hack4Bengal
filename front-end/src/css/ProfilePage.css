@@ -161,3 +161,12 @@ a {
 .fa-margin {
   margin-right: 0.5rem;
 }
+
+.join-room-btn{
+  background-color: transparent !important;
+}
+
+.join-room-btn:hover{
+  background-color: rgba(128, 128, 128, 0.43) !important;
+  font-weight: 600;
+}
