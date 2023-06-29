@@ -86,7 +86,24 @@
   width: 70%;
 }
 
+.book_time > input{
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid #666;
+  border-radius: 10px;
+}
+
+.book_time > textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #666;
+  border-radius: 10px;
+}
+
+
 .book_time > label {
+  margin-top: 15px;
   font-size: clamp(1rem, calc(3vw - 6px), 1.4rem);
   font-weight: 500;
 }
@@ -152,6 +169,7 @@
 .specialization {
   display: flex;
   align-items: center;
+  margin-top: .5rem;
 }
 
 .doctorContainer {

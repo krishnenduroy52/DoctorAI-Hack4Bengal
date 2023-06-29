@@ -40,8 +40,8 @@
   padding: 1em 2.1em 1.1em;
   border-radius: 4px;
   margin: 8px 8px 8px 0;
-  border: 2px solid #016cff;
-  background-color: #016cff;
+  border: 2px solid #0a6ebd;
+  background-color: #0a6ebd;
   color: #fff;
   font-weight: 800;
   font-size: 0.85em;
@@ -53,7 +53,7 @@
 
 .topBody .appointment-btn:hover {
   background-color: transparent;
-  color: #016cff;
+  color: #0a6ebd;
   cursor: pointer;
 }
 

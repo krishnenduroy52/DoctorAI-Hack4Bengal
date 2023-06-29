@@ -4,6 +4,9 @@ import {
   faXmark,
   faAngleUp,
   faAngleDown,
+  faUser,
+  faRightFromBracket,
+
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -114,12 +117,13 @@ const Navbar = () => {
         ) : (
           <div className="profile_dropdown">
             <button className="action_btn" onClick={toggleProfileDropdown}>
+            <FontAwesomeIcon className="fa-margin" icon={faUser} />
               Profile
             </button>
             {showProfileDropdown && (
               <div className="profile_dropdown_content">
                 <Link to="/profile">View Profile</Link>
-                <Link onClick={handleLogout}>Logout</Link>
+                <Link onClick={handleLogout}> <FontAwesomeIcon className="fa-margin" icon={faRightFromBracket} /> Logout</Link>
               </div>
             )}
           </div>
