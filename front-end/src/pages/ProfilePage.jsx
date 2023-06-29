@@ -68,6 +68,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const isDoc = localStorage.getItem("doctor_ai_isDoc");
+    // Doctor redirect to /doctor/dashboard
     if (isDoc == "1") {
       navigate("/doctor/dashboard");
       return;
