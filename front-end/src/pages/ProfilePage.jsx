@@ -359,7 +359,7 @@ export default function ProfilePage() {
                           <div className="user-info">
                             <div className="user-info__img">
                               <img
-                                src="/Image/profile.png"
+                                src="/Image/doctor.png"
                                 alt="doctor Img"
                                 width="30"
                               />
