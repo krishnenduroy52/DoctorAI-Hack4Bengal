@@ -7,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 
+import { userSignupRoute } from '../utils/APIRoutes';
+
 const Signup = () => {
     const [state, setState] = useState({
         username: '',
@@ -102,7 +104,7 @@ const Signup = () => {
 
         try {
             const hashedPassword = await bcrypt.hash(password, 10);
-            await axios.post("http://localhost:3000/signup", {
+            await axios.post(userSignupRoute , {
                 username,
                 email,
                 phoneNumber,

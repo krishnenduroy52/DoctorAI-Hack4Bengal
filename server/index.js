@@ -20,7 +20,7 @@ mongoose
     bufferCommands: false,
   })
   .then(() => {
-    console.log("Connection successful");
+    console.log("Connection successful via Mongo DB Atlas");
   })
   .catch((err) => {
     console.log(err);

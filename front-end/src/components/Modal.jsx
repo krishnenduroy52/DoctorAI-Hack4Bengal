@@ -52,6 +52,7 @@ export default function Modal({
                 style={{ backgroundColor: "black" }}
                 onClick={onClose}
                 to="/appointment"
+                state={{about: `Issue ${bigText}, prediction ${percentage}%. We need doctor's assistance.`}}
               >
                 Appointment
               </Link>
