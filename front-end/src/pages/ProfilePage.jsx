@@ -5,19 +5,19 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import {
-//   faPhone,
-//   faStethoscope,
-//   faCalendarDays,
-//   faClock,
-//   faEllipsisVertical,
-//   faTrashCan,
-//   faPenToSquare,
-//   faFloppyDisk,
-//   faCircleInfo,
-//   faCalendarPlus,
-// } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhone,
+  faStethoscope,
+  faCalendarDays,
+  faClock,
+  faEllipsisVertical,
+  faTrashCan,
+  faPenToSquare,
+  faFloppyDisk,
+  faCircleInfo,
+  faCalendarPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -232,7 +232,7 @@ export default function ProfilePage() {
       <section className="profile-right-pannel">
         <div className="right-container">
           <div className="personal-info">
-            <h2>My Details</h2>
+            <h2>My Details {" "} <FontAwesomeIcon icon={faCircleInfo} style={{}}/></h2>
             <p>Personal Information</p>
             <hr />
             <div className="personal-info-container">
@@ -309,10 +309,12 @@ export default function ProfilePage() {
                 <div className="save_edit_container">
                   {isEditMode ? (
                     <button onClick={handleSave} className="save_edit">
+                      <FontAwesomeIcon icon={faFloppyDisk} />{" "}
                       Save
                     </button>
                   ) : (
                     <button onClick={handleEdit} className="save_edit">
+                      <FontAwesomeIcon icon={faPenToSquare} />{" "}
                       Edit
                     </button>
                   )}
@@ -321,7 +323,7 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="schedule-info">
-            <h2>My Schedules</h2>
+            <h2>My Schedules{" "}<FontAwesomeIcon icon={faCalendarPlus} /></h2>
             <p>Meeting Information</p>
             <hr />
             {isLoading ? (
@@ -372,7 +374,7 @@ export default function ProfilePage() {
                               aria-haspopup="true"
                               aria-expanded="false"
                             >
-                              <i className="fa fa-ellipsis-v"></i>
+                              <FontAwesomeIcon icon={faEllipsisVertical} />
                             </a>
                             <div
                               className="dropdown-menu"
@@ -382,28 +384,29 @@ export default function ProfilePage() {
                                 onClick={() => handleScheduleDelete(item._id)}
                                 className="dropdown-item text-danger"
                               >
-                                <i className="fa-sharp fa-solid fa-trash fa-shake"></i>{" "}
+                                <FontAwesomeIcon icon={faTrashCan} shake />{" "}
                                 Delete
                               </a>
                             </div>
                           </div>
                         </div>
                         <h6 className="mb-0">
-                          <i className="fa-solid fa-phone fa-bounce fa-margin"></i>
+                          {" "}
+                          <FontAwesomeIcon className="fa-margin" icon={faPhone} bounce />{" "}
                           {item.doctor.phoneNumber}
                         </h6>
                         <div>
-                          <i className="fa-solid fa-stethoscope fa-margin"></i>
+                          <FontAwesomeIcon className="fa-margin" icon={faStethoscope} />
                           <small>{item.about}</small>
                         </div>
                         <div className="d-flex justify-content-between mt-4">
                           <div>
                             <h5 className="mb-0">
-                              <i className="fa-sharp fa-regular fa-clock fa-margin"></i>
+                              <FontAwesomeIcon className="fa-margin" icon={faClock} spin />
                               {item.timeOfAppointment}
                               <hr className="card-hr" />
                               <small className="ml-1">
-                                <i className="fa-solid fa-calendar-days fa-margin"></i>
+                                <FontAwesomeIcon className="fa-margin" icon={faCalendarDays} />
                                 {formatDate(item.dateOfAppointment)}
                               </small>
                             </h5>
