@@ -211,7 +211,7 @@ export default function DoctorDashboard() {
     <div className="profile-main">
       <aside className="profile-left-panel">
         <div className="pbtn active profile">
-          <img src="/Image/profile.png" alt="profile" />
+          <img src="/Image/doctor.png" alt="profile" />
           <div className="name">
             <p>
               {isEditMode
@@ -345,7 +345,7 @@ export default function DoctorDashboard() {
                           <div className="user-info">
                             <div className="user-info__img">
                               <img
-                                src="/Image/profile.png"
+                                src="/Image/doctor.png"
                                 alt="doctor Img"
                                 width="30"
                               />
