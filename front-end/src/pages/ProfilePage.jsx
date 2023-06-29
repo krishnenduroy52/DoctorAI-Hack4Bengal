@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
+import { getUserDataRoute } from '../utils/APIRoutes'
 import "bootstrap/dist/css/bootstrap.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -95,7 +96,7 @@ export default function ProfilePage() {
 
   const fetchUserData = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:3000/user/${userId}`);
+      const response = await fetch(getUserDataRoute(userId));
       const data = await response.json();
       if (response.ok) {
         setUserData(data.user);
@@ -208,10 +209,17 @@ export default function ProfilePage() {
       suffix = "rd";
     }
 
-    return `${day}${suffix} ${formattedDate}`;
+    const today = new Date();
+    const differenceInTime = date.getTime() - today.getTime();
+    const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+    if (differenceInDays <= 5){
+      return `${formattedDate} (In ${differenceInDays} days)`;
+    }
+    else{
+      return `${formattedDate}`;
+    }
+    // return `${day}${suffix} ${formattedDate}`;
   };
-
-  // console.log(schedule);
 
   return (
     <div className="profile-main">

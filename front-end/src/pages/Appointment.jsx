@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/Appointment.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { doctorDetailsRoute, appointmentRoute } from '../utils/APIRoutes'
 
 const Appointment = () => {
   const dateInputRef = useRef(null);
@@ -66,7 +67,7 @@ const Appointment = () => {
 
   const fetchDoctorData = async () => {
     try {
-      const doctors = await axios.get(`http://localhost:3000/doctor/details`);
+      const doctors = await axios.get(doctorDetailsRoute);
       console.log(doctors.data);
       setDoctorDetails(doctors.data);
     } catch (error) {
@@ -107,7 +108,7 @@ const Appointment = () => {
     }
     
     try {
-      const response = await axios.post(`http://localhost:3000/appointment`, {
+      const response = await axios.post(appointmentRoute, {
         doctorId: doctorID,
         clientId: userID,
         timeOfAppointment: time,
@@ -117,6 +118,7 @@ const Appointment = () => {
 
       if (response.status === 200) {
         toast.success("Appointment booked successfully");
+        navigate("/profile");
       } else {
         toast.error("Failed to book appointment");
       }
