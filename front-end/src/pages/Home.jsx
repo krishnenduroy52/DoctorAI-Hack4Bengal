@@ -24,7 +24,7 @@ const Home = () => {
               Detect. Connect. Heal. Seamlessly schedule doctor meetings after
               disease detection, unlocking your path to optimal health.
             </p>
-            <Link type="button" to="/appointment" className="appointment-btn" state={{about: "This is for testing from home"}}>
+            <Link type="button" to="/appointment" className="appointment-btn" state={{about: "General queries regarding health "}}>
               Make Appointment
             </Link>
           </div>

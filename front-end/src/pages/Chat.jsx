@@ -74,7 +74,7 @@ function Chat() {
             </svg>
             Clear Chat
           </button>
-          <Link className="btn" to="/appointment">
+          <Link className="btn" to="/appointment" state={{about: "General queries regarding health "}}>
             {/* Plus svg */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
