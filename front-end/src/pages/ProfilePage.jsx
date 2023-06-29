@@ -4,21 +4,20 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
-import { getUserDataRoute } from '../utils/APIRoutes'
 import "bootstrap/dist/css/bootstrap.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPhone,
-  faStethoscope,
-  faCalendarDays,
-  faClock,
-  faEllipsisVertical,
-  faTrashCan,
-  faPenToSquare,
-  faFloppyDisk,
-  faCircleInfo,
-  faCalendarPlus
-} from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faPhone,
+//   faStethoscope,
+//   faCalendarDays,
+//   faClock,
+//   faEllipsisVertical,
+//   faTrashCan,
+//   faPenToSquare,
+//   faFloppyDisk,
+//   faCircleInfo,
+//   faCalendarPlus,
+// } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -52,24 +51,16 @@ export default function ProfilePage() {
         `http://localhost:3000/appointment/${id}`
       );
       const userId = scheduleResult.data.appointment.clientId;
-      const clientResult = await axios.get(
-        `http://localhost:3000/user/${userId}`
-      );
-      const oldSchedule = clientResult.data.user.schedule;
-      const newSchedule = oldSchedule.filter((s) => s !== id);
-
-      await axios.put(`http://localhost:3000/user/${userId}`, {
-        schedule: newSchedule,
-      });
+      const doctorId = scheduleResult.data.appointment.doctorId;
       const deleteAppointment = await axios.delete(
-        `http://localhost:3000/appointment/delete/${id}`
+        `http://localhost:3000/appointment/delete/${id}`,
+        { data: { doctorId, userId } }
       );
       console.log(deleteAppointment.data);
       if (deleteAppointment.data.success) {
         toast.success(deleteAppointment.data.message);
-        setUserData((prev) => ({ ...prev, schedule: newSchedule }));
         setSchedule([]);
-        newSchedule.forEach((s) => fetchAppointmentDetails(s));
+        fetchUserData(userId);
       } else {
         toast.error(deleteAppointment.data.message);
       }
@@ -80,7 +71,6 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const isDoc = localStorage.getItem("doctor_ai_isDoc");
-    // Doctor redirect to /doctor/dashboard
     if (isDoc == "1") {
       navigate("/doctor/dashboard");
       return;
@@ -96,11 +86,15 @@ export default function ProfilePage() {
 
   const fetchUserData = async (userId) => {
     try {
-      const response = await fetch(getUserDataRoute(userId));
+      const response = await fetch(`http://localhost:3000/user/${userId}`);
       const data = await response.json();
       if (response.ok) {
         setUserData(data.user);
-        data.user.schedule.map((s) => fetchAppointmentDetails(s));
+        console.log("User schedule");
+        console.log(data.user.schedule);
+        if (data.user.schedule.length != 0) {
+          data.user.schedule.map((s) => fetchAppointmentDetails(s));
+        } else setSchedule([]);
         toast.success("Successfully fetched user data.");
       } else {
         toast.error("Error retrieving user data"); // Display toast error
@@ -174,7 +168,7 @@ export default function ProfilePage() {
       setSchedule((prev) => {
         let isAlreadyScheduled = false;
         prev.forEach((item) =>
-          item._id == appointment._id ? (isAlreadyScheduled = true) : null
+          item._id === appointment._id ? (isAlreadyScheduled = true) : null
         );
         if (!isAlreadyScheduled) {
           return [...prev, { ...appointment, doctor: doc }];
@@ -182,7 +176,7 @@ export default function ProfilePage() {
         return prev;
       });
       setIsLoading(false);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleChange = (e) => {
@@ -212,14 +206,13 @@ export default function ProfilePage() {
     const today = new Date();
     const differenceInTime = date.getTime() - today.getTime();
     const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
-    if (differenceInDays <= 5){
+    if (differenceInDays <= 5) {
       return `${formattedDate} (In ${differenceInDays} days)`;
     }
-    else{
-      return `${formattedDate}`;
-    }
-    // return `${day}${suffix} ${formattedDate}`;
+    return `${formattedDate}`;
   };
+
+  // console.log(schedule);
 
   return (
     <div className="profile-main">
@@ -239,7 +232,7 @@ export default function ProfilePage() {
       <section className="profile-right-pannel">
         <div className="right-container">
           <div className="personal-info">
-            <h2>My Details {" "} <FontAwesomeIcon icon={faCircleInfo} style={{}}/></h2>
+            <h2>My Details</h2>
             <p>Personal Information</p>
             <hr />
             <div className="personal-info-container">
@@ -316,12 +309,10 @@ export default function ProfilePage() {
                 <div className="save_edit_container">
                   {isEditMode ? (
                     <button onClick={handleSave} className="save_edit">
-                      <FontAwesomeIcon icon={faFloppyDisk} />{" "}
                       Save
                     </button>
                   ) : (
                     <button onClick={handleEdit} className="save_edit">
-                      <FontAwesomeIcon icon={faPenToSquare} />{" "}
                       Edit
                     </button>
                   )}
@@ -330,7 +321,7 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="schedule-info">
-            <h2>My Schedules{" "}<FontAwesomeIcon icon={faCalendarPlus} /></h2>
+            <h2>My Schedules</h2>
             <p>Meeting Information</p>
             <hr />
             {isLoading ? (
@@ -381,7 +372,7 @@ export default function ProfilePage() {
                               aria-haspopup="true"
                               aria-expanded="false"
                             >
-                              <FontAwesomeIcon icon={faEllipsisVertical} />
+                              <i className="fa fa-ellipsis-v"></i>
                             </a>
                             <div
                               className="dropdown-menu"
@@ -391,29 +382,28 @@ export default function ProfilePage() {
                                 onClick={() => handleScheduleDelete(item._id)}
                                 className="dropdown-item text-danger"
                               >
-                                <FontAwesomeIcon icon={faTrashCan} shake />{" "}
+                                <i className="fa-sharp fa-solid fa-trash fa-shake"></i>{" "}
                                 Delete
                               </a>
                             </div>
                           </div>
                         </div>
                         <h6 className="mb-0">
-                          {" "}
-                          <FontAwesomeIcon className="fa-margin" icon={faPhone} bounce />{" "}
+                          <i className="fa-solid fa-phone fa-bounce fa-margin"></i>
                           {item.doctor.phoneNumber}
                         </h6>
                         <div>
-                          <FontAwesomeIcon className="fa-margin" icon={faStethoscope} />
+                          <i className="fa-solid fa-stethoscope fa-margin"></i>
                           <small>{item.about}</small>
                         </div>
                         <div className="d-flex justify-content-between mt-4">
                           <div>
                             <h5 className="mb-0">
-                              <FontAwesomeIcon className="fa-margin" icon={faClock} spin />
+                              <i className="fa-sharp fa-regular fa-clock fa-margin"></i>
                               {item.timeOfAppointment}
                               <hr className="card-hr" />
                               <small className="ml-1">
-                                <FontAwesomeIcon className="fa-margin" icon={faCalendarDays} />
+                                <i className="fa-solid fa-calendar-days fa-margin"></i>
                                 {formatDate(item.dateOfAppointment)}
                               </small>
                             </h5>

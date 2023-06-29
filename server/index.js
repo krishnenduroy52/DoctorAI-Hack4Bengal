@@ -20,7 +20,7 @@ mongoose
     bufferCommands: false,
   })
   .then(() => {
-    console.log("Connection successful via Mongo DB Atlas");
+    console.log("Connection successful");
   })
   .catch((err) => {
     console.log(err);
@@ -195,10 +195,10 @@ app.put("/user/:userId", async (req, res) => {
 app.delete("/appointment/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const doctorId = req.body.doctorId;
-    const response = await Appointment.findByIdAndDelete(id);
-    const docDetail = await Doctor.findById(doctorId);
+    const { doctorId, userId } = req.body;
 
+    // delete from doctor
+    const docDetail = await Doctor.findById(doctorId);
     if (!docDetail) {
       return res
         .status(404)
@@ -208,7 +208,23 @@ app.delete("/appointment/delete/:id", async (req, res) => {
     const DocoldSchedule = docDetail.schedule;
     const DocnewSchedule = DocoldSchedule.filter((s) => s !== id);
     docDetail.schedule = DocnewSchedule;
+
+    // delete from user
+    const userDetail = await User.findById(userId);
+    if (!userDetail) {
+      return res
+        .status(404)
+        .json({ message: "Client not found", success: false });
+    }
+
+    const userSchedule = docDetail.schedule;
+    const newUserSchedule = userSchedule.filter((s) => s !== id);
+    userDetail.schedule = newUserSchedule;
+
     await docDetail.save();
+    await userDetail.save();
+
+    const response = await Appointment.findByIdAndDelete(id);
     if (!response) {
       return res
         .status(404)
@@ -226,7 +242,6 @@ app.post("/appointment", async (req, res) => {
   console.log("This is appointment page backend");
   const { doctorId, clientId, timeOfAppointment, dateOfAppointment, about } =
     req.body;
-  console.log(req.body); // Logging the entire request body
 
   try {
     // Create a new user document
