@@ -10,6 +10,7 @@ import {
   faRightToBracket
 } from "@fortawesome/free-solid-svg-icons";
 
+
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -40,7 +41,7 @@ const Login = () => {
       return;
     } else {
       try {
-        const res = await axios.post("http://localhost:3000/login", {
+        const res = await axios.post(`http://localhost:3000/login`, {
           username,
           password,
         });

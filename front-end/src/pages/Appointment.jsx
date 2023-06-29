@@ -66,7 +66,7 @@ const Appointment = () => {
 
   const fetchDoctorData = async () => {
     try {
-      const doctors = await axios.get("http://localhost:3000/doctor/details");
+      const doctors = await axios.get(`http://localhost:3000/doctor/details`);
       console.log(doctors.data);
       setDoctorDetails(doctors.data);
     } catch (error) {
