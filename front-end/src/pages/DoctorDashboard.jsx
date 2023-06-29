@@ -302,10 +302,12 @@ export default function DoctorDashboard() {
                 <div className="save_edit_container">
                   {isEditMode ? (
                     <button onClick={handleSave} className="save_edit">
+                      <FontAwesomeIcon className="fa-margin" icon={faFloppyDisk} />
                       Save
                     </button>
                   ) : (
                     <button onClick={handleEdit} className="save_edit">
+                      <FontAwesomeIcon className="fa-margin" icon={faPenToSquare} />
                       Edit
                     </button>
                   )}
@@ -404,7 +406,7 @@ export default function DoctorDashboard() {
                           </div>
                           <Link
                             to={`/rooms/${item.meetingId}`}
-                            className="text-success font-weight-bold btn"
+                            className="text-success font-weight-bold btn join-room-btn"
                             style={{ width: "auto" }}
                           >
                             Join
