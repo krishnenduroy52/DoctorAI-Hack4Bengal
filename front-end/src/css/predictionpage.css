@@ -39,7 +39,7 @@
 }
 
 .left-container {
-  width: 49rem;
+  width: 69rem;
 }
 .left-container-video {
   border-radius: 22px;
@@ -49,8 +49,8 @@
     0 14px 19px 0 rgba(0, 0, 0, 0.07);
 }
 
-.right-container {
-  width: 34rem;
+.right-container-prediction {
+  width: 100%;
 }
 .right-container-drop {
   border-radius: 22px;
@@ -88,8 +88,4 @@
   background-color: transparent;
   color: #016cff;
   cursor: pointer;
-}
-
-/* result_modal */
-.result_modal {
 }

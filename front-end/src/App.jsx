@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import ProfilePage from "./pages/ProfilePage";
 import Chat from "./pages/Chat";
 import Appointment from "./pages/Appointment";
+import Footer from "./components/Footer";
 
 // doctor
 import DoctorDataInput from "./pages/DoctorDataInput";
@@ -41,6 +42,8 @@ function App() {
           element={<Appointment about={"Lorem ipsum dolor sit amet."} />}
         />
       </Routes>
+      {/* Footer */}
+      <Footer />
     </Router>
   );
 }
