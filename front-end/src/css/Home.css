@@ -57,19 +57,99 @@
   cursor: pointer;
 }
 
-/*                Model Selection Section                */
+.wave-img {
+  margin-top: 20px;
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+  /* position: absolute;
+  bottom: 0;
+  left: 0; */
+  z-index: -1;
+  opacity: 0.5;
+  /* transform: rotate(180deg); */
+  /* transform: scaleX(-1); */
 
-.models {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.models button {
+/*                Model Selection Section                */
+
+.modelSection {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 20px;
+  /* grid-template-rows: auto; */
+  /* align-items: center; */
+  padding: 50px;
+  margin: 100px 0;
+  /* justify-items: center; */
+}
+
+.models {
+  display: grid;
+  width: 100%;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.models > button {
+  position: relative;
   padding: clamp(2rem, calc(6vw - 12px), 4rem);
+  height: clamp(8rem, calc(20vw - 12px), 12rem);
+  width: minmax(clamp(8rem, calc(20vw - 12px), 13rem), 100%);
   border: 2px solid #016cff;
-  margin: clamp(2rem, calc(6vw - 12px), 4rem);
-  color: #016cff;
+  margin: 0 10px 0 0;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.models > button > p {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: clamp(0.8rem, calc(1.2vw - 6px), 0.1rem);
+}
+
+.models > button:hover {
+  cursor: pointer;
+  transform: translateY(-10px);
+  /* box-shadow: 10px 10px 30px #000; */
+}
+
+.modelSection > p {
+  font-size: clamp(1.2rem, calc(1.9vw - 6px), 2.2rem);
+  height: 100%;
+  text-align: center;
+}
+
+.modelSection > p > span {
+  font-size: clamp(1.4rem, calc(2vw - 6px), 2.5rem);
+  font-weight: 700;
+}
+
+
+/* Bottom Body */
+
+
+/* FAQ SECTION  */
+
+.faq {
+  margin-top: 100px;
+  padding: 50px 0;
+  background-color: #272A3D;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.faq > h1 {
+  font-size: clamp(1.4rem, calc(6vw - 6px), 2.5rem);
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: #fff;
+  line-height: clamp(1.4rem, calc(6vw - 6px), 2.5rem);
 }
 
 /* Responsive Design */
@@ -83,10 +163,26 @@
     width: 100%;
     text-align: center;
   }
+
+  .modelSection {
+    grid-template-columns: 1fr 2fr;
+  }
 }
 
 @media (max-width: 650px) {
   .topBody img {
     width: 100%;
+  }
+  .models {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 575px) {
+  .modelSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 }
