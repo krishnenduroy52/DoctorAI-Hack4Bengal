@@ -42,39 +42,6 @@ export default function DoctorDashboard() {
     return age;
   };
 
-  const handleScheduleDelete = async (id) => {
-    try {
-      //Appointment schema fetching
-      const scheduleResult = await axios.get(
-        `http://localhost:3000/appointment/${id}`
-      );
-      const userId = scheduleResult.data.appointment.clientId;
-      const clientResult = await axios.get(
-        `http://localhost:3000/user/${userId}`
-      );
-      const oldSchedule = clientResult.data.user.schedule;
-      const newSchedule = oldSchedule.filter((s) => s !== id);
-
-      await axios.put(`http://localhost:3000/user/${userId}`, {
-        schedule: newSchedule,
-      });
-      const deleteAppointment = await axios.delete(
-        `http://localhost:3000/appointment/delete/${id}`
-      );
-      console.log(deleteAppointment.data);
-      if (deleteAppointment.data.success) {
-        toast.success(deleteAppointment.data.message);
-        setUserData((prev) => ({ ...prev, schedule: newSchedule }));
-        setSchedule([]);
-        newSchedule.forEach((s) => fetchAppointmentDetails(s));
-      } else {
-        toast.error(deleteAppointment.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     const isDoc = localStorage.getItem("doctor_ai_isDoc");
     console.log("isDoc: " + isDoc);
@@ -175,7 +142,7 @@ export default function DoctorDashboard() {
         return prev;
       });
       setIsLoading(false);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const handleChange = (e) => {
@@ -302,12 +269,18 @@ export default function DoctorDashboard() {
                 <div className="save_edit_container">
                   {isEditMode ? (
                     <button onClick={handleSave} className="save_edit">
-                      <FontAwesomeIcon className="fa-margin" icon={faFloppyDisk} />
+                      <FontAwesomeIcon
+                        className="fa-margin"
+                        icon={faFloppyDisk}
+                      />
                       Save
                     </button>
                   ) : (
                     <button onClick={handleEdit} className="save_edit">
-                      <FontAwesomeIcon className="fa-margin" icon={faPenToSquare} />
+                      <FontAwesomeIcon
+                        className="fa-margin"
+                        icon={faPenToSquare}
+                      />
                       Edit
                     </button>
                   )}
@@ -385,21 +358,35 @@ export default function DoctorDashboard() {
                         </div>
                         <h6 className="mb-0">
                           {" "}
-                          <FontAwesomeIcon className="fa-margin" icon={faPhone} bounce />{" "}
+                          <FontAwesomeIcon
+                            className="fa-margin"
+                            icon={faPhone}
+                            bounce
+                          />{" "}
                           {item.doctor.phoneNumber}
                         </h6>
                         <div>
-                          <FontAwesomeIcon className="fa-margin" icon={faStethoscope} />
+                          <FontAwesomeIcon
+                            className="fa-margin"
+                            icon={faStethoscope}
+                          />
                           <small>{item.about}</small>
                         </div>
                         <div className="d-flex justify-content-between mt-4">
                           <div>
                             <h5 className="mb-0">
-                              <FontAwesomeIcon className="fa-margin" icon={faClock} spin />
+                              <FontAwesomeIcon
+                                className="fa-margin"
+                                icon={faClock}
+                                spin
+                              />
                               {item.timeOfAppointment}
                               <hr className="card-hr" />
                               <small className="ml-1">
-                                <FontAwesomeIcon className="fa-margin" icon={faCalendarDays} />
+                                <FontAwesomeIcon
+                                  className="fa-margin"
+                                  icon={faCalendarDays}
+                                />
                                 {formatDate(item.dateOfAppointment)}
                               </small>
                             </h5>

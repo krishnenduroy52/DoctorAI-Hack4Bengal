@@ -4,9 +4,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import wave from "../../public/Image/wave.svg";
 import FAQSection from "../components/FAQSection";
-import  faqData  from "../assets/json-data/faqData.json";
+import faqData from "../assets/json-data/faqData.json";
 import axios from "axios";
 import Footer from "../components/Footer";
+import Chat from "./Chat";
 
 const Home = () => {
   return (
@@ -57,6 +58,9 @@ const Home = () => {
             </button>
           </div>
         </div>
+        <div>
+          <Chat />
+        </div>
         {/* <img className="wave-img" src={wave} /> */}
         {/* --------BottomBody--------*/}
         <div className="bottomBody">
@@ -65,8 +69,6 @@ const Home = () => {
             <h1>Have a question ?</h1>
             <FAQSection faqData={faqData} />
           </div>
-          {/* Footer */}
-          <Footer/>
         </div>
       </div>
     </>
