@@ -5,7 +5,12 @@ import "../css/Signup.css";
 import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faRightToBracket
+} from "@fortawesome/free-solid-svg-icons";
+
+import {userLoginRoute} from "../utils/APIRoutes"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -37,7 +42,7 @@ const Login = () => {
       return;
     } else {
       try {
-        const res = await axios.post("http://localhost:3000/login", {
+        const res = await axios.post(userLoginRoute, {
           username,
           password,
         });
@@ -115,7 +120,7 @@ const Login = () => {
               className="action_btn"
               onClick={handleSubmitForm}
             >
-              Login
+              Login {" "} <FontAwesomeIcon icon={faRightToBracket} />
             </button>
           </div>
           <p className="already-account">

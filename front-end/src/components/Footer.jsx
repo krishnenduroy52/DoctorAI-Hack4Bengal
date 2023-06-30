@@ -1,8 +1,9 @@
-import React from 'react';
-import '../css/Footer.css';
-import logo from '../../public/Image/doctorai_logo.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+import React from "react";
+import "../css/Footer.css";
+import logo from "../../public/Image/doctorai_logo.svg";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
@@ -14,28 +15,38 @@ const Footer = () => {
           <p>Empowering Healthcare through Artificial Intelligence</p>
         </div>
         <div className="content">
-          <div className="motto">
-            {/* Company Motto */}
+          {/* <div className="motto">Company Motto</div> */}
+          <div className="social-media">
+            {/* Social Media Links */}
+            <label htmlFor="social_handles">Socials</label>
+            <ul id="social_handles">
+              <li>
+                <FontAwesomeIcon className="social-icons" icon={faFacebook} />
+                <a href="https://www.facebook.com">Facebook</a>
+              </li>
+              <li>
+                <FontAwesomeIcon className="social-icons" icon={faTwitter} />
+                <a href="https://www.twitter.com">Twitter</a>
+              </li>
+              <li>
+                <FontAwesomeIcon className="social-icons" icon={faInstagram} />
+                <a href="https://www.instagram.com">Instagram</a>
+              </li>
+            </ul>
           </div>
           <div className="product-list">
             {/* Product List */}
             <label htmlFor="Products">Products</label>
-            <ul id='Products'>
-              <li>Product 1</li>
-              <li>Product 2</li>
-              <li>Product 3</li>
+            <ul id="Products">
+              <li><Link className="product-link" to="/ctscan">CT-Scan</Link></li>
+              <li><Link className="product-link" to="/mri">MRI-Scan</Link></li>
+              <li><Link className="product-link" to="/xray">Lungs-X-Ray</Link></li>
             </ul>
           </div>
-          <div className="contact">
-            {/* Contact Us */}
-            <p>Contact Us: contact@example.com</p>
-          </div>
         </div>
-        <div className="social-media">
-          {/* Social Media Links */}
-          <a href="https://www.facebook.com"><FontAwesomeIcon icon={faFacebook} />Facebook</a>
-          <a href="https://www.twitter.com">Twitter</a>
-          <a href="https://www.instagram.com">Instagram</a>
+        <div className="contact">
+          {/* Contact Us */}
+          <p>Contact Us: contact@example.com</p>
         </div>
       </div>
     </footer>

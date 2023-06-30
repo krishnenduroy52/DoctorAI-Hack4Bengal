@@ -5,6 +5,19 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhone,
+  faStethoscope,
+  faCalendarDays,
+  faClock,
+  faEllipsisVertical,
+  faTrashCan,
+  faPenToSquare,
+  faFloppyDisk,
+  faCircleInfo,
+  faCalendarPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
@@ -39,24 +52,15 @@ export default function ProfilePage() {
       );
       const userId = scheduleResult.data.appointment.clientId;
       const doctorId = scheduleResult.data.appointment.doctorId;
-      const clientResult = await axios.get(
-        `http://localhost:3000/user/${userId}`
-      );
-      const oldSchedule = clientResult.data.user.schedule;
-      const newSchedule = oldSchedule.filter((s) => s !== id);
-
-      await axios.put(`http://localhost:3000/user/${userId}`, {
-        schedule: newSchedule,
-      });
       const deleteAppointment = await axios.delete(
-        `http://localhost:3000/appointment/delete/${id}`
+        `http://localhost:3000/appointment/delete/${id}`,
+        { data: { doctorId, userId } }
       );
       console.log(deleteAppointment.data);
       if (deleteAppointment.data.success) {
         toast.success(deleteAppointment.data.message);
-        setUserData((prev) => ({ ...prev, schedule: newSchedule }));
         setSchedule([]);
-        newSchedule.forEach((s) => fetchAppointmentDetails(s));
+        fetchUserData(userId);
       } else {
         toast.error(deleteAppointment.data.message);
       }
@@ -86,7 +90,11 @@ export default function ProfilePage() {
       const data = await response.json();
       if (response.ok) {
         setUserData(data.user);
-        data.user.schedule.map((s) => fetchAppointmentDetails(s));
+        console.log("User schedule");
+        console.log(data.user.schedule);
+        if (data.user.schedule.length != 0) {
+          data.user.schedule.map((s) => fetchAppointmentDetails(s));
+        } else setSchedule([]);
         toast.success("Successfully fetched user data.");
       } else {
         toast.error("Error retrieving user data"); // Display toast error
@@ -160,7 +168,7 @@ export default function ProfilePage() {
       setSchedule((prev) => {
         let isAlreadyScheduled = false;
         prev.forEach((item) =>
-          item._id == appointment._id ? (isAlreadyScheduled = true) : null
+          item._id === appointment._id ? (isAlreadyScheduled = true) : null
         );
         if (!isAlreadyScheduled) {
           return [...prev, { ...appointment, doctor: doc }];
@@ -195,7 +203,13 @@ export default function ProfilePage() {
       suffix = "rd";
     }
 
-    return `${day}${suffix} ${formattedDate}`;
+    const today = new Date();
+    const differenceInTime = date.getTime() - today.getTime();
+    const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
+    if (differenceInDays <= 5) {
+      return `${formattedDate} (In ${differenceInDays} days)`;
+    }
+    return `${formattedDate}`;
   };
 
   // console.log(schedule);
@@ -218,7 +232,7 @@ export default function ProfilePage() {
       <section className="profile-right-pannel">
         <div className="right-container">
           <div className="personal-info">
-            <h2>My Details</h2>
+            <h2>My Details {" "} <FontAwesomeIcon icon={faCircleInfo} style={{}}/></h2>
             <p>Personal Information</p>
             <hr />
             <div className="personal-info-container">
@@ -295,10 +309,12 @@ export default function ProfilePage() {
                 <div className="save_edit_container">
                   {isEditMode ? (
                     <button onClick={handleSave} className="save_edit">
+                      <FontAwesomeIcon icon={faFloppyDisk} />{" "}
                       Save
                     </button>
                   ) : (
                     <button onClick={handleEdit} className="save_edit">
+                      <FontAwesomeIcon icon={faPenToSquare} />{" "}
                       Edit
                     </button>
                   )}
@@ -307,7 +323,7 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="schedule-info">
-            <h2>My Schedules</h2>
+            <h2>My Schedules{" "}<FontAwesomeIcon icon={faCalendarPlus} /></h2>
             <p>Meeting Information</p>
             <hr />
             {isLoading ? (
@@ -336,7 +352,7 @@ export default function ProfilePage() {
                           <div className="user-info">
                             <div className="user-info__img">
                               <img
-                                src="/Image/profile.png"
+                                src="/Image/doctor.png"
                                 alt="doctor Img"
                                 width="30"
                               />
@@ -358,7 +374,7 @@ export default function ProfilePage() {
                               aria-haspopup="true"
                               aria-expanded="false"
                             >
-                              <i className="fa fa-ellipsis-v"></i>
+                              <FontAwesomeIcon icon={faEllipsisVertical} />
                             </a>
                             <div
                               className="dropdown-menu"
@@ -368,7 +384,7 @@ export default function ProfilePage() {
                                 onClick={() => handleScheduleDelete(item._id)}
                                 className="dropdown-item text-danger"
                               >
-                                <i className="fa-sharp fa-solid fa-trash fa-shake"></i>{" "}
+                                <FontAwesomeIcon icon={faTrashCan} shake />{" "}
                                 Delete
                               </a>
                             </div>
@@ -376,28 +392,28 @@ export default function ProfilePage() {
                         </div>
                         <h6 className="mb-0">
                           {" "}
-                          <i className="fa-solid fa-phone fa-bounce fa-margin"></i>{" "}
+                          <FontAwesomeIcon className="fa-margin" icon={faPhone} bounce />{" "}
                           {item.doctor.phoneNumber}
                         </h6>
                         <div>
-                          <i className="fa-solid fa-stethoscope fa-margin"></i>
+                          <FontAwesomeIcon className="fa-margin" icon={faStethoscope} />
                           <small>{item.about}</small>
                         </div>
                         <div className="d-flex justify-content-between mt-4">
                           <div>
                             <h5 className="mb-0">
-                              <i className="fa-sharp fa-regular fa-clock fa-margin"></i>
+                              <FontAwesomeIcon className="fa-margin" icon={faClock} spin />
                               {item.timeOfAppointment}
                               <hr className="card-hr" />
                               <small className="ml-1">
-                                <i className="fa-solid fa-calendar-days fa-margin"></i>
+                                <FontAwesomeIcon className="fa-margin" icon={faCalendarDays} />
                                 {formatDate(item.dateOfAppointment)}
                               </small>
                             </h5>
                           </div>
                           <Link
                             to={`/rooms/${item.meetingId}`}
-                            className="text-success font-weight-bold btn"
+                            className="text-success font-weight-bold btn join-room-btn"
                             style={{ width: "auto" }}
                           >
                             Join

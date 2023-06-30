@@ -195,6 +195,35 @@ app.put("/user/:userId", async (req, res) => {
 app.delete("/appointment/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
+    const { doctorId, userId } = req.body;
+
+    // delete from doctor
+    const docDetail = await Doctor.findById(doctorId);
+    if (!docDetail) {
+      return res
+        .status(404)
+        .json({ message: "Doctor not found", success: false });
+    }
+
+    const DocoldSchedule = docDetail.schedule;
+    const DocnewSchedule = DocoldSchedule.filter((s) => s !== id);
+    docDetail.schedule = DocnewSchedule;
+
+    // delete from user
+    const userDetail = await User.findById(userId);
+    if (!userDetail) {
+      return res
+        .status(404)
+        .json({ message: "Client not found", success: false });
+    }
+
+    const userSchedule = docDetail.schedule;
+    const newUserSchedule = userSchedule.filter((s) => s !== id);
+    userDetail.schedule = newUserSchedule;
+
+    await docDetail.save();
+    await userDetail.save();
+
     const response = await Appointment.findByIdAndDelete(id);
     if (!response) {
       return res
@@ -211,14 +240,8 @@ app.delete("/appointment/delete/:id", async (req, res) => {
 
 app.post("/appointment", async (req, res) => {
   console.log("This is appointment page backend");
-  const {
-    doctorId,
-    clientId,
-    timeOfAppointment,
-    dateOfAppointment,
-    about,
-  } = req.body;
-  console.log(req.body); // Logging the entire request body
+  const { doctorId, clientId, timeOfAppointment, dateOfAppointment, about } =
+    req.body;
 
   try {
     // Create a new user document
@@ -243,8 +266,8 @@ app.post("/appointment", async (req, res) => {
     await user.save();
 
     const doctor = await Doctor.findById(doctorId);
-    if(!doctor) {
-      return res.status(404).json({error: "Doctor not found"})
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor not found" });
     }
     doctor.schedule.push(appointmentId);
     await doctor.save();

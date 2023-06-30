@@ -5,6 +5,17 @@ import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhone,
+  faStethoscope,
+  faCalendarDays,
+  faClock,
+  faEllipsisVertical,
+  faTrashCan,
+  faPenToSquare,
+  faFloppyDisk,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function DoctorDashboard() {
   const [userData, setUserData] = useState(null);
@@ -164,7 +175,7 @@ export default function DoctorDashboard() {
         return prev;
       });
       setIsLoading(false);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handleChange = (e) => {
@@ -200,7 +211,7 @@ export default function DoctorDashboard() {
     <div className="profile-main">
       <aside className="profile-left-panel">
         <div className="pbtn active profile">
-          <img src="/Image/profile.png" alt="profile" />
+          <img src="/Image/doctor.png" alt="profile" />
           <div className="name">
             <p>
               {isEditMode
@@ -291,10 +302,12 @@ export default function DoctorDashboard() {
                 <div className="save_edit_container">
                   {isEditMode ? (
                     <button onClick={handleSave} className="save_edit">
+                      <FontAwesomeIcon className="fa-margin" icon={faFloppyDisk} />
                       Save
                     </button>
                   ) : (
                     <button onClick={handleEdit} className="save_edit">
+                      <FontAwesomeIcon className="fa-margin" icon={faPenToSquare} />
                       Edit
                     </button>
                   )}
@@ -332,7 +345,7 @@ export default function DoctorDashboard() {
                           <div className="user-info">
                             <div className="user-info__img">
                               <img
-                                src="/Image/profile.png"
+                                src="/Image/doctor.png"
                                 alt="doctor Img"
                                 width="30"
                               />
@@ -354,7 +367,7 @@ export default function DoctorDashboard() {
                               aria-haspopup="true"
                               aria-expanded="false"
                             >
-                              <i className="fa fa-ellipsis-v"></i>
+                              <FontAwesomeIcon icon={faEllipsisVertical} />
                             </a>
                             <div
                               className="dropdown-menu"
@@ -364,7 +377,7 @@ export default function DoctorDashboard() {
                                 onClick={() => handleScheduleDelete(item._id)}
                                 className="dropdown-item text-danger"
                               >
-                                <i className="fa-sharp fa-solid fa-trash fa-shake"></i>{" "}
+                                <FontAwesomeIcon icon={faTrashCan} shake />{" "}
                                 Delete
                               </a>
                             </div>
@@ -372,28 +385,28 @@ export default function DoctorDashboard() {
                         </div>
                         <h6 className="mb-0">
                           {" "}
-                          <i className="fa-solid fa-phone fa-bounce fa-margin"></i>{" "}
+                          <FontAwesomeIcon className="fa-margin" icon={faPhone} bounce />{" "}
                           {item.doctor.phoneNumber}
                         </h6>
                         <div>
-                          <i className="fa-solid fa-stethoscope fa-margin"></i>
+                          <FontAwesomeIcon className="fa-margin" icon={faStethoscope} />
                           <small>{item.about}</small>
                         </div>
                         <div className="d-flex justify-content-between mt-4">
                           <div>
                             <h5 className="mb-0">
-                              <i className="fa-sharp fa-regular fa-clock fa-margin"></i>
+                              <FontAwesomeIcon className="fa-margin" icon={faClock} spin />
                               {item.timeOfAppointment}
                               <hr className="card-hr" />
                               <small className="ml-1">
-                                <i className="fa-solid fa-calendar-days fa-margin"></i>
+                                <FontAwesomeIcon className="fa-margin" icon={faCalendarDays} />
                                 {formatDate(item.dateOfAppointment)}
                               </small>
                             </h5>
                           </div>
                           <Link
                             to={`/rooms/${item.meetingId}`}
-                            className="text-success font-weight-bold btn"
+                            className="text-success font-weight-bold btn join-room-btn"
                             style={{ width: "auto" }}
                           >
                             Join
