@@ -100,7 +100,6 @@
   width: minmax(clamp(8rem, calc(20vw - 12px), 13rem), 100%);
   border: 2px solid #016cff;
   margin: 0 10px 0 0;
-  color: #016cff;
   border-radius: 15px;
   transition: all 0.3s ease;
 }
@@ -131,10 +130,6 @@
 
 
 /* Bottom Body */
-
-.bottomBody {
-  /* overflow: scroll; */
-}
 
 
 /* FAQ SECTION  */
