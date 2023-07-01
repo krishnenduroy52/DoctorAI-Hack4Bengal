@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../css/ProfilePage.css";
 import axios from "axios";
+import { getUserDataRoute } from '../utils/APIRoutes'
 import "bootstrap/dist/css/bootstrap.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -63,7 +64,7 @@ export default function DoctorDashboard() {
         `http://localhost:3000/doctor/details/${userId}`
       );
       setUserData(response.data);
-      console.log(response.data);
+      // console.log(response.data);
       response.data.schedule.map((s) => fetchAppointmentDetails(s));
       toast.success("Successfully fetched user data.");
     } catch (error) {
@@ -126,18 +127,19 @@ export default function DoctorDashboard() {
         `http://localhost:3000/appointment/${appointmentId}`
       );
       const appointment = response.data.appointment;
-      const doctorId = appointment.doctorId;
-      const doctorDetail = await axios.get(
-        `http://localhost:3000/doctor/details/${doctorId}`
+      const clientId = appointment.clientId;
+      const clientDetails = await axios.get(
+        getUserDataRoute(clientId)
       );
-      const doc = doctorDetail.data;
+      const client = clientDetails.data;
+      console.log(client)
       setSchedule((prev) => {
         let isAlreadyScheduled = false;
         prev.forEach((item) =>
           item._id == appointment._id ? (isAlreadyScheduled = true) : null
         );
         if (!isAlreadyScheduled) {
-          return [...prev, { ...appointment, doctor: doc }];
+          return [...prev, { ...appointment, client: client.user }];
         }
         return prev;
       });
@@ -152,7 +154,7 @@ export default function DoctorDashboard() {
       [name]: value,
     }));
   };
-
+  console.log(schedule)
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { day: "numeric", month: "long", year: "numeric" };
@@ -318,20 +320,20 @@ export default function DoctorDashboard() {
                           <div className="user-info">
                             <div className="user-info__img">
                               <img
-                                src="/Image/doctor.png"
-                                alt="doctor Img"
+                                src="/Image/profile.png"
+                                alt="profile Img"
                                 width="30"
                               />
                             </div>
                             <div className="user-info__basic">
-                              <h5 className="mb-0">{item.doctor.username}</h5>
+                              <h5 className="mb-0">{item.client.username}</h5>
                               <p className="text-muted mb-0">
-                                {calculateAge(item.doctor.dob)} yrs,{" "}
-                                {item.doctor.gender}
+                                {calculateAge(item.client.dob)} yrs,{" "}
+                                {item.client.gender}
                               </p>
                             </div>
                           </div>
-                          <div className="dropdown open">
+                          {/* <div className="dropdown open">
                             <a
                               href="#!"
                               className="px-2"
@@ -354,7 +356,7 @@ export default function DoctorDashboard() {
                                 Delete
                               </a>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                         <h6 className="mb-0">
                           {" "}
@@ -363,7 +365,7 @@ export default function DoctorDashboard() {
                             icon={faPhone}
                             bounce
                           />{" "}
-                          {item.doctor.phoneNumber}
+                          {item.client.phoneNumber}
                         </h6>
                         <div>
                           <FontAwesomeIcon
