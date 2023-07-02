@@ -1,3 +1,9 @@
+
+.home > hr {
+  width: 90%;
+  margin: 0 auto;
+}
+
 /*                 Hero Section                 */
 
 .topBody_container {

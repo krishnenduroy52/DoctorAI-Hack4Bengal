@@ -60,6 +60,7 @@ const Home = () => {
             </button>
           </div>
         </div>
+        <hr />
         <div>
           <Chat />
         </div>
