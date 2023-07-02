@@ -4,27 +4,52 @@ import axios from "axios";
 import "../css/predictionpage.css";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
+import Progress_bar from "../components/Progress_bar";
 
 function Mri() {
   // fileupload & Result
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [result, setResult] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [showGive, setshowGive] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handelClose = () => {
+    setshowGive(false);
+    setLoading(false);
+    setUploadProgress(0);
+  };
+  useEffect(() => {
+    if (selectedFile != null) setLoading(true);
+  }, [selectedFile]);
+
+  const uploadImg = async () => {
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    const config = {
+      onUploadProgress: (progressEvent) => {
+        const progress = Math.round(
+          (progressEvent.loaded / progressEvent.total) * 100
+        );
+        setUploadProgress(progress);
+      },
+    };
+
+    await axios
+      .post("http://localhost:8000/predict-mri", formData, config)
+      .then((response) => {
+        setResult(response.data);
+        setshowGive(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
     if (selectedFile) {
-      const formData = new FormData();
-      formData.append("image", selectedFile);
-      axios
-        .post("http://localhost:8000/predict-mri", formData)
-        .then((response) => {
-          setResult(response.data);
-          setshowGive(true);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      uploadImg();
     }
   }, [selectedFile]);
 
@@ -53,8 +78,8 @@ function Mri() {
         <img src="./Image/doctor-bg.jpg" alt="" />
       </div> */}
       <div className="py-4 md:py-8">
-        <div className="mx-auto w-full px-8 max-w-5xl relative">
-          <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center md:gap-4">
+        <div className="mx-auto w-full px-8 relative">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center md:gap-9">
             <div className="left-container flex flex-col md:flex-row lg:flex-col items-center gap-6 md:gap-8">
               <video
                 preload="auto"
@@ -67,11 +92,8 @@ function Mri() {
               ></video>
               <div className="flex flex-col gap-4">
                 <h1 className="font-display font-bold text-typo m-0 text-4xl md:text-5xl lg:text-6xl text-center md:!text-left">
-                  Detect
-                  <br />
-                  <span className="text-orange-400">Brain Tumor</span>
-                  <br />
-                  MRI image
+                  Detect <span className="text-orange-500">Brain Tumer</span>
+                  <br /> CT-Scan image
                 </h1>
                 <p className="text-typo-tertiary font-bold text-xl m-0 !text-typo text-center md:!text-left">
                   100% Automatically and
@@ -81,34 +103,41 @@ function Mri() {
                 </p>
               </div>
             </div>
-            <div className="right-container relative group flex flex-col gap-4">
-              <div className="dropzone-enabled" {...getRootProps()}>
-                <input {...getInputProps()} />
+            <div className="right-container-prediction relative group flex flex-col gap-4 md:gap-8">
+              {loading == false ? (
+                <div className="dropzone-enabled" {...getRootProps()}>
+                  <input {...getInputProps()} />
 
-                <div
-                  className={`right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl ${
-                    isDraggingOver ? "right-container-drag" : ""
-                  }`}
-                >
-                  <button
-                    type="button"
-                    className="upload-btn border border-transparent rounded-full font-bold transition ease-in-out text-center font-body no-underline text-white hover:no-underline inline-flex items-center justify-center text-2xl px-8 py-2.5 hover:bg-primary-hover active:bg-primary-hover active:scale-[0.98] focus:outline-none focus-visible:outline-none focus:ring-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-primary-hover"
-                    onClick={() => {
-                      // Handle click on the upload button here
-                    }}
+                  <div
+                    className={`right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl ${
+                      isDraggingOver ? "right-container-drag" : ""
+                    }`}
                   >
-                    Upload Image
-                  </button>
-                  <div className="hidden sm:flex flex-col gap-1.5">
-                    <p className="m-0 font-bold text-xl text-typo-secondary">
-                      or drop a file,
-                    </p>
-                    <span className="text-xs text-typo-secondary text-center">
-                      Paste Image and Wait
-                    </span>
+                    <button type="button" className="upload-btn">
+                      Upload Image
+                    </button>
+                    <div className="hidden sm:flex flex-col gap-1.5">
+                      <p className="m-0 font-bold text-xl text-typo-secondary">
+                        or drop a file,
+                      </p>
+                      <span className="text-xs text-typo-secondary text-center">
+                        Paste Image and Wait
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-36  rounded-4xl bg-white shadow-2xl">
+                  <div className="loading_div">
+                    <p>Uploading the image</p>
+                    <Progress_bar
+                      bgcolor="#99ccff"
+                      progress={`${uploadProgress}`}
+                      height={30}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -116,7 +145,7 @@ function Mri() {
       {result && showGive ? (
         <Modal
           show={showGive}
-          onClose={() => setshowGive(false)}
+          onClose={handelClose}
           img="Image/modelBanner.jpg"
           bigText={`${result.predicted_class}`}
           smallText="We recommend you to make a appointment with doctor"

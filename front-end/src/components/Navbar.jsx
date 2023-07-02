@@ -6,14 +6,13 @@ import {
   faAngleDown,
   faUser,
   faRightFromBracket,
-
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import { Link } from "react-router-dom";
 import services_menu from "../assets/json-data/services_menu.json";
-import logo from "/Image/doctorai_logo.svg";
+import logo from "/public/Image/doctorai_logo.svg";
 
 const Navbar = () => {
   const toogleBtn = useRef(null);
@@ -117,13 +116,20 @@ const Navbar = () => {
         ) : (
           <div className="profile_dropdown">
             <button className="action_btn" onClick={toggleProfileDropdown}>
-            <FontAwesomeIcon className="fa-margin" icon={faUser} />
+              <FontAwesomeIcon className="fa-margin" icon={faUser} />
               Profile
             </button>
             {showProfileDropdown && (
               <div className="profile_dropdown_content">
                 <Link to="/profile">View Profile</Link>
-                <Link onClick={handleLogout}> <FontAwesomeIcon className="fa-margin" icon={faRightFromBracket} /> Logout</Link>
+                <Link onClick={handleLogout}>
+                  {" "}
+                  <FontAwesomeIcon
+                    className="fa-margin"
+                    icon={faRightFromBracket}
+                  />{" "}
+                  Logout
+                </Link>
               </div>
             )}
           </div>

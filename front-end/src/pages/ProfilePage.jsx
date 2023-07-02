@@ -414,7 +414,7 @@ export default function ProfilePage() {
                           <Link
                             to={`/rooms/${item.meetingId}`}
                             className="text-success font-weight-bold btn join-room-btn"
-                            style={{ width: "auto" }}
+                            style={{ width: "auto", padding: "1.03rem" }}
                           >
                             Join
                           </Link>

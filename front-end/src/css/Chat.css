@@ -31,7 +31,7 @@
   width: 20px;
   margin-right: 10px;
 }
-.btn {
+.btnChat {
   margin-top: 10px;
   display: flex;
   width: 100%;
@@ -45,7 +45,7 @@
   background-color: #4480d9;
   color: white;
 }
-.btn:hover {
+.btnChat:hover {
   background-color: rgba(82, 82, 82, 0.2);
 }
 .main {
@@ -61,7 +61,7 @@
 .chat {
   color: white;
 }
-.me {
+.gpt {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -69,18 +69,18 @@
   margin-bottom: 10px;
 }
 
-.me .chat {
+.gpt .chat {
   display: flex;
   align-items: center;
   margin-left: 10px;
 }
 
-.me svg {
+.gpt svg {
   margin-right: 8px;
   margin-left: 4px;
 }
 
-.me div {
+.gpt div {
   background-color: #4480d9;
   padding: 5px;
   border-radius: 8px;
@@ -88,23 +88,23 @@
   word-wrap: break-word;
 }
 
-.gpt {
+.me {
   display: flex;
   flex-direction: row-reverse; /* Reverses the order of chat elements */
   justify-content: flex-start; /* Aligns the chat elements to the start of the container */
   align-items: center;
   margin-bottom: 10px;
 }
-.gpt .chat {
+.me .chat {
   display: flex;
   align-items: center;
   margin-right: 10px;
 }
-.gpt svg {
+.me svg {
   margin-left: 8px;
   margin-right: 4px;
 }
-.gpt div {
+.me div {
   background-color: #4480d9;
   padding: 5px;
   border-radius: 8px;

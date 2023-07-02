@@ -5,37 +5,39 @@ import { Link } from "react-router-dom";
 
 function Chat() {
   const [input, setInput] = useState();
-  const [chats, setChats] = useState([]);
+  const [chats, setChats] = useState([
+    { user: "gpt", chat: "Ask me anything about Health" },
+  ]);
   const [selectModel, setSelectmodel] = useState(null);
   const [model, setModel] = useState([]);
   const count = useRef("");
-  const handelSumbit = async (e) => {
-    e.preventDefault();
-    const chatLog = [...chats, { user: "me", chat: input }];
-    setChats(chatLog);
-    setInput("");
-    const response = await axios.post("http://localhost:3000/completion", {
-      prompt: input,
-    });
-    setChats((chats) => [
-      ...chats,
-      { user: "gpt", chat: response.data.choices[0].message.content },
-    ]);
-  };
-
-  // Test UI with handel submit
   // const handelSumbit = async (e) => {
   //   e.preventDefault();
   //   const chatLog = [...chats, { user: "me", chat: input }];
   //   setChats(chatLog);
   //   setInput("");
-  //   const gptAnswer = prompt("Enter the gpt asnwer");
-  //   console.log(gptAnswer);
-  //   setChats((chats) => [...chats, { user: "gpt", chat: gptAnswer }]);
+  //   const response = await axios.post("http://localhost:3000/completion", {
+  //     prompt: input,
+  //   });
+  //   setChats((chats) => [
+  //     ...chats,
+  //     { user: "gpt", chat: response.data.choices[0].message.content },
+  //   ]);
   // };
 
+  // Test UI with handel submit
+  const handelSumbit = async (e) => {
+    e.preventDefault();
+    const chatLog = [...chats, { user: "me", chat: input }];
+    setChats(chatLog);
+    setInput("");
+    const gptAnswer = prompt("Enter the gpt asnwer");
+    console.log(gptAnswer);
+    setChats((chats) => [...chats, { user: "gpt", chat: gptAnswer }]);
+  };
+
   const clearChat = () => {
-    setChats([]);
+    setChats([{ user: "gpt", chat: "Ask me anything about Health" }]);
   };
 
   const onPressEnter = (e) => {
@@ -56,7 +58,7 @@ function Chat() {
       </div>
       <div className="chatApp">
         <aside className="left-panel">
-          <button className="btn" onClick={clearChat}>
+          <button className="btnChat" onClick={clearChat}>
             {/* Plus svg */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +76,11 @@ function Chat() {
             </svg>
             Clear Chat
           </button>
-          <Link className="btn" to="/appointment" state={{about: "General queries regarding health "}}>
+          <Link
+            className="btnChat"
+            to="/appointment"
+            state={{ about: "General queries regarding health " }}
+          >
             {/* Plus svg */}
             <svg
               xmlns="http://www.w3.org/2000/svg"

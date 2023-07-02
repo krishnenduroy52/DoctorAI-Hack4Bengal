@@ -39,7 +39,7 @@
 }
 
 .left-container {
-  width: 49rem;
+  width: 54rem;
 }
 .left-container-video {
   border-radius: 22px;
@@ -49,8 +49,8 @@
     0 14px 19px 0 rgba(0, 0, 0, 0.07);
 }
 
-.right-container {
-  width: 34rem;
+.right-container-prediction {
+  width: 100%;
 }
 .right-container-drop {
   border-radius: 22px;
@@ -60,14 +60,6 @@
   border: 1px dotted black;
   border-style: dashed;
 }
-
-/* .upload-btn {
-  background-color: #50b3ff;
-} */
-
-/* .upload-btn:hover {
-  background-color: #82c9ff;
-} */
 
 .predict-appointment,
 .upload-btn {
@@ -90,6 +82,15 @@
   cursor: pointer;
 }
 
-/* result_modal */
-.result_modal {
+.loading_div {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+.loading_div p {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
 }
