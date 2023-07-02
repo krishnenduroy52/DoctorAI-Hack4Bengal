@@ -4,10 +4,12 @@ import axios from "axios";
 import "../css/predictionpage.css";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
+import Progress_bar from "../components/Progress_bar";
 
 function Ctscan() {
   // fileupload & Result
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [result, setResult] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [showGive, setshowGive] = useState(false);
@@ -16,24 +18,38 @@ function Ctscan() {
   const handelClose = () => {
     setshowGive(false);
     setLoading(false);
+    setUploadProgress(0);
   };
   useEffect(() => {
     if (selectedFile != null) setLoading(true);
   }, [selectedFile]);
 
+  const uploadImg = async () => {
+    const formData = new FormData();
+    formData.append("image", selectedFile);
+    const config = {
+      onUploadProgress: (progressEvent) => {
+        const progress = Math.round(
+          (progressEvent.loaded / progressEvent.total) * 100
+        );
+        setUploadProgress(progress);
+      },
+    };
+
+    await axios
+      .post("http://localhost:8000/predict-ct", formData, config)
+      .then((response) => {
+        setResult(response.data);
+        setshowGive(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   useEffect(() => {
     if (selectedFile) {
-      const formData = new FormData();
-      formData.append("image", selectedFile);
-      axios
-        .post("http://localhost:8000/predict-ct", formData)
-        .then((response) => {
-          setResult(response.data);
-          setshowGive(true);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      uploadImg();
     }
   }, [selectedFile]);
 
@@ -97,13 +113,7 @@ function Ctscan() {
                       isDraggingOver ? "right-container-drag" : ""
                     }`}
                   >
-                    <button
-                      type="button"
-                      className="upload-btn"
-                      onClick={() => {
-                        // Handle click on the upload button here
-                      }}
-                    >
+                    <button type="button" className="upload-btn">
                       Upload Image
                     </button>
                     <div className="hidden sm:flex flex-col gap-1.5">
@@ -117,7 +127,16 @@ function Ctscan() {
                   </div>
                 </div>
               ) : (
-                <div>Loading</div>
+                <div className="right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-36  rounded-4xl bg-white shadow-2xl">
+                  <div className="loading_div">
+                    <p>Uploading the image</p>
+                    <Progress_bar
+                      bgcolor="#99ccff"
+                      progress={`${uploadProgress}`}
+                      height={30}
+                    />
+                  </div>
+                </div>
               )}
             </div>
           </div>
