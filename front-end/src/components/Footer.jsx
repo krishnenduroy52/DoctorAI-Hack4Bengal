@@ -44,11 +44,11 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+      </div>
         <div className="contact">
           {/* Contact Us */}
           <p>Contact Us: contact@example.com</p>
         </div>
-      </div>
     </footer>
   );
 };

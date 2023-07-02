@@ -14,8 +14,9 @@ const Home = () => {
       <ToastContainer position="bottom-right" theme="colored" />
       <div className="home">
         {/*--------TopBody--------*/}
-        <div className="topBody">
+        <div className="topBody_container">
           {/* hero image */}
+          <div className="topBody">
           <img
             src="./Image/doctor-hero.svg"
             alt="HeroImg"
@@ -36,8 +37,9 @@ const Home = () => {
               Make Appointment
             </Link>
           </div>
+          </div>
+          <img className="wave-img" src={wave} />
         </div>
-        <img className="wave-img" src={wave} />
         {/* Models of CT scan and MRI machines */}
         <div className="modelSection">
           {/* Models */}
