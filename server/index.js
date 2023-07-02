@@ -390,7 +390,7 @@ app.get("/doctor/details/:id", async (req, res) => {
     res.status(200).json(response);
   } catch (err) {
     // Handle any errors that occurred during the retrieval
-    console.error("Error while retrieving appointment:", err);
+    console.error("Error while retrieving doctor:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });
