@@ -44,11 +44,13 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+      </div>
         <div className="contact">
           {/* Contact Us */}
           <p>Contact Us: contact@example.com</p>
+          <div className="footer-hr"></div>
+          <Link className="join-doctor" to="/join-doctor">Join us as Doctor</Link>
         </div>
-      </div>
     </footer>
   );
 };
