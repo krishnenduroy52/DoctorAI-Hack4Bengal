@@ -85,11 +85,11 @@ function Pneumonia() {
               <video
                 preload="auto"
                 className="left-container-video w-full h-auto rounded-4xl max-w-[320px] lg:max-w-[420px]"
-                poster="https://images.pexels.com/videos/7089596/pexels-photo-7089596.jpeg?auto=compress&cs=tinysrgb&w=600"
+                poster="https://images.pexels.com/videos/4316922/corona-virus-coronavirus-covid-covid-19-4316922.jpeg?auto=compress&cs=tinysrgb&w=1600"
                 autoPlay
                 muted
                 playsInline
-                src="./videos/ctscan_video.mp4"
+                src="./videos/xray_video.mp4"
               ></video>
               <div className="flex flex-col gap-4">
                 <h1 className="font-display font-bold text-typo m-0 text-4xl md:text-5xl lg:text-6xl text-center md:!text-left">
