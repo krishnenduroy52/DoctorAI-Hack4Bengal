@@ -376,7 +376,6 @@ app.get("/doctor/details", async (req, res) => {
 
 app.get("/doctor/details/:id", async (req, res) => {
   const doctorId = req.params.id;
-
   try {
     // Find the appointment in the database by ID
     const response = await Doctor.findById(doctorId);
