@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.densenet import preprocess_input
@@ -18,8 +19,16 @@ ctmodel = load_model('Models/ct-scan/chest_CT_SCAN-DenseNet201.hdf5')
 # Load the MRI model
 mrimodel = load_model('Models/MRI/VGG16-Brain-Tumor-MRI-3.h5')
 
-# Load the pneumonia model 
+# Load the pneumonia model
 pneumonia_model = load_model("Models/PNEUMONIA/pneumonia_model.h5")
+
+# Load the Cancer model
+cancerModel = load_model("Models\LUNG-CANCER\lung cancer_final_99.h5")
+cancerModel.compile(optimizer='rmsprop',
+                    loss=tf.keras.losses.SparseCategoricalCrossentropy(
+                        from_logits=True),
+                    metrics=['accuracy'])
+
 
 class NumpyInt64Encoder(json.JSONEncoder):
     def default(self, obj):
@@ -103,7 +112,6 @@ def predict_mri():
     return jsonify(response)
 
 
-
 @app.route('/pneumonia', methods=['POST'])
 def pneumonia_prediction():
     if 'image' not in request.files:
@@ -136,9 +144,43 @@ def pneumonia_prediction():
         }
     # Remove the temporary image file
     os.remove(img_path)
-    
+
     return jsonify(result)
- 
+
+
+@app.route('/cancer-prediction', methods=['POST'])
+def cancer_prediction():
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image file provided'})
+
+    # Load and preprocess the image
+    img = request.files['image']
+    img_path = f"tmp/{img.filename}"  # Save the file temporarily
+    img.save(img_path)
+
+    test_image = image.load_img(img_path, target_size=(460, 460))
+    test_image = image.img_to_array(test_image)
+    test_image = np.expand_dims(test_image, axis=0)
+    test_image = test_image / 255.0
+
+    predictionsCancer = cancerModel.predict(test_image)
+    print(predictionsCancer)
+
+    predicted_class = np.argmax(predictionsCancer)
+
+    if predicted_class == 0:
+        result = {'predicted_class': 'Benign',
+                  'probability': float(predictionsCancer[0][0])*100}
+    elif predicted_class == 1:
+        result = {'predicted_class': 'Malignant',
+                  'probability': float(predictionsCancer[0][1])*100}
+    else:
+        result = {'predicted_class': 'Normal',
+                  'probability': float(predictionsCancer[0][2])*100}
+
+    os.remove(img_path)
+    return jsonify(result)
+
 
 @app.route('/', methods=['GET'])
 def welcome():
