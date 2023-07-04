@@ -20,6 +20,7 @@ import DoctorDashboard from "./pages/DoctorDashboard";
 import DoctorLogin from "./pages/DoctorLogin";
 import Error from "./components/Error";
 import Contact from "./pages/Contact";
+import Cancerpage from "./pages/Cancerpage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/ctscan" element={<Ctscan />} />
         <Route path="/mri" element={<Mri />} />
         <Route path="/xray" element={<Pneumonia />} />
+        <Route path="/cancer" element={<Cancerpage />} />
         <Route path="/meet" element={<Meet />} />
         <Route path="/rooms/:roomId" element={<Rooms />} />
         <Route path="/general/chat" element={<Chat />} />
@@ -43,8 +45,8 @@ function App() {
           path="/appointment"
           element={<Appointment about={"Lorem ipsum dolor sit amet."} />}
         />
-        <Route path="/contact" element={<Contact/>} />
-        <Route path="*" element={<Error/>} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<Error />} />
       </Routes>
       {/* Footer */}
       <Footer />
