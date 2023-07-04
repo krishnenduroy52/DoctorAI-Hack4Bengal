@@ -105,7 +105,7 @@ const Navbar = () => {
             <a href="/about">About</a>
           </li>
           <li>
-            <a href="/contact-us">Contact Us</a>
+            <a href="/contact">Contact Us</a>
           </li>
         </ul>
         {/* signup */}
@@ -147,7 +147,7 @@ const Navbar = () => {
             <a href="about">About</a>
           </li>
           <li className="dropdown_links">
-            <a href="contact-us">Contact Us</a>
+            <a href="contact">Contact Us</a>
           </li>
           {isLogin === false ? (
             <Link to="/login" className="action_btn">

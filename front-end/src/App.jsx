@@ -18,6 +18,8 @@ import Footer from "./components/Footer";
 import DoctorDataInput from "./pages/DoctorDataInput";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import DoctorLogin from "./pages/DoctorLogin";
+import Error from "./components/Error";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
           path="/appointment"
           element={<Appointment about={"Lorem ipsum dolor sit amet."} />}
         />
+        <Route path="/contact" element={<Contact/>} />
+        <Route path="*" element={<Error/>} />
       </Routes>
       {/* Footer */}
       <Footer />
