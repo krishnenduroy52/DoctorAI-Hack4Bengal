@@ -13,6 +13,7 @@ export const doctorSignupRoute = `${host}/doctor/signup`;
 
 // Doctor details
 export const doctorDetailsRoute = `${host}/doctor/details`;
+export const getDoctorDetailsRoute = (id) => `${host}/doctor/details/${id}`
 
 // Appointment
 export const appointmentRoute = `${host}/appointment`;

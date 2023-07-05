@@ -376,7 +376,6 @@ app.get("/doctor/details", async (req, res) => {
 
 app.get("/doctor/details/:id", async (req, res) => {
   const doctorId = req.params.id;
-
   try {
     // Find the appointment in the database by ID
     const response = await Doctor.findById(doctorId);
@@ -390,7 +389,7 @@ app.get("/doctor/details/:id", async (req, res) => {
     res.status(200).json(response);
   } catch (err) {
     // Handle any errors that occurred during the retrieval
-    console.error("Error while retrieving appointment:", err);
+    console.error("Error while retrieving doctor:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 });

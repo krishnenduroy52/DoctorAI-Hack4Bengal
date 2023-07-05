@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/Footer.css";
-import logo from "../../public/Image/doctorai_logo.svg";
+import logo from '../../public/Image/doctorai_logo.svg'
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
@@ -49,7 +49,7 @@ const Footer = () => {
           {/* Contact Us */}
           <p>Contact Us: contact@example.com</p>
           <div className="footer-hr"></div>
-          <Link className="join-doctor" to="/join-doctor">Join us as Doctor</Link>
+          <Link className="join-doctor" to="/doctor/login">Join us as Doctor</Link>
         </div>
     </footer>
   );
