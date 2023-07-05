@@ -135,6 +135,8 @@ a {
   color: #fff; */
 /* } */
 
+
+
 .dropdown_menu ul li {
   padding: 0.6rem;
   display: flex;
@@ -193,7 +195,7 @@ a {
 
 /* Responseive Design */
 
-@media (max-width: 832px) {
+@media (max-width: 992px) {
   .topNav .links,
   .topNav .action_btn {
     display: none;
@@ -223,7 +225,10 @@ a {
 
 .profile_dropdown {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
 }
 
 .profile_btn {

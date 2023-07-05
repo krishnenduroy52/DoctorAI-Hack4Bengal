@@ -1,5 +1,10 @@
 .chat_container {
-  margin: 0 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 0;
+  /* margin: 0 150px; */
 }
 .chat_header_text {
   text-align: center;
@@ -7,11 +12,12 @@
   padding: 0 90px;
 }
 .chat_header_text h2 {
-  font-size: 50px;
+  font-size: clamp(2rem, calc(6vw - 12px), 4rem);
   font-weight: 700;
 }
 .chatApp {
   height: 88.5vh;
+  width: 75%;
   display: flex;
   border-radius: 10px;
   margin-bottom: 50px;
@@ -20,7 +26,7 @@
   box-shadow: -2px -2px 20px 0px rgba(100, 100, 100, 0.75);
 }
 .left-panel {
-  width: 300px;
+  width: 30%;
   height: 88.5vh;
   border-right: 1px solid rgb(149, 149, 149);
   padding: 0 8px;
@@ -156,5 +162,19 @@ input:focus {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+@media (max-width: 992px) {
+  .chat_container {
+    width: 100%;
+    padding: clamp(2rem, calc(6vw - 12px), 4rem);
+  }
+  .chatApp {
+    width: 100%;
+  }
+  .inField {
+    width: 80%;
   }
 }
