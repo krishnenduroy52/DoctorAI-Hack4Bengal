@@ -157,6 +157,7 @@ function Chat() {
                 rows="1"
                 onKeyDown={onPressEnter}
               />
+              
             </form>
           </div>
         </section>
