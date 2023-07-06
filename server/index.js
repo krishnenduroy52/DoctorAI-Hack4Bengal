@@ -361,7 +361,7 @@ app.post("/doctor/login", async (req, res) => {
       success: true,
       user: doct._id,
     });
-  } catch (error) {}
+  } catch (error) { }
 });
 
 app.get("/doctor/details", async (req, res) => {
