@@ -7,6 +7,11 @@ import Modal from "../components/Modal";
 import Progress_bar from "../components/Progress_bar";
 import videoSrc from "../videos/ctscan_video.mp4";
 import Chat from "./Chat";
+
+// Icon import
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+
 function Cancerpage() {
   // fileupload & Result
   const [selectedFile, setSelectedFile] = useState(null);
@@ -72,6 +77,11 @@ function Cancerpage() {
           realated Queries
         </h2>
         <p>
+          <FontAwesomeIcon
+            icon={faTriangleExclamation}
+            className="fa-margin"
+            style={{ color: "red" }}
+          />
           Doctor.AI Health Assistant is for informational purposes only. Don’t
           take any actions without a doctor’s validation or consultation.
         </p>
@@ -151,7 +161,6 @@ function Cancerpage() {
           <Modal
             show={showGive}
             onClose={handelClose}
-            img="Image/modelBanner.jpg"
             bigText={`${result.predicted_class}`}
             smallText="We recommend you to make a appointment with doctor"
             percentage={`${Math.round(result.probability)}`}

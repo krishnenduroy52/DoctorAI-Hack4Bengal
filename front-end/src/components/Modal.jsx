@@ -4,10 +4,12 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 
+// image import
+import img from "../img/modelBanner.jpg";
+
 export default function Modal({
   show,
   onClose,
-  img,
   bigText,
   smallText,
   percentage,
@@ -52,7 +54,9 @@ export default function Modal({
                 style={{ backgroundColor: "black" }}
                 onClick={onClose}
                 to="/appointment"
-                state={{about: `Issue ${bigText}, prediction ${percentage}%. We need doctor's assistance.`}}
+                state={{
+                  about: `Issue ${bigText}, prediction ${percentage}%. We need doctor's assistance.`,
+                }}
               >
                 Appointment
               </Link>
