@@ -27,14 +27,14 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route exact path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route exact path="/ctscan" element={<Ctscan />} />
-        <Route path="/mri" element={<Mri />} />
-        <Route path="/xray" element={<Pneumonia />} />
-        <Route path="/cancer" element={<Cancerpage />} />
+        <Route path="/prediction/ctscan" element={<Ctscan />} />
+        <Route path="/prediction/mri" element={<Mri />} />
+        <Route path="/prediction/xray" element={<Pneumonia />} />
+        <Route path="/prediction/cancer" element={<Cancerpage />} />
         <Route path="/meet" element={<Meet />} />
         <Route path="/rooms/:roomId" element={<Rooms />} />
         <Route path="/general/chat" element={<Chat />} />

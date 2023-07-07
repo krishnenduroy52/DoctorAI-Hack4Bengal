@@ -135,8 +135,6 @@ a {
   color: #fff; */
 /* } */
 
-
-
 .dropdown_menu ul li {
   padding: 0.6rem;
   display: flex;
@@ -177,6 +175,7 @@ a {
   display: none;
   width: clamp(220px, 15vw, 280px);
   z-index: 100;
+  margin-top: 10px;
 }
 
 .services_options.open {

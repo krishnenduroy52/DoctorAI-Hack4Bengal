@@ -12,6 +12,12 @@
   width: 60%;
 }
 
+hr {
+  width: 90%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 .prediction-bg-right {
   position: absolute;
   overflow: hidden;
