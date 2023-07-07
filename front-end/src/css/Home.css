@@ -117,6 +117,8 @@
 
 .models > button > img {
   position: absolute;
+  width: 100% !important;
+  height: 100% !important;
   top: 0;
   left: 0;
   right: 0;
