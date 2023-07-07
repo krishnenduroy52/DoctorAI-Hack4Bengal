@@ -8,7 +8,6 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import { Link } from "react-router-dom";
 import services_menu from "../assets/json-data/services_menu.json";
@@ -20,10 +19,9 @@ const Navbar = () => {
   const toogleBtn = useRef(null);
   const servicesBtn = useRef(null);
   const [toggleBtnIcon, setToggleBtnIcon] = useState(faBarsStaggered);
-  const [serviceBtnIcon, setServiceBtnIcon] = useState(faAngleDown);
+  const [isOpen, setIsOpen] = useState(false);
   const dropdownMenu = useRef(null);
 
-  const navigate = useNavigate();
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
   const toggleProfileDropdown = () => {
@@ -39,8 +37,22 @@ const Navbar = () => {
     } else {
       setIsLogin(false);
     }
-    console.log(isLogin);
   }, [token]);
+
+  const handleOutsideClick = (event) => {
+    if (!event.target.closest('.services')) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if(isOpen) {
+      document.body.addEventListener('click', handleOutsideClick);
+    }
+    return () => {
+      document.body.removeEventListener('click', handleOutsideClick);
+    };
+  }, [isOpen]);
 
   const handleLogout = () => {
     localStorage.removeItem("doctor_ai_userID");
@@ -51,9 +63,8 @@ const Navbar = () => {
 
   const openMenu = () => {
     dropdownMenu.current.classList.toggle("open");
-    const isOpen = dropdownMenu.current.classList.contains("open");
-    // console.log(toggleBtnIcon.current.classList);
-    if (isOpen) {
+    const open = dropdownMenu.current.classList.contains("open");
+    if (open) {
       setToggleBtnIcon(faXmark);
     } else {
       setToggleBtnIcon(faBarsStaggered);
@@ -61,14 +72,7 @@ const Navbar = () => {
   };
 
   const openServices = () => {
-    servicesBtn.current.classList.toggle("open");
-    const isOpen = servicesBtn.current.classList.contains("open");
-    // console.log(toggleBtnIcon.current.classList);
-    if (isOpen) {
-      setServiceBtnIcon(faAngleUp);
-    } else {
-      setServiceBtnIcon(faAngleDown);
-    }
+    setIsOpen((prevOpen) => !prevOpen);
   };
 
   return (
@@ -83,22 +87,20 @@ const Navbar = () => {
         </div>
         {/* menu */}
         <ul className="links">
-          <li className="services">
-            <a className="no-link" onClick={openServices}>
+          <li className="services" onClick={openServices}>
+            <a className="no-link">
               Services{" "}
-              <FontAwesomeIcon className="ml-1 w-2" icon={serviceBtnIcon} />
+              <FontAwesomeIcon className="ml-1 w-2" icon={!isOpen ? faAngleDown : faAngleUp} />
             </a>
-            <div ref={servicesBtn} className="services_options">
+            {isOpen && (<div ref={servicesBtn} className="services_options open">
               <ul>
-                {services_menu.items.map((item, index) => {
-                  return (
+                {services_menu.items.map((item, index) => (
                     <Link key={index} to={item.url}>
-                      <li>{item.title}</li>
+                      <li className={index === 0 ? 'first-child' : index === services_menu.items.length - 1 ? 'last-child' : ''}>{item.title}</li>
                     </Link>
-                  );
-                })}
+                ))}
               </ul>
-            </div>
+            </div>)}
           </li>
           <li>
             <a href="/general/chat">General</a>

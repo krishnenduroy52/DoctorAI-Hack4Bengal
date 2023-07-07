@@ -54,12 +54,14 @@ const Home = () => {
           <div className="models">
             <button className="CtScan">
               <img src={ctScanModelImg} />
-              <p>CT SCAN model</p>
+              <p>CT SCAN</p>
             </button>
             <button className="MRIScan">
+              <img src={ctScanModelImg} />
               <p>MRI SCAN</p>
             </button>
             <button className="LungXRayScan">
+            <img src={ctScanModelImg} />
               <p>Lungs X-RAY</p>
             </button>
           </div>
