@@ -1,16 +1,29 @@
 {
     "items": [
         {
-            "title": "MRI Scan",
-            "url": "/mri"
+            "className":"fa-solid fa-brain-circuit",
+            "title": "Cancer Prediction",
+            "url": "/prediction/cancer"
         },
         {
-            "title": "CT Scan",
-            "url": "/ctscan"
+            "className":"fa-solid fa-brain-circuit",
+            "title": "Brain Tumer Prediction",
+            "url": "/prediction/mri"
         },
         {
-            "title": "X-Ray",
-            "url": "/xray"
+            "className":"fa-solid fa-brain-circuit",
+            "title": "Carcinoma Prediction",
+            "url": "/prediction/ctscan"
+        },
+        {
+            "className":"fa-solid fa-brain-circuit",
+            "title": "Pneumonia Prediction",
+            "url": "/prediction/xray"
+        },
+        {
+            "className":"fa-solid fa-brain-circuit",
+            "title": "General Chat",
+            "url":"general/chat"
         }
     ]
 }

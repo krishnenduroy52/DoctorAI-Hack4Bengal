@@ -2,7 +2,8 @@ import "../css/Chat.css";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 function Chat() {
   const [input, setInput] = useState();
   const [chats, setChats] = useState([
@@ -52,6 +53,11 @@ function Chat() {
       <div className="chat_header_text">
         <h2>AI Health Assistant for all your health-related questions</h2>
         <p>
+          <FontAwesomeIcon
+            icon={faTriangleExclamation}
+            className="fa-margin"
+            style={{ color: "red" }}
+          />
           Doctor.AI Health Assistant is for informational purposes only. Don’t
           take any actions without a doctor’s validation or consultation.
         </p>
@@ -157,7 +163,6 @@ function Chat() {
                 rows="1"
                 onKeyDown={onPressEnter}
               />
-              
             </form>
           </div>
         </section>

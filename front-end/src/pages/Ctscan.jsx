@@ -5,6 +5,7 @@ import "../css/predictionpage.css";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
 import Progress_bar from "../components/Progress_bar";
+import videoSrc from "../videos/ctscan_video.mp4";
 
 function Ctscan() {
   // fileupload & Result
@@ -88,7 +89,7 @@ function Ctscan() {
                 autoPlay
                 muted
                 playsInline
-                src="./videos/ctscan_video.mp4"
+                src={videoSrc}
               ></video>
               <div className="flex flex-col gap-4">
                 <h1 className="font-display font-bold text-typo m-0 text-4xl md:text-5xl lg:text-6xl text-center md:!text-left">

@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 import services_menu from "../assets/json-data/services_menu.json";
 import logo from "/public/Image/doctorai_logo.svg";
 
+// img
+
 const Navbar = () => {
   const toogleBtn = useRef(null);
   const servicesBtn = useRef(null);
