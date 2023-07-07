@@ -90,7 +90,7 @@ const Navbar = () => {
           <li className="services" onClick={openServices}>
             <a className="no-link">
               Services{" "}
-              <FontAwesomeIcon className="ml-1 w-2" icon={isOpen ? faAngleDown : faAngleUp} />
+              <FontAwesomeIcon className="ml-1 w-2" icon={!isOpen ? faAngleDown : faAngleUp} />
             </a>
             {isOpen && (<div ref={servicesBtn} className="services_options open">
               <ul>
