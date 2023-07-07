@@ -11,6 +11,7 @@ import Chat from "./Chat";
 
 // Image import
 import ctScanModelImg from "../img/ct-scan.png";
+import BrainTumor from "../img/brainTumor.png";
 
 const Home = () => {
   return (
@@ -57,11 +58,11 @@ const Home = () => {
               <p>CT SCAN</p>
             </button>
             <button className="MRIScan">
-              <img src={ctScanModelImg} />
+              <img src={BrainTumor} />
               <p>MRI SCAN</p>
             </button>
             <button className="LungXRayScan">
-            <img src={ctScanModelImg} />
+              <img src={ctScanModelImg} />
               <p>Lungs X-RAY</p>
             </button>
           </div>

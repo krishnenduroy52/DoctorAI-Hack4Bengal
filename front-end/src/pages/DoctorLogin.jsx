@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "../css/Signup.css";
 import axios from "axios";
@@ -114,7 +114,7 @@ const DoctorLogin = () => {
             </button>
           </div>
           <p className="already-account">
-            Don't have an account? <a href="/signup">Sign Up</a>
+            Don't have an account? <Link to="/doctor/signup">Sign Up</Link>
           </p>
         </form>
       </div>

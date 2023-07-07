@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "../css/Signup.css";
 import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faRightToBracket
-} from "@fortawesome/free-solid-svg-icons";
+import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
-import {userLoginRoute} from "../utils/APIRoutes"
+import { userLoginRoute } from "../utils/APIRoutes";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -120,11 +118,11 @@ const Login = () => {
               className="action_btn"
               onClick={handleSubmitForm}
             >
-              Login {" "} <FontAwesomeIcon icon={faRightToBracket} />
+              Login <FontAwesomeIcon icon={faRightToBracket} />
             </button>
           </div>
           <p className="already-account">
-            Don't have an account? <a href="/signup">Sign Up</a>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
           </p>
         </form>
       </div>

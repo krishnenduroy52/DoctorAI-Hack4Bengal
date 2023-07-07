@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Poppins:ital,wght@0,300;0,400;800;1,300&family=Roboto+Slab:wght@300;400;800&display=swap");
 
 .modalWrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -12,6 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 }
 
 .modal_custom {

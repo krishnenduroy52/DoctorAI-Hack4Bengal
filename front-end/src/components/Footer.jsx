@@ -1,9 +1,13 @@
 import React from "react";
 import "../css/Footer.css";
-import logo from '../../public/Image/doctorai_logo.svg'
+import logo from "../../public/Image/doctorai_logo.svg";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
@@ -38,19 +42,33 @@ const Footer = () => {
             {/* Product List */}
             <label htmlFor="Products">Products</label>
             <ul id="Products">
-              <li><Link className="product-link" to="/ctscan">CT-Scan</Link></li>
-              <li><Link className="product-link" to="/mri">MRI-Scan</Link></li>
-              <li><Link className="product-link" to="/xray">Lungs-X-Ray</Link></li>
+              <li>
+                <Link className="product-link" to="/prediction/ctscan">
+                  CT-Scan
+                </Link>
+              </li>
+              <li>
+                <Link className="product-link" to="/prediction/mri">
+                  MRI-Scan
+                </Link>
+              </li>
+              <li>
+                <Link className="product-link" to="/prediction/xray">
+                  Lungs-X-Ray
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-        <div className="contact">
-          {/* Contact Us */}
-          <p>Contact Us: contact@example.com</p>
-          <div className="footer-hr"></div>
-          <Link className="join-doctor" to="/doctor/login">Join us as Doctor</Link>
-        </div>
+      <div className="contact">
+        {/* Contact Us */}
+        <p>Contact Us: contact@example.com</p>
+        <div className="footer-hr"></div>
+        <Link className="join-doctor" to="/doctor/login">
+          Join us as Doctor
+        </Link>
+      </div>
     </footer>
   );
 };
