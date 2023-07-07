@@ -115,10 +115,22 @@
   transition: all 0.3s ease;
 }
 
+.models > button > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  object-fit: cover;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
 .models > button > p {
   position: absolute;
   top: 10px;
   left: 15px;
+  font-weight: bolder;
   font-size: clamp(0.8rem, calc(1.2vw - 6px), 0.1rem);
 }
 

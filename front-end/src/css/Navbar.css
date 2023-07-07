@@ -169,13 +169,13 @@ a {
 
 .services_options {
   position: absolute;
-  background-color: rgba(38, 37, 37, 0.8);
-  backdrop-filter: blur(200px);
+  background-color: rgba(255, 252, 252);
   border-radius: 10px;
   display: none;
   width: clamp(220px, 15vw, 280px);
   z-index: 100;
   margin-top: 10px;
+  box-shadow: #1c181882 0px 0px 20px;
 }
 
 .services_options.open {
@@ -183,13 +183,21 @@ a {
 }
 
 .services_options > ul li {
-  color: #fff;
+  color: #000;
   padding: clamp(0.5rem, 1vw, 1rem);
   width: 100%;
 }
 
 .services_options > ul li:hover {
-  background-color: rgba(38, 37, 37, 0.5);
+  background-color: rgba(125, 125, 125, 0.5);
+}
+
+.first-child {
+  border-radius: 10px 10px 0 0;
+}
+
+.last-child {
+  border-radius: 0 0 10px 10px;
 }
 
 /* Responseive Design */
