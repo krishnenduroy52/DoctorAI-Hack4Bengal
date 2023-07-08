@@ -17,3 +17,6 @@ export const getDoctorDetailsRoute = (id) => `${host}/doctor/details/${id}`
 
 // Appointment
 export const appointmentRoute = `${host}/appointment`;
+
+// Chat gpt api route
+export const chatAiRoute = `${host}/completion`;

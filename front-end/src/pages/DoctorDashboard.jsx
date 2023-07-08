@@ -396,7 +396,7 @@ export default function DoctorDashboard() {
                           <Link
                             to={`/rooms/${item.meetingId}`}
                             className="text-success font-weight-bold btn join-room-btn"
-                            style={{ width: "auto" }}
+                            style={{ width: "auto", display: "flex", alignItems: "center" }}
                           >
                             Join
                           </Link>
