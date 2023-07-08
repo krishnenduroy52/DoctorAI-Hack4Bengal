@@ -1,14 +1,12 @@
 import "../css/Home.css";
-import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import wave from "../../public/Image/wave.svg";
 import FAQSection from "../components/FAQSection";
 import faqData from "../assets/json-data/faqData.json";
-import axios from "axios";
-import Footer from "../components/Footer";
 import Chat from "./Chat";
-
+import services_menu from "../assets/json-data/services_menu.json";
 // Image import
 import ctScanModelImg from "../img/ct-scan.png";
 import BrainTumor from "../img/brainTumor.png";
@@ -53,18 +51,25 @@ const Home = () => {
             with our latest AI Technology
           </p>
           <div className="models">
-            <button className="CtScan">
-              <img src={ctScanModelImg} />
-              <p>CT SCAN</p>
-            </button>
-            <button className="MRIScan">
+            {services_menu.items.map((item, index) => {
+              if (index !== services_menu.items.length - 1) {
+                return (
+                  <button key={index} className="CtScan">
+                  <img src={item.src} />
+                  <p>{item.title}</p>
+                </button>
+                );
+              }
+            })}
+           
+            {/* <button className="MRIScan">
               <img src={BrainTumor} />
               <p>MRI SCAN</p>
             </button>
             <button className="LungXRayScan">
               <img src={ctScanModelImg} />
               <p>Lungs X-RAY</p>
-            </button>
+            </button> */}
           </div>
         </div>
         <hr />
