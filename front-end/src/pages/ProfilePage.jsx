@@ -95,7 +95,9 @@ export default function ProfilePage() {
         if (data.user.schedule.length != 0) {
           data.user.schedule.map((s) => fetchAppointmentDetails(s));
         } else setSchedule([]);
-        toast.success("Successfully fetched user data.");
+        toast.success("Successfully fetched user data.", {
+          autoClose: 1500,
+        });
       } else {
         toast.error("Error retrieving user data"); // Display toast error
         console.error("Error retrieving user data:", data.error);
