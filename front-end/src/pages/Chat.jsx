@@ -12,30 +12,33 @@ function Chat() {
   const [selectModel, setSelectmodel] = useState(null);
   const [model, setModel] = useState([]);
   const count = useRef("");
-  // const handelSumbit = async (e) => {
-  //   e.preventDefault();
-  //   const chatLog = [...chats, { user: "me", chat: input }];
-  //   setChats(chatLog);
-  //   setInput("");
-  //   const response = await axios.post("http://localhost:3000/completion", {
-  //     prompt: input,
-  //   });
-  //   setChats((chats) => [
-  //     ...chats,
-  //     { user: "gpt", chat: response.data.choices[0].message.content },
-  //   ]);
-  // };
-
-  // Test UI with handel submit
   const handelSumbit = async (e) => {
     e.preventDefault();
     const chatLog = [...chats, { user: "me", chat: input }];
     setChats(chatLog);
     setInput("");
-    const gptAnswer = prompt("Enter the gpt asnwer");
-    console.log(gptAnswer);
-    setChats((chats) => [...chats, { user: "gpt", chat: gptAnswer }]);
+    const response = await axios.post("http://localhost:3000/completion", {
+      prompt:
+        "if this following question is not health related then return output only saying this is not health related question. Question: " +
+        input +
+        " within 50 words.",
+    });
+    setChats((chats) => [
+      ...chats,
+      { user: "gpt", chat: response.data.choices[0].message.content },
+    ]);
   };
+
+  // Test UI with handel submit
+  // const handelSumbit = async (e) => {
+  //   e.preventDefault();
+  //   const chatLog = [...chats, { user: "me", chat: input }];
+  //   setChats(chatLog);
+  //   setInput("");
+  //   const gptAnswer = prompt("Enter the gpt asnwer");
+  //   console.log(gptAnswer);
+  //   setChats((chats) => [...chats, { user: "gpt", chat: gptAnswer }]);
+  // };
 
   const clearChat = () => {
     setChats([{ user: "gpt", chat: "Ask me anything about Health" }]);
