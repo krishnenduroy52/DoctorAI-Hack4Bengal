@@ -130,14 +130,14 @@ def pneumonia_prediction():
 
     prediction = pneumonia_model.predict(test_image)
     print("Prediction: ", prediction)
-    if prediction[0][0] == 0:
-        statistic = prediction[0] * 100
+    if prediction[0][0] < 0.5:
+        statistic = (1.0-prediction[0]) * 100
         result = {
-            'predicted_class': 'NORMAL',
+            'predicted_class': 'Normal',
             'probability': float(statistic)
         }
     else:
-        statistic = (1.0 - prediction[0]) * 100
+        statistic = prediction[0] * 100
         result = {
             'predicted_class': 'PNEUMONIA',
             'probability': float(statistic)
