@@ -10,6 +10,7 @@ import services_menu from "../assets/json-data/services_menu.json";
 // Image import
 import ctScanModelImg from "../img/ct-scan.png";
 import BrainTumor from "../img/brainTumor.png";
+import gif from "../img/doctor-application.gif";
 
 const Home = () => {
   return (
@@ -46,27 +47,30 @@ const Home = () => {
         {/* Models of CT scan and MRI machines */}
         <div className="modelSection">
           {/* Models */}
-          <p>
-            <span>Health At Your FingerTips.</span> <br /> Check your health
-            with our latest AI Technology
-          </p>
+          <div>
+            <p>
+              <span>Health At Your FingerTips.</span> <br /> Check your health
+              with our latest AI Technology
+            </p>
+            <img src={gif} className="gifimg" />
+          </div>
           <div className="models">
             {services_menu.items.map((item, index) => {
               if (index !== services_menu.items.length - 1) {
                 return (
-                  <button key={index} className="CtScan">
-                  <img src={item.src} />
-                  <p>{item.title}</p>
-                </button>
+                  <div key={index} className="CtScan">
+                    <img src={item.src} />
+                    <span>{item.title}</span>
+                  </div>
                 );
               }
             })}
-           
+
             {/* <button className="MRIScan">
               <img src={BrainTumor} />
               <p>MRI SCAN</p>
             </button>
-            <button className="LungXRayScan">
+            <button className="LungXRayScan"> 
               <img src={ctScanModelImg} />
               <p>Lungs X-RAY</p>
             </button> */}
