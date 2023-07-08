@@ -45,7 +45,7 @@ export default function DoctorDashboard() {
 
   useEffect(() => {
     const isDoc = localStorage.getItem("doctor_ai_isDoc");
-    console.log("isDoc: " + isDoc);
+    // console.log("isDoc: " + isDoc);
     if (isDoc != "1") {
       navigate("/profile");
       return;
@@ -154,7 +154,7 @@ export default function DoctorDashboard() {
       [name]: value,
     }));
   };
-  console.log(schedule)
+  // console.log(schedule)
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { day: "numeric", month: "long", year: "numeric" };

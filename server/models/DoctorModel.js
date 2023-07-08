@@ -15,7 +15,6 @@ const doctorSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         required: true,
-        unique: true
     },
     gender: {
         type: String,
