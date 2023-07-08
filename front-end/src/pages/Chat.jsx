@@ -65,7 +65,7 @@ function Chat() {
   //   const chatLog = [...chats, { user: "me", chat: input }];
   //   setChats(chatLog);
   //   setInput("");
-  //   const gptAnswer = prompt("Enter the gpt asnwer");
+  //   const gptAnswer = prompt("Enter the gpt answer");
   //   console.log(gptAnswer);
   //   setChats((chats) => [...chats, { user: "gpt", chat: gptAnswer }]);
   // };
