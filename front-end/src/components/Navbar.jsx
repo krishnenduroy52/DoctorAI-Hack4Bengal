@@ -6,6 +6,7 @@ import {
   faAngleDown,
   faUser,
   faRightFromBracket,
+  faBrain,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
 import "../css/Navbar.css";
@@ -46,7 +47,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if(isOpen) {
+    if (isOpen) {
       document.body.addEventListener('click', handleOutsideClick);
     }
     return () => {
@@ -95,9 +96,14 @@ const Navbar = () => {
             {isOpen && (<div ref={servicesBtn} className="services_options open">
               <ul>
                 {services_menu.items.map((item, index) => (
+                  <>
                     <Link key={index} to={item.url}>
-                      <li className={index === 0 ? 'first-child' : index === services_menu.items.length - 1 ? 'last-child' : ''}>{item.title}</li>
+                      <li className={index === 0 ? 'first-child' : index === services_menu.items.length - 1 ? 'last-child' : ''}> {item.title}</li>
                     </Link>
+                    {/* <Link key={index} to={item.url}>
+                      <li className={index === 0 ? 'first-child' : index === services_menu.items.length - 1 ? 'last-child' : ''}> <FontAwesomeIcon icon={faBrain} /> {item.title}</li>
+                    </Link> */}
+                  </>
                 ))}
               </ul>
             </div>)}

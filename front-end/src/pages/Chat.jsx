@@ -4,6 +4,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { chatAiRoute } from "../utils/APIRoutes";
+
 function Chat() {
   const [input, setInput] = useState();
   const [chats, setChats] = useState([
@@ -46,7 +48,7 @@ function Chat() {
       },
     ]);
 
-    const response = await axios.post("http://localhost:3000/completion", {
+    const response = await axios.post(chatAiRoute, {
       prompt: input + " within 50 words.",
     });
     // setLoading(false);

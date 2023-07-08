@@ -65,7 +65,7 @@ const Footer = () => {
         {/* Contact Us */}
         <p>Contact Us: contact@example.com</p>
         <div className="footer-hr"></div>
-        <Link className="join-doctor" to="/doctor/login">
+        <Link className="join-doctor" to="/doctor/signup">
           Join us as Doctor
         </Link>
       </div>

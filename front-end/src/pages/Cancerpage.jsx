@@ -106,7 +106,7 @@ function Cancerpage() {
                 <div className="flex flex-col gap-4">
                   <h1 className="font-display font-bold text-typo m-0 text-4xl md:text-5xl lg:text-6xl text-center md:!text-left">
                     Detect <span className="text-orange-500">Cancer</span>
-                    <br /> with 99% accuracy
+                    <br /> with CT SCAN Image
                   </h1>
                   <p className="text-typo-tertiary font-bold text-xl m-0 !text-typo text-center md:!text-left">
                     100% Automatically and
@@ -122,9 +122,8 @@ function Cancerpage() {
                     <input {...getInputProps()} />
 
                     <div
-                      className={`right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl ${
-                        isDraggingOver ? "right-container-drag" : ""
-                      }`}
+                      className={`right-container-drop  w-full flex flex-col sm:justify-center sm:items-center sm:gap-8 sm:pt-36 sm:pb-16 rounded-4xl bg-white shadow-2xl ${isDraggingOver ? "right-container-drag" : ""
+                        }`}
                     >
                       <button type="button" className="upload-btn">
                         Upload Image

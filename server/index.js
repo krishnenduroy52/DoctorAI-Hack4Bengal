@@ -314,8 +314,9 @@ app.post("/doctor/signup", async (req, res) => {
   } = req.body;
 
   try {
+    // console.log(email);  
     const existingUser = await Doctor.findOne({ email });
-
+    
     if (existingUser) {
       return res.status(400).json({ error: "Email already exists" });
     }
