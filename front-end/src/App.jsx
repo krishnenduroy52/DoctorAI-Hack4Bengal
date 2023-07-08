@@ -43,7 +43,7 @@ function App() {
         <Route path="/doctor/login" element={<DoctorLogin />} />
         <Route
           path="/appointment"
-          element={<Appointment about={"Lorem ipsum dolor sit amet."} />}
+          element={<Appointment about={" "} />}
         />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Error />} />
