@@ -123,6 +123,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  -webkit-filter: blur(2px);
   object-fit: cover;
   border-radius: 14px;
   overflow: hidden;
@@ -130,8 +131,15 @@
 
 .models > button > p {
   position: absolute;
-  top: 10px;
-  left: 15px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  mix-blend-mode:multiply;
+  /* box-shadow: 0 0 16px #fff, 0 0 32px #fff; */
+  /* opacity: 0.9; */
   font-weight: bolder;
   font-size: clamp(0.8rem, calc(1.2vw - 6px), 0.1rem);
 }
